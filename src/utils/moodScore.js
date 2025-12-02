@@ -1,0 +1,1 @@
+// Ce fichier sert à faire le calcul SIMPLE et LOGIQUE du MoodScore.
