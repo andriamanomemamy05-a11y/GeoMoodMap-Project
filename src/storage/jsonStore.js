@@ -1,0 +1,1 @@
+// Ce fichier centralise la persistance, gère la création du dossier, la récupération et la réparation si JSON corrompu.
