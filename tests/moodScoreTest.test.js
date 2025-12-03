@@ -2,22 +2,22 @@ const { computeScoreWithBreakdown } = require('../src/utils/moodScore');
 
 describe('computeScoreWithBreakdown', () => {
 
-    test('test avec valeur de score faux selon calcul ', () => {
+    test('score maximum avec bon rating, texte positif et météo ensoleillée', () => {
         const result = computeScoreWithBreakdown({
-            rating: 3,
-            textScore: 0,
-            weather: { weather: 'cloud', temp: 15 }
+            rating: 5,
+            textScore: 3,
+            weather: { weather: 'clear', temp: 30 }
         });
         expect(result).toBe(100);
     });
 
-    test('test score qui doit être négatif selon météo', () => {
+    test('score minimum avec mauvais rating, texte négatif et pluie', () => {
         const result = computeScoreWithBreakdown({
-            rating: 4,
-            textScore: 1,
-            weather: { weather: 'snow', temp: -2 }
+            rating: 1,
+            textScore: -3,
+            weather: { weather: 'rain', temp: 0 }
         });
-        expect(result).toBe(90);
+        expect(result).toBe(0);
     });
 
 });

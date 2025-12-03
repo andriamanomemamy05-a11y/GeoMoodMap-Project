@@ -13,7 +13,8 @@ const { addMood } = require('../src/controllers/moodController');
 describe('moodController addMood behavior', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    // mocks fs basiques pour éviter écriture réelle
+
+    // Mocks fs basiques pour éviter écriture réelle
     fs.existsSync.mockReturnValue(false);
     fs.readFileSync.mockReturnValue('[]');
     fs.writeFileSync.mockImplementation(() => {});
@@ -21,10 +22,12 @@ describe('moodController addMood behavior', () => {
   });
 
   test('privilégie lat/lon quand lat+lon ET address fournis (appel reverseGeocode)', async () => {
+    // Préparation des mocks
     geocodeService.reverseGeocode.mockResolvedValue({ name: 'PlaceFromCoords', type: 'park', lat: 43.2820455, lon: 5.3812726 });
     geocodeService.forwardGeocode.mockResolvedValue({ name: 'PlaceFromAddress', type: 'street', lat: '43.999', lon: '5.999' }); // ne doit pas être appelé
     weatherService.getWeather.mockResolvedValue({ source: 'mock', data: { temp: 20, weather: 'clear sky' } });
 
+    // Data simulées
     const req = {
       body: {
         text: 'Je suis quoi',
@@ -41,11 +44,13 @@ describe('moodController addMood behavior', () => {
 
     await addMood(req, res);
 
+    // assertions dans les services
     expect(geocodeService.reverseGeocode).toHaveBeenCalledWith(43.2820455, 5.3812726);
     expect(geocodeService.forwardGeocode).not.toHaveBeenCalled();
     expect(weatherService.getWeather).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(201);
 
+    // vérifier que json a été appelé et que l'objet contient lat/lon venant des coords
     const returned = res.json.mock.calls[0][0];
     expect(returned).toHaveProperty('lat', 43.2820455);
     expect(returned).toHaveProperty('lon', 5.3812726);
@@ -54,7 +59,8 @@ describe('moodController addMood behavior', () => {
   });
 
   test('utilise forwardGeocode quand seule address fournie', async () => {
-    geocodeService.reverseGeocode.mockResolvedValue(null); // ne doit pas être appelé
+    // Appel des mocks dans les services
+    geocodeService.reverseGeocode.mockResolvedValue(null);
     geocodeService.forwardGeocode.mockResolvedValue({ name: 'PlaceFromAddress', type: 'street', lat: '43.999', lon: '5.999' });
     weatherService.getWeather.mockResolvedValue({ source: 'mock', data: { temp: 15, weather: 'light rain' } });
 
@@ -72,13 +78,15 @@ describe('moodController addMood behavior', () => {
 
     await addMood(req, res);
 
+    // forwardGeocode doit avoir été appelé
     expect(geocodeService.forwardGeocode).toHaveBeenCalledWith('Avenue de la Viste, La Viste, Marseille');
     expect(geocodeService.reverseGeocode).not.toHaveBeenCalled();
     expect(weatherService.getWeather).toHaveBeenCalled();
 
     expect(res.status).toHaveBeenCalledWith(201);
-
     const returned = res.json.mock.calls[0][0];
+
+    // lat/lon dans returned viennent de forwardGeocode et ont été parseFloat
     expect(returned.lat).toBeCloseTo(43.999, 3);
     expect(returned.lon).toBeCloseTo(5.999, 3);
     expect(returned.place.name).toBe('PlaceFromAddress');
