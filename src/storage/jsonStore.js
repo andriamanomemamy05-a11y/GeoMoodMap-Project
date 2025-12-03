@@ -5,9 +5,25 @@ const path = require('path');
 
 const FILE = path.join(process.cwd(), 'data', 'moods.json');
 
-/**
- * save - ajoute une entrée (append)
- */
+function ensure() {
+  const dir = path.dirname(FILE);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  if (!fs.existsSync(FILE)) fs.writeFileSync(FILE, '[]', 'utf8');
+}
+
+function loadAll() {
+  ensure();
+  const raw = fs.readFileSync(FILE, 'utf8');
+  try {
+    return JSON.parse(raw || '[]');
+  } catch (err) {
+    // Si fichier corrompu, on réinitialise proprement
+    console.error('jsonStore: JSON parse error, resetting file', err);
+    fs.writeFileSync(FILE, '[]', 'utf8');
+    return [];
+  }
+}
+
 function save(entry) {
   if (!entry) throw new Error('entry is required');
   const arr = loadAll();

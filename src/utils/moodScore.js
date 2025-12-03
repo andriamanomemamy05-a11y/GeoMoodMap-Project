@@ -1,4 +1,5 @@
 // Ce fichier sert à faire le calcul SIMPLE et LOGIQUE du MoodScore.
+
 function computeScoreWithBreakdown({ rating, textScore, weather }) {
     let ratingScore = rating * 20;
 
@@ -7,7 +8,6 @@ function computeScoreWithBreakdown({ rating, textScore, weather }) {
     // On limite pour éviter les abus :
     if (textPoints > 30) textPoints = 30;
     if (textPoints < -30) textPoints = -30;
-
     let weatherPoints = 0;
 
     if (weather) {
@@ -15,6 +15,12 @@ function computeScoreWithBreakdown({ rating, textScore, weather }) {
         const temp = weather.temp;
 
         // Météo simple (à ajouter au fure et à mésure)
+        if (w.includes("rain") || w.includes("pluie")) {
+            weatherPoints -= 10;
+        }
+        if (w.includes("snow") || w.includes("neige")) {
+            weatherPoints -= 8;
+        }
         if (w.includes("cloud") || w.includes("nuage")) {
             weatherPoints -= 5;
         }
@@ -30,7 +36,6 @@ function computeScoreWithBreakdown({ rating, textScore, weather }) {
     }
     let final = ratingScore + textPoints + weatherPoints;
 
-    // Clamp 0 → 100 pour rester cohérent
     if (final > 100) final = 100;
     if (final < 0) final = 0;
 

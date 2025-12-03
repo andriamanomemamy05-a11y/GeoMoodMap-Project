@@ -1,8 +1,7 @@
 // Petit analyseur lexicale : retourne un integer pouvant être négatif ou positif.
-// On garde cet util simple pour la phase 1 ; peut être remplacé par du ML plus tard.
 
-const positives = ['bien', 'heureux', 'content'];
-const negatives = ['mal', 'triste', 'hate', 'déçu'];
+const positives = ['bien', 'heureux', 'content', 'joyeux', 'serein', 'love', 'happy', 'ravi', 'cool'];
+const negatives = ['mal', 'triste', 'hate', 'déçu', 'colère', 'anxieux', 'stress', 'mauvais', 'deteste'];
 
 function analyzeText(text) {
   if (!text || typeof text !== 'string') return 0;
