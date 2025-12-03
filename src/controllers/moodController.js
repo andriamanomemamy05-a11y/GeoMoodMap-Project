@@ -1,18 +1,22 @@
-// Les controllers gèrent la logique liée aux routes API
-// Ils reçoivent les requêtes HTTP et appellent les services.
-
-
 const geocodeService = require('../services/geocodeService');
 const weatherService = require('../services/weatherService');
 const jsonStore = require('../storage/jsonStore');
 const { computeScoreWithBreakdown } = require('../utils/moodScore');
 const { analyzeText } = require('../utils/textAnalyzer');
 
-
+/**
+ * addMood
+ * - Validatation des données
+ * - R2cupération des coordinations ou adresse
+ * - Récupérer la météo selon les coord 
+ * - Calculer le mood score via utils/moodScore par rapport aux données
+ * - Sauvegarder dans data/mood.json via storage/jsonStore
+*/
 async function addMood(req, res) {
   try {
     const { text = '', rating, lat, lon, address, imageUrl } = req.body;
 
+    // Validation basique mais explicite
     if (typeof text !== 'string' || text.trim() === '') {
       return res.status(400).json({ error: 'text is required and must be a non-empty string' });
     }
@@ -20,25 +24,30 @@ async function addMood(req, res) {
       return res.status(400).json({ error: 'rating is required and must be a number (1-5 recommended)' });
     }
 
+    // Normaliser le rating en nombre
     let numericRating = Number(rating);
 
+    // S'assurer qu'on a des coordonnées ou une adresse
     const hasCoords = lat !== undefined && lon !== undefined && lat !== null && lon !== null;
     const hasAddress = typeof address === 'string' && address.trim() !== '';
     if (!hasCoords && !hasAddress) {
       return res.status(400).json({ error: 'Provide either lat+lon or address' });
     }
 
+    // Décortiquer et initialiser les coords, l'adresse
     let usedLat = hasCoords ? Number(lat) : null;
     let usedLon = hasCoords ? Number(lon) : null;
     let place = null;
 
     if (hasCoords) {
+      // Reverse geocode : pour récupérer l'adresse exacte depuis les coords
       try {
         place = await geocodeService.reverseGeocode(usedLat, usedLon);
       } catch (err) {
         console.warn('reverseGeocode failed:', err.message || err);
       }
     } else {
+      // Forward geocode : pour récupérer les coords depuis l'adrese
       try {
         const f = await geocodeService.forwardGeocode(address);
         usedLat = f.lat ? Number(f.lat) : null;
@@ -49,6 +58,7 @@ async function addMood(req, res) {
       }
     }
 
+    // Obtenir la météo actuel du jour (uniquement si les coordonnées sont présentes ceux qui sont très utiles)
     let weather = null;
     try {
       if (usedLat !== null && usedLon !== null && !Number.isNaN(usedLat) && !Number.isNaN(usedLon)) {
@@ -60,14 +70,17 @@ async function addMood(req, res) {
       weather = null;
     }
 
+    // Analyser le text par rapport ç la facteur de sentiment écrit
     const textScore = analyzeText(text);
 
+    // Calcul du score d'humeur final avec ventilation
     const scoreResult = computeScoreWithBreakdown({
       rating: numericRating,
       textScore,
       weather
     });
 
+    // Construire une entrée d’humeur
     const mood = {
       id: Date.now(),
       text,
@@ -82,6 +95,7 @@ async function addMood(req, res) {
       createdAt: new Date().toISOString()
     };
 
+    // Récupérer les données et l'envoeyr das jsonStore pour le sauvegarder
     jsonStore.save(mood);
 
     return res.status(201).json(mood);
@@ -91,4 +105,17 @@ async function addMood(req, res) {
   }
 }
 
-module.exports = { addMood };
+/**
+  * getMoods - retourne la liste complète (simple)
+*/
+function getMoods(req, res) {
+  try {
+    const moods = jsonStore.loadAll();
+    res.json(moods);
+  } catch (err) {
+    console.error('getMoods error:', err && (err.stack || err));
+    res.status(500).json({ error: err.message || 'Internal Server Error' });
+  }
+}
+
+module.exports = { addMood, getMoods };
