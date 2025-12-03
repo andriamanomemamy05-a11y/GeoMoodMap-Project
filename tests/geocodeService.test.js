@@ -4,7 +4,7 @@ const geocodeService = require('../src/services/geocodeService')
 
 describe('Services de geolocalisation (avec mocks)', () => {
 
-  test('geocodeService.reverseGeocode retourne un lieu simulé', async () => {
+  test('geocodeService.reverseGeocode : retourne un lieu simulé', async () => {
     const result = await geocodeService.reverseGeocode(48.8566, 2.3522);
     expect(result).toHaveProperty('name');
     expect(result).toHaveProperty('type');
@@ -13,7 +13,7 @@ describe('Services de geolocalisation (avec mocks)', () => {
   });
 
 
-  test('geocodeService.forwardGeocode retourne un lieu simulé avec lat et longitude', async () => {
+  test('geocodeService.forwardGeocode : retourner un lieu simulé avec lat et longitude', async () => {
     const result = await geocodeService.forwardGeocode('Avenue de la viste');
     expect(result).toHaveProperty('name', "Avenue de la viste");
     expect(result).toHaveProperty('type');
