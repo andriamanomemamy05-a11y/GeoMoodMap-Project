@@ -1,3 +1,94 @@
-{
-    "commentaire": "Ce fichier stocke tous les moods enregistrés, sert de petite base de données JSON"
-}
+[
+  {
+    "id": 1764763092192,
+    "text": "Je suis heureux",
+    "rating": 2,
+    "lat": 43.2820455,
+    "lon": 5.3812726,
+    "place": {
+      "name": "Rue de Madagascar, Vauban, Marseille 6e Arrondissement, Marseille, Bouches-du-Rhône, Provence-Alpes-Côte d'Azur, France métropolitaine, 13006, France",
+      "type": "residential",
+      "lat": 43.2820455,
+      "lon": 5.3812726
+    },
+    "weather": {
+      "temp": 11.33,
+      "weather": "light rain",
+      "humidity": 89,
+      "wind_speed": 3.58
+    },
+    "textScore": 1,
+    "scoreResult": 40,
+    "imageUrl": null,
+    "createdAt": "2025-12-03T11:58:12.192Z"
+  },
+  {
+    "id": 1764763103133,
+    "text": "Je suis en colère",
+    "rating": 5,
+    "lat": 43.3587255,
+    "lon": 5.3576592,
+    "place": {
+      "name": "Avenue de la Viste, La Viste, Marseille 15e Arrondissement, Marseille, Bouches-du-Rhône, Provence-Alpes-Côte d'Azur, France métropolitaine, 13015, France",
+      "type": "tertiary",
+      "lat": 43.3587255,
+      "lon": 5.3576592
+    },
+    "weather": {
+      "temp": 9.99,
+      "weather": "overcast clouds",
+      "humidity": 91,
+      "wind_speed": 3.58
+    },
+    "textScore": 0,
+    "scoreResult": 95,
+    "imageUrl": null,
+    "createdAt": "2025-12-03T11:58:23.133Z"
+  },
+  {
+    "id": 1764763287829,
+    "text": "Je suis heureux",
+    "rating": 2,
+    "lat": 43.2820455,
+    "lon": 5.3812726,
+    "place": {
+      "name": "Rue de Madagascar, Vauban, Marseille 6e Arrondissement, Marseille, Bouches-du-Rhône, Provence-Alpes-Côte d'Azur, France métropolitaine, 13006, France",
+      "type": "residential",
+      "lat": 43.2820455,
+      "lon": 5.3812726
+    },
+    "weather": {
+      "temp": 11.33,
+      "weather": "light rain",
+      "humidity": 89,
+      "wind_speed": 3.58
+    },
+    "textScore": 1,
+    "scoreResult": 40,
+    "imageUrl": null,
+    "createdAt": "2025-12-03T12:01:27.829Z"
+  },
+  {
+    "id": 1764763291712,
+    "text": "Je suis en colère",
+    "rating": 5,
+    "lat": 43.3587255,
+    "lon": 5.3576592,
+    "place": {
+      "name": "Avenue de la Viste, La Viste, Marseille 15e Arrondissement, Marseille, Bouches-du-Rhône, Provence-Alpes-Côte d'Azur, France métropolitaine, 13015, France",
+      "type": "tertiary",
+      "lat": 43.3587255,
+      "lon": 5.3576592
+    },
+    "weather": {
+      "temp": 9.99,
+      "weather": "overcast clouds",
+      "humidity": 91,
+      "wind_speed": 3.58
+    },
+    "textScore": 0,
+    "scoreResult": 95,
+    "imageUrl": null,
+    "createdAt": "2025-12-03T12:01:31.712Z"
+  }
+]

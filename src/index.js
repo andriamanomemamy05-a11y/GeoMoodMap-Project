@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const { addMood, getMoods } = require('./controllers/moodController');
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,10 @@ app.use((req, res, next) => {
 
 // Initialisation des api routes
 app.get('/', (req, res) => res.send('API up'));
+
+// Création de l'api et appel de controller pour sauvegarder et lister les moods
+app.post('/api/moods', addMood);
+app.get('/api/moods', getMoods);
 
 // Check de l'erreur 404
 app.use((req, res) => {
