@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const { addMood, getMoods } = require('./controllers/moodController');
 
+const fs = require('fs');
+const path = require('path');
+
 const app = express();
 app.use(express.json());
 
@@ -11,8 +14,22 @@ app.use((req, res, next) => {
   next();
 });
 
-// Initialisation des api routes
-app.get('/', (req, res) => res.send('API up'));
+// Servir les fichiers statiques du dossier /public
+app.use(express.static(path.join(process.cwd(), 'public')));
+
+// Endpoint de recherche d'adresse pour l'autocomplete
+app.get('/api/search', async (req, res) => {
+  const q = req.query.q;
+  if (!q) return res.json([]);
+  try {
+    const result = await geocodeService.forwardGeocode(q);
+    // Retourne un tableau pour que le front fonctionne avec Leaflet
+    res.json([result]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // Création de l'api et appel de controller pour sauvegarder et lister les moods
 app.post('/api/moods', addMood);
