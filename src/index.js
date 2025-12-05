@@ -2,11 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const { addMood, getMoods } = require('./controllers/moodController');
 
+const geocodeService = require('./services/geocodeService');
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
-app.use(express.json());
+
+// Autoriser les payloads plus gros (ici jusqu'à 10MB)
+app.use(express.json({ limit: '10mb' }));
 
 // Simple logger
 app.use((req, res, next) => {
@@ -34,6 +37,29 @@ app.get('/api/search', async (req, res) => {
 // Création de l'api et appel de controller pour sauvegarder et lister les moods
 app.post('/api/moods', addMood);
 app.get('/api/moods', getMoods);
+
+// Endpoint pour recevoir et enregistrer la photo
+app.post('/api/selfie', express.json({ limit: '5mb' }), (req, res) => {
+  try {
+    const { image } = req.body; // dataURL base64
+    if (!image) return res.status(400).json({ error: 'No image provided' });
+
+    // Crée le dossier selfies si nécessaire
+    const selfiesDir = path.join(process.cwd(), 'data', 'selfies');
+    if (!fs.existsSync(selfiesDir)) fs.mkdirSync(selfiesDir, { recursive: true });
+
+    // Extraire la partie base64
+    const base64Data = image.replace(/^data:image\/png;base64,/, '');
+    const fileName = `selfie_${Date.now()}.png`;
+    const filePath = path.join(selfiesDir, fileName);
+
+    fs.writeFileSync(filePath, base64Data, 'base64');
+    res.json({ success: true, path: filePath });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to save image' });
+  }
+});
 
 // Check de l'erreur 404
 app.use((req, res) => {

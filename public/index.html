@@ -171,6 +171,14 @@
           <div id="autocomplete" class="autocomplete-suggestions"></div>
         </div>
 
+        <div class="mb-3">
+          <label for="selfie" class="form-label">Prendre un selfie</label>
+          <video id="camera" autoplay playsinline class="d-block mb-2 w-100" style="border:1px solid #ccc;"></video>
+          <button type="button" id="snap" class="btn btn-secondary mb-2">📸 Prendre la photo</button>
+          <canvas id="canvas" style="display:none;"></canvas>
+          <img id="selfiePreview" src="" alt="Selfie" class="img-fluid rounded">
+        </div>
+
         <button type="submit" class="btn btn-success">Enregistrer l'humeur</button>
       </form>
     </div>

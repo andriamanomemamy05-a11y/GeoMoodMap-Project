@@ -3,6 +3,8 @@ const weatherService = require('../services/weatherService');
 const jsonStore = require('../storage/jsonStore');
 const { computeScoreWithBreakdown } = require('../utils/moodScore');
 const { analyzeText } = require('../utils/textAnalyzer');
+const fs = require('fs');
+const path = require('path');
 
 /**
  * addMood
@@ -80,6 +82,27 @@ async function addMood(req, res) {
       weather
     });
 
+    // --- Sauvegarde du selfie : image en base64 ---
+    let savedImagePath = null;
+    if (imageUrl && imageUrl.startsWith('data:image')) {
+      // Dossier public/selfies pour que le navigateur y accède
+      const publicSelfiesDir = path.join(process.cwd(), 'public', 'selfies');
+
+      // Crée le dossier si nécessaire
+      if (!fs.existsSync(publicSelfiesDir)) fs.mkdirSync(publicSelfiesDir, { recursive: true });
+
+      // Extraire les données base64
+      const base64Data = imageUrl.replace(/^data:image\/png;base64,/, '');
+      const fileName = `selfie_${Date.now()}.png`;
+      const filePath = path.join(publicSelfiesDir, fileName);
+
+      // Écrire le fichier
+      fs.writeFileSync(filePath, base64Data, 'base64');
+
+      // Sauvegarder le chemin relatif pour JSON (accessible dans le navigateur)
+      savedImagePath = `selfies/${fileName}`;
+    }
+
     // Construire une entrée d’humeur
     const mood = {
       id: Date.now(),
@@ -91,7 +114,7 @@ async function addMood(req, res) {
       weather,
       textScore,
       scoreResult,
-      imageUrl: imageUrl || null,
+      imageUrl: savedImagePath || null,
       createdAt: new Date().toISOString()
     };
 
