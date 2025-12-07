@@ -1,0 +1,39 @@
+/* map.css - Styles de la carte */
+
+#map {
+  height: 500px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.map-container {
+  flex: 2;
+  height: 500px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Responsive map */
+@media (max-width: 800px) {
+  #map,
+  .map-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 600px) {
+  #map {
+    height: 300px;
+  }
+}
+
+/* Leaflet popup customization */
+.leaflet-popup-content {
+  margin: 8px;
+  line-height: 1.4;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+}

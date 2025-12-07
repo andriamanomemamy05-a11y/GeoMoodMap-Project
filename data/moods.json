@@ -90,5 +90,51 @@
     "scoreResult": 95,
     "imageUrl": null,
     "createdAt": "2025-12-03T12:01:31.712Z"
+  },
+  {
+    "id": 1765135752441,
+    "text": "Je suis heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Boileau, Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "bus_stop",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": 13.92,
+      "weather": "overcast clouds",
+      "humidity": 97,
+      "wind_speed": 9.26
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": null,
+    "createdAt": "2025-12-07T19:29:12.441Z"
+  },
+  {
+    "id": 1765137918401,
+    "text": "Test",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Boileau, Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "bus_stop",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": 13.24,
+      "weather": "overcast clouds",
+      "humidity": 98,
+      "wind_speed": 8.23
+    },
+    "textScore": 0,
+    "scoreResult": 95,
+    "imageUrl": null,
+    "createdAt": "2025-12-07T20:05:18.401Z"
   }
 ]

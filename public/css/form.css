@@ -1,0 +1,103 @@
+/* form.css - Styles du formulaire */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="url"],
+textarea {
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+}
+
+button {
+  padding: 0.7rem;
+  font-size: 1rem;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Autocomplete styles */
+.autocomplete-suggestions {
+  border: 1px solid #ccc;
+  background: white;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.autocomplete-suggestion {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.autocomplete-suggestion:hover {
+  background: #eee;
+}
+
+/* Camera/Selfie styles */
+#camera {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-width: 100%;
+}
+
+#canvas {
+  display: none;
+}
+
+#selfiePreview {
+  max-width: 100%;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+#selfiePreview:not([src]), 
+#selfiePreview[src=""] {
+  display: none;
+}
+
+/* Form layout */
+.form-map-container {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-top: 1rem;
+}
+
+.mood-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .form-map-container {
+    flex-direction: column;
+  }
+}
