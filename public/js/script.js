@@ -202,7 +202,7 @@ function showModal(mood) {
     <p><strong>Note :</strong> ${mood.rating}</p>
     <p><strong>Score :</strong> ${score}%</p>
     <p><strong>Adresse :</strong> ${mood.place?.name || mood.address || 'N/A'}</p>
-    <h6>Météo</h6>
+    <h6><strong>Météo :</strong></h6>
     ${weatherHTML}
     ${imgHTML}
   `;
