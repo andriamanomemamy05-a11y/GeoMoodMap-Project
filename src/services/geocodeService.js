@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const { ERROR_MESSAGES } = require('../config/constants');
+const { validateCoordinates } = require('../utils/coordinateValidator');
 
 const USE_MOCKS = process.env.USE_MOCKS === 'true';
 
@@ -12,9 +13,7 @@ const USER_AGENT = process.env.NOMINATIM_USER_AGENT || 'MoodApp/1.0 (andriamanom
  */
 async function reverseGeocode(lat, lon) {
     // Les coordonnées géographiques sont obligatoires
-    if (!isFinite(lat) || !isFinite(lon)) {
-        throw new Error(ERROR_MESSAGES.INVALID_COORDS);
-    }
+    validateCoordinates(lat, lon);
 
     // Si mock true, on utilise les données de test
     if (USE_MOCKS) {

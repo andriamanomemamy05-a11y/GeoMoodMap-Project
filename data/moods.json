@@ -251,5 +251,28 @@
     "scoreResult": 15,
     "imageUrl": "selfies/selfie_1765737735886.png",
     "createdAt": "2025-12-14T18:42:15.900Z"
+  },
+  {
+    "id": 1765738691209,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 46.4109416,
+    "lon": -74.8721639,
+    "place": {
+      "name": "233, Rue Boileau, Rivière-Rouge, Antoine-Labelle, Laurentides, Québec, J0T 2X0, Canada",
+      "type": "house",
+      "lat": 46.4109416,
+      "lon": -74.8721639
+    },
+    "weather": {
+      "temp": -12.65,
+      "weather": "scattered clouds",
+      "humidity": 79,
+      "wind_speed": 3.49
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": null,
+    "createdAt": "2025-12-14T18:58:11.209Z"
   }
 ]

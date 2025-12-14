@@ -1,6 +1,7 @@
 // Petit analyseur lexical : retourne un integer pouvant être négatif ou positif.
 
 const { TEXT_ANALYSIS } = require('../config/constants');
+const { clamp } = require('./mathHelpers');
 
 function analyzeText(text) {
   if (!text || typeof text !== 'string') return 0;
@@ -14,11 +15,7 @@ function analyzeText(text) {
   }
 
   // Limitez le score à une plage raisonnable pour éviter une influence excessive
-  if (score > TEXT_ANALYSIS.MAX_SCORE) score = TEXT_ANALYSIS.MAX_SCORE;
-  if (score < TEXT_ANALYSIS.MIN_SCORE) score = TEXT_ANALYSIS.MIN_SCORE;
-
-  // Retourner le score selon l'humeur dans le texte
-  return score;
+  return clamp(score, TEXT_ANALYSIS.MIN_SCORE, TEXT_ANALYSIS.MAX_SCORE);
 }
 
 module.exports = { analyzeText };

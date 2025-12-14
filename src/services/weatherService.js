@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const { ERROR_MESSAGES } = require('../config/constants');
+const { validateCoordinates } = require('../utils/coordinateValidator');
 
 const USE_MOCKS = process.env.USE_MOCKS === 'true';
 
@@ -14,9 +15,7 @@ const OPENWEATHER_KEY = process.env.OPENWEATHER_API_KEY || '';
 */
 async function getWeather(lat, lon) {
     // Les coordonnées sont obligatoires pour récupérer la météo
-    if (!isFinite(lat) || !isFinite(lon)) {
-        throw new Error(ERROR_MESSAGES.INVALID_COORDS);
-    }
+    validateCoordinates(lat, lon);
 
     // Si mock est true, on utilise les données de test simulées
     if (USE_MOCKS) {

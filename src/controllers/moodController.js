@@ -4,103 +4,146 @@ const jsonStore = require('../storage/jsonStore');
 const { computeScoreWithBreakdown } = require('../utils/moodScore');
 const { analyzeText } = require('../utils/textAnalyzer');
 const { saveBase64Image } = require('../utils/imageHandler');
+const { areCoordinatesUsable } = require('../utils/coordinateValidator');
 const { HTTP_STATUS, ERROR_MESSAGES } = require('../config/constants');
 
 /**
- * addMood
- * - Validation des données
- * - Récupération des coordonnées ou adresse
- * - Récupérer la météo selon les coords
- * - Calculer le mood score via utils/moodScore par rapport aux données
- * - Sauvegarder dans data/mood.json via storage/jsonStore
-*/
+ * Valide les données d'entrée du mood
+ */
+function validateMoodInput(text, rating) {
+  if (typeof text !== 'string' || text.trim() === '') {
+    return { valid: false, error: ERROR_MESSAGES.TEXT_REQUIRED };
+  }
+  if (rating === undefined || rating === null || isNaN(Number(rating))) {
+    return { valid: false, error: ERROR_MESSAGES.RATING_REQUIRED };
+  }
+  return { valid: true, numericRating: Number(rating) };
+}
+
+/**
+ * Valide qu'on a soit des coordonnées soit une adresse
+ */
+function validateLocationInput(lat, lon, address) {
+  const hasCoords = lat !== undefined && lon !== undefined && lat !== null && lon !== null;
+  const hasAddress = typeof address === 'string' && address.trim() !== '';
+
+  if (!hasCoords && !hasAddress) {
+    return { valid: false, error: ERROR_MESSAGES.COORDS_OR_ADDRESS_REQUIRED };
+  }
+
+  return { valid: true, hasCoords, hasAddress };
+}
+
+/**
+ * Récupère les coordonnées et le lieu via geocoding
+ */
+async function resolveLocation(lat, lon, address, hasCoords) {
+  let usedLat = hasCoords ? Number(lat) : null;
+  let usedLon = hasCoords ? Number(lon) : null;
+  let place = null;
+
+  if (hasCoords) {
+    try {
+      place = await geocodeService.reverseGeocode(usedLat, usedLon);
+    } catch (err) {
+      console.warn('reverseGeocode failed:', err.message || err);
+    }
+  } else {
+    try {
+      const geocodeResult = await geocodeService.forwardGeocode(address);
+      usedLat = geocodeResult.lat ? Number(geocodeResult.lat) : null;
+      usedLon = geocodeResult.lon ? Number(geocodeResult.lon) : null;
+      place = geocodeResult;
+    } catch (err) {
+      console.warn('forwardGeocode failed:', err.message || err);
+    }
+  }
+
+  return { lat: usedLat, lon: usedLon, place };
+}
+
+/**
+ * Récupère les données météo pour des coordonnées
+ */
+async function fetchWeatherData(lat, lon) {
+  if (!areCoordinatesUsable(lat, lon)) {
+    return null;
+  }
+
+  try {
+    const weatherData = await weatherService.getWeather(lat, lon);
+    return weatherData && weatherData.data ? weatherData.data : null;
+  } catch (err) {
+    console.warn('getWeather failed:', err.message || err);
+    return null;
+  }
+}
+
+/**
+ * Construit l'objet mood à partir des données collectées
+ */
+function buildMoodEntry(text, rating, location, weather, textScore, scoreResult, imagePath) {
+  return {
+    id: Date.now(),
+    text,
+    rating,
+    lat: location.lat,
+    lon: location.lon,
+    place: location.place,
+    weather,
+    textScore,
+    scoreResult,
+    imageUrl: imagePath || null,
+    createdAt: new Date().toISOString()
+  };
+}
+
+/**
+ * addMood - Controller principal pour ajouter un mood
+ */
 async function addMood(req, res) {
   try {
     const { text = '', rating, lat, lon, address, imageUrl } = req.body;
 
-    // Validation basique mais explicite
-    if (typeof text !== 'string' || text.trim() === '') {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: ERROR_MESSAGES.TEXT_REQUIRED });
-    }
-    if (rating === undefined || rating === null || isNaN(Number(rating))) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: ERROR_MESSAGES.RATING_REQUIRED });
+    // Validation des données
+    const inputValidation = validateMoodInput(text, rating);
+    if (!inputValidation.valid) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: inputValidation.error });
     }
 
-    // Normaliser le rating en nombre
-    let numericRating = Number(rating);
-
-    // S'assurer qu'on a des coordonnées ou une adresse
-    const hasCoords = lat !== undefined && lon !== undefined && lat !== null && lon !== null;
-    const hasAddress = typeof address === 'string' && address.trim() !== '';
-    if (!hasCoords && !hasAddress) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: ERROR_MESSAGES.COORDS_OR_ADDRESS_REQUIRED });
+    const locationValidation = validateLocationInput(lat, lon, address);
+    if (!locationValidation.valid) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: locationValidation.error });
     }
 
-    // Décortiquer et initialiser les coords, l'adresse
-    let usedLat = hasCoords ? Number(lat) : null;
-    let usedLon = hasCoords ? Number(lon) : null;
-    let place = null;
+    // Récupération des coordonnées et lieu
+    const location = await resolveLocation(lat, lon, address, locationValidation.hasCoords);
 
-    if (hasCoords) {
-      // Reverse geocode : pour récupérer l'adresse exacte depuis les coords
-      try {
-        place = await geocodeService.reverseGeocode(usedLat, usedLon);
-      } catch (err) {
-        console.warn('reverseGeocode failed:', err.message || err);
-      }
-    } else {
-      // Forward geocode : pour récupérer les coords depuis l'adresse
-      try {
-        const f = await geocodeService.forwardGeocode(address);
-        usedLat = f.lat ? Number(f.lat) : null;
-        usedLon = f.lon ? Number(f.lon) : null;
-        place = f;
-      } catch (err) {
-        console.warn('forwardGeocode failed:', err.message || err);
-      }
-    }
+    // Récupération météo
+    const weather = await fetchWeatherData(location.lat, location.lon);
 
-    // Obtenir la météo actuelle du jour (uniquement si les coordonnées sont présentes, ce qui est très utile)
-    let weather = null;
-    try {
-      if (usedLat !== null && usedLon !== null && !Number.isNaN(usedLat) && !Number.isNaN(usedLon)) {
-        const w = await weatherService.getWeather(usedLat, usedLon);
-        weather = w && w.data ? w.data : null;
-      }
-    } catch (err) {
-      console.warn('getWeather failed:', err.message || err);
-      weather = null;
-    }
-
-    // Analyser le texte par rapport au facteur de sentiment écrit
+    // Analyse de texte et calcul du score
     const textScore = analyzeText(text);
-
-    // Calcul du score d'humeur final avec ventilation
     const scoreResult = computeScoreWithBreakdown({
-      rating: numericRating,
+      rating: inputValidation.numericRating,
       textScore,
       weather
     });
 
-    // Sauvegarde du selfie via imageHandler
+    // Sauvegarde de l'image
     const savedImagePath = saveBase64Image(imageUrl);
 
-    // Construire une entrée d'humeur
-    const mood = {
-      id: Date.now(),
+    // Construction et sauvegarde du mood
+    const mood = buildMoodEntry(
       text,
-      rating: numericRating,
-      lat: usedLat,
-      lon: usedLon,
-      place,
+      inputValidation.numericRating,
+      location,
       weather,
       textScore,
       scoreResult,
-      imageUrl: savedImagePath || null,
-      createdAt: new Date().toISOString()
-    };
+      savedImagePath
+    );
 
-    // Récupérer les données et les envoyer dans jsonStore pour les sauvegarder
     jsonStore.save(mood);
 
     return res.status(HTTP_STATUS.CREATED).json(mood);
