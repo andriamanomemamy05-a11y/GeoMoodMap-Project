@@ -320,5 +320,51 @@
     "scoreResult": 100,
     "imageUrl": null,
     "createdAt": "2025-12-14T22:26:01.591Z"
+  },
+  {
+    "id": 1765751809821,
+    "text": "heureux",
+    "rating": 5,
+    "lat": 59.755292,
+    "lon": 8.980651,
+    "place": {
+      "name": "233, Venåsvegen, Bergsland, Gransherad, Notodden, Telemark, 3691, Norge",
+      "type": "house",
+      "lat": 59.755292,
+      "lon": 8.980651
+    },
+    "weather": {
+      "temp": 2.91,
+      "weather": "overcast clouds",
+      "humidity": 97,
+      "wind_speed": 2.04
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": null,
+    "createdAt": "2025-12-14T22:36:49.821Z"
+  },
+  {
+    "id": 1765751877724,
+    "text": "heureux",
+    "rating": 5,
+    "lat": 39.3260685,
+    "lon": -4.8379791,
+    "place": {
+      "name": "Umbría del Encinarejo, Helechosa de los Montes, Badajoz, Extremadura, España",
+      "type": "locality",
+      "lat": 39.3260685,
+      "lon": -4.8379791
+    },
+    "weather": {
+      "temp": 10.13,
+      "weather": "few clouds",
+      "humidity": 86,
+      "wind_speed": 2.66
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1765751877715.png",
+    "createdAt": "2025-12-14T22:37:57.724Z"
   }
 ]

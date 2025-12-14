@@ -153,7 +153,7 @@ function getMoods(req, res) {
     res.status(HTTP_STATUS.OK).json(moods);
   } catch (err) {
     console.error('getMoods error:', err && (err.stack || err));
-    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: err.message || 'Internal Server Error' });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: err.message || ERROR_MESSAGES.INTERNAL_SERVER_ERROR });
   }
 }
 
