@@ -1,4 +1,6 @@
 const fetch = require('node-fetch');
+const { ERROR_MESSAGES } = require('../config/constants');
+
 const USE_MOCKS = process.env.USE_MOCKS === 'true';
 
 // User-Agent obligatoire pour Nominatim
@@ -9,9 +11,9 @@ const USER_AGENT = process.env.NOMINATIM_USER_AGENT || 'MoodApp/1.0 (andriamanom
  * Utilise Nominatim (OpenStreetMap) pour récupérer le lieu réel.
  */
 async function reverseGeocode(lat, lon) {
-    // Les coordonnées géographiquessont obligatoires
+    // Les coordonnées géographiques sont obligatoires
     if (!isFinite(lat) || !isFinite(lon)) {
-        throw new Error('Invalid coordinates for reverseGeocode');
+        throw new Error(ERROR_MESSAGES.INVALID_COORDS);
     }
 
     // Si mock true, on utilise les données de test
@@ -19,7 +21,7 @@ async function reverseGeocode(lat, lon) {
         return { display_name: 'Mock Place', type: 'park', lat, lon, name: 'Mock Place' };
     }
 
-    // Appel de Nominatim pour récupérer le lieu exacte venant des données géographiques réçues
+    // Appel de Nominatim pour récupérer le lieu exact venant des données géographiques reçues
     const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`;
     const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
     if (!res.ok) throw new Error(`Nominatim reverse error: ${res.status}`);
@@ -41,14 +43,16 @@ async function reverseGeocode(lat, lon) {
  */
 async function forwardGeocode(address) {
     // L'adresse est obligatoire
-    if (!address || typeof address !== 'string') throw new Error('address must be a non-empty string');
-    
+    if (!address || typeof address !== 'string') {
+        throw new Error(ERROR_MESSAGES.ADDRESS_INVALID);
+    }
+
     // Si mock est true, on utilise les données de test
     if (USE_MOCKS) {
         return { name: address, type: 'mock', lat: 48.8566, lon: 2.3522 };
     }
 
-    // Appel de Nominatim avec l'adresse réçue pour récupérer les lat et lon exacte de l'adresse
+    // Appel de Nominatim avec l'adresse reçue pour récupérer les lat et lon exacts de l'adresse
     const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&q=${encodeURIComponent(address)}&limit=1`;
     const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
     if (!res.ok) throw new Error(`Nominatim forward error: ${res.status}`);

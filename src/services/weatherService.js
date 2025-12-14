@@ -1,4 +1,6 @@
 const fetch = require('node-fetch');
+const { ERROR_MESSAGES } = require('../config/constants');
+
 const USE_MOCKS = process.env.USE_MOCKS === 'true';
 
 // On récupère la clé API depuis .env
@@ -12,7 +14,9 @@ const OPENWEATHER_KEY = process.env.OPENWEATHER_API_KEY || '';
 */
 async function getWeather(lat, lon) {
     // Les coordonnées sont obligatoires pour récupérer la météo
-    if (!isFinite(lat) || !isFinite(lon)) throw new Error('Invalid coordinates for getWeather');
+    if (!isFinite(lat) || !isFinite(lon)) {
+        throw new Error(ERROR_MESSAGES.INVALID_COORDS);
+    }
 
     // Si mock est true, on utilise les données de test simulées
     if (USE_MOCKS) {
@@ -22,12 +26,12 @@ async function getWeather(lat, lon) {
         };
     }
 
-    // Checkez si l'api de openweathermap est récupéré
+    // Vérifier si l'API d'OpenWeatherMap est configurée
     if (!OPENWEATHER_KEY) {
-        throw new Error('OPENWEATHER_API_KEY not set');
+        throw new Error(ERROR_MESSAGES.OPENWEATHER_KEY_MISSING);
     }
 
-    // Appel de l'api en ligne : openweathermap avec les données géographiques réçues
+    // Appel de l'API en ligne : OpenWeatherMap avec les données géographiques reçues
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${OPENWEATHER_KEY}`;
     const res = await fetch(url);
     if (!res.ok) {

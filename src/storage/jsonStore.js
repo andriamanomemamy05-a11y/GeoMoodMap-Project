@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { ERROR_MESSAGES } = require('../config/constants');
 
 // Chemin vers le fichier JSON qui stocke les moods
 const FILE = path.join(process.cwd(), 'data', 'moods.json');
@@ -16,7 +17,7 @@ function ensure() {
 
 /**
  * Lit et parse le fichier JSON
- * Retourne toujous un tableau
+ * Retourne toujours un tableau
 */
 function loadAll() {
   // Assure l'existence du fichier
@@ -49,7 +50,7 @@ function loadAll() {
   * Sauvegarde une entrée dans le fichier JSON.
 */
 function save(entry) {
-  if (!entry) throw new Error('entry is required');
+  if (!entry) throw new Error(ERROR_MESSAGES.ENTRY_REQUIRED);
 
   // Charge toutes les entrées existantes depuis le fichier
   const arr = loadAll();

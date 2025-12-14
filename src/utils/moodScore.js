@@ -1,5 +1,6 @@
 // Ce fichier sert à faire le calcul SIMPLE et LOGIQUE du MoodScore.
 
+const { MOOD_SCORE } = require('../config/constants');
 
 /**
  * Calcul SIMPLE et LOGIQUE du MoodScore.
@@ -13,21 +14,21 @@ function computeScoreWithBreakdown({ rating, textScore, weather }) {
     // -----------------------------
     // rating est sur 1..5, on le transforme en pourcentage simple.
     // 1 → 20, 2 → 40, ..., 5 → 100
-    let ratingScore = rating * 20;
+    let ratingScore = rating * MOOD_SCORE.RATING_MULTIPLIER;
 
     // -----------------------------
     // 2. TextScore (-30 → +30)
     // -----------------------------
-    // textScore vient de moodAnalyzer : 
+    // textScore vient de moodAnalyzer :
     // positif = +1, négatif = -1, etc.
     // On transforme ça en points lisibles :
     // +1 → +10, +2 → +20, +3 → +30
     // -1 → -10, -2 → -20, -3 → -30
-    let textPoints = textScore * 10;
+    let textPoints = textScore * MOOD_SCORE.TEXT_POINT_MULTIPLIER;
 
     // On limite pour éviter les abus :
-    if (textPoints > 30) textPoints = 30;
-    if (textPoints < -30) textPoints = -30;
+    if (textPoints > MOOD_SCORE.MAX_TEXT_POINTS) textPoints = MOOD_SCORE.MAX_TEXT_POINTS;
+    if (textPoints < MOOD_SCORE.MIN_TEXT_POINTS) textPoints = MOOD_SCORE.MIN_TEXT_POINTS;
 
     // -----------------------------
     // 3. WeatherScore (-15 → +15)
@@ -38,24 +39,24 @@ function computeScoreWithBreakdown({ rating, textScore, weather }) {
         const w = (weather.weather || "").toLowerCase();
         const temp = weather.temp;
 
-        // Météo simple (à ajouter au fure et à mésure)
+        // Météo simple (à ajouter au fur et à mesure)
         if (w.includes("rain") || w.includes("pluie")) {
-            weatherPoints -= 10;
+            weatherPoints += MOOD_SCORE.RAIN_PENALTY;
         }
         if (w.includes("snow") || w.includes("neige")) {
-            weatherPoints -= 8;
+            weatherPoints += MOOD_SCORE.SNOW_PENALTY;
         }
         if (w.includes("cloud") || w.includes("nuage")) {
-            weatherPoints -= 5;
+            weatherPoints += MOOD_SCORE.CLOUD_PENALTY;
         }
         if (w.includes("clear") || w.includes("sun") || w.includes("soleil")) {
-            weatherPoints += 10;
+            weatherPoints += MOOD_SCORE.CLEAR_BONUS;
         }
 
         // Température simple
         if (typeof temp === "number") {
-            if (temp > 28) weatherPoints += 5; // chaud agréable
-            if (temp < 5) weatherPoints -= 5;  // froid pénible
+            if (temp > MOOD_SCORE.HOT_TEMP_THRESHOLD) weatherPoints += MOOD_SCORE.HOT_TEMP_BONUS; // chaud agréable
+            if (temp < MOOD_SCORE.COLD_TEMP_THRESHOLD) weatherPoints += MOOD_SCORE.COLD_TEMP_PENALTY;  // froid pénible
         }
     }
 
@@ -65,10 +66,10 @@ function computeScoreWithBreakdown({ rating, textScore, weather }) {
     let final = ratingScore + textPoints + weatherPoints;
 
     // Clamp 0 → 100 pour rester cohérent
-    if (final > 100) final = 100;
-    if (final < 0) final = 0;
+    if (final > MOOD_SCORE.MAX_SCORE) final = MOOD_SCORE.MAX_SCORE;
+    if (final < MOOD_SCORE.MIN_SCORE) final = MOOD_SCORE.MIN_SCORE;
 
-    // On retourne un entier pour le score finale
+    // On retourne un entier pour le score final
     return Math.round(final);
 }
 

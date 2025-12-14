@@ -3,14 +3,14 @@ const weatherService = require('../services/weatherService');
 const jsonStore = require('../storage/jsonStore');
 const { computeScoreWithBreakdown } = require('../utils/moodScore');
 const { analyzeText } = require('../utils/textAnalyzer');
-const fs = require('fs');
-const path = require('path');
+const { saveBase64Image } = require('../utils/imageHandler');
+const { HTTP_STATUS, ERROR_MESSAGES } = require('../config/constants');
 
 /**
  * addMood
- * - Validatation des données
- * - R2cupération des coordinations ou adresse
- * - Récupérer la météo selon les coord 
+ * - Validation des données
+ * - Récupération des coordonnées ou adresse
+ * - Récupérer la météo selon les coords
  * - Calculer le mood score via utils/moodScore par rapport aux données
  * - Sauvegarder dans data/mood.json via storage/jsonStore
 */
@@ -20,10 +20,10 @@ async function addMood(req, res) {
 
     // Validation basique mais explicite
     if (typeof text !== 'string' || text.trim() === '') {
-      return res.status(400).json({ error: 'text is required and must be a non-empty string' });
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: ERROR_MESSAGES.TEXT_REQUIRED });
     }
     if (rating === undefined || rating === null || isNaN(Number(rating))) {
-      return res.status(400).json({ error: 'rating is required and must be a number (1-5 recommended)' });
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: ERROR_MESSAGES.RATING_REQUIRED });
     }
 
     // Normaliser le rating en nombre
@@ -33,7 +33,7 @@ async function addMood(req, res) {
     const hasCoords = lat !== undefined && lon !== undefined && lat !== null && lon !== null;
     const hasAddress = typeof address === 'string' && address.trim() !== '';
     if (!hasCoords && !hasAddress) {
-      return res.status(400).json({ error: 'Provide either lat+lon or address' });
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: ERROR_MESSAGES.COORDS_OR_ADDRESS_REQUIRED });
     }
 
     // Décortiquer et initialiser les coords, l'adresse
@@ -49,7 +49,7 @@ async function addMood(req, res) {
         console.warn('reverseGeocode failed:', err.message || err);
       }
     } else {
-      // Forward geocode : pour récupérer les coords depuis l'adrese
+      // Forward geocode : pour récupérer les coords depuis l'adresse
       try {
         const f = await geocodeService.forwardGeocode(address);
         usedLat = f.lat ? Number(f.lat) : null;
@@ -60,7 +60,7 @@ async function addMood(req, res) {
       }
     }
 
-    // Obtenir la météo actuel du jour (uniquement si les coordonnées sont présentes ceux qui sont très utiles)
+    // Obtenir la météo actuelle du jour (uniquement si les coordonnées sont présentes, ce qui est très utile)
     let weather = null;
     try {
       if (usedLat !== null && usedLon !== null && !Number.isNaN(usedLat) && !Number.isNaN(usedLon)) {
@@ -72,7 +72,7 @@ async function addMood(req, res) {
       weather = null;
     }
 
-    // Analyser le text par rapport ç la facteur de sentiment écrit
+    // Analyser le texte par rapport au facteur de sentiment écrit
     const textScore = analyzeText(text);
 
     // Calcul du score d'humeur final avec ventilation
@@ -82,28 +82,10 @@ async function addMood(req, res) {
       weather
     });
 
-    // --- Sauvegarde du selfie : image en base64 ---
-    let savedImagePath = null;
-    if (imageUrl && imageUrl.startsWith('data:image')) {
-      // Dossier public/selfies pour que le navigateur y accède
-      const publicSelfiesDir = path.join(process.cwd(), 'public', 'selfies');
+    // Sauvegarde du selfie via imageHandler
+    const savedImagePath = saveBase64Image(imageUrl);
 
-      // Crée le dossier si nécessaire
-      if (!fs.existsSync(publicSelfiesDir)) fs.mkdirSync(publicSelfiesDir, { recursive: true });
-
-      // Extraire les données base64
-      const base64Data = imageUrl.replace(/^data:image\/png;base64,/, '');
-      const fileName = `selfie_${Date.now()}.png`;
-      const filePath = path.join(publicSelfiesDir, fileName);
-
-      // Écrire le fichier
-      fs.writeFileSync(filePath, base64Data, 'base64');
-
-      // Sauvegarder le chemin relatif pour JSON (accessible dans le navigateur)
-      savedImagePath = `selfies/${fileName}`;
-    }
-
-    // Construire une entrée d’humeur
+    // Construire une entrée d'humeur
     const mood = {
       id: Date.now(),
       text,
@@ -118,13 +100,13 @@ async function addMood(req, res) {
       createdAt: new Date().toISOString()
     };
 
-    // Récupérer les données et l'envoeyr das jsonStore pour le sauvegarder
+    // Récupérer les données et les envoyer dans jsonStore pour les sauvegarder
     jsonStore.save(mood);
 
-    return res.status(201).json(mood);
+    return res.status(HTTP_STATUS.CREATED).json(mood);
   } catch (err) {
     console.error('addMood error:', err && (err.stack || err));
-    return res.status(500).json({ error: err.message || 'Internal Server Error' });
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: err.message || 'Internal Server Error' });
   }
 }
 
@@ -134,10 +116,10 @@ async function addMood(req, res) {
 function getMoods(req, res) {
   try {
     const moods = jsonStore.loadAll();
-    res.json(moods);
+    res.status(HTTP_STATUS.OK).json(moods);
   } catch (err) {
     console.error('getMoods error:', err && (err.stack || err));
-    res.status(500).json({ error: err.message || 'Internal Server Error' });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: err.message || 'Internal Server Error' });
   }
 }
 

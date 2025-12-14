@@ -228,5 +228,28 @@
     "scoreResult": 100,
     "imageUrl": "selfies/selfie_1765735084379.png",
     "createdAt": "2025-12-14T17:58:04.394Z"
+  },
+  {
+    "id": 1765737735900,
+    "text": "Je suis énervé",
+    "rating": 1,
+    "lat": 40.7127281,
+    "lon": -74.0060152,
+    "place": {
+      "name": "New York City Hall, 260, Broadway, Tribeca, Lower Manhattan, Manhattan, New York County, City of New York, New York, 10000, United States",
+      "type": "townhall",
+      "lat": 40.7127281,
+      "lon": -74.0060152
+    },
+    "weather": {
+      "temp": -2.35,
+      "weather": "haze",
+      "humidity": 74,
+      "wind_speed": 6.69
+    },
+    "textScore": 0,
+    "scoreResult": 15,
+    "imageUrl": "selfies/selfie_1765737735886.png",
+    "createdAt": "2025-12-14T18:42:15.900Z"
   }
 ]
