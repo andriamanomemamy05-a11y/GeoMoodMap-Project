@@ -274,5 +274,28 @@
     "scoreResult": 100,
     "imageUrl": null,
     "createdAt": "2025-12-14T18:58:11.209Z"
+  },
+  {
+    "id": 1765750312463,
+    "text": "heureux",
+    "rating": 5,
+    "lat": 14.6113732,
+    "lon": -60.9620777,
+    "place": {
+      "name": "Chemin Bellonie, Le Lamentin, Fort-de-France, Martinique, 97232, France",
+      "type": "tertiary",
+      "lat": 14.6113732,
+      "lon": -60.9620777
+    },
+    "weather": {
+      "temp": 26.5,
+      "weather": "broken clouds",
+      "humidity": 74,
+      "wind_speed": 5.14
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1765750312457.png",
+    "createdAt": "2025-12-14T22:11:52.463Z"
   }
 ]

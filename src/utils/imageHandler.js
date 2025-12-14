@@ -20,28 +20,33 @@ function saveBase64Image(imageUrl) {
     return null;
   }
 
-  // Dossier public/selfies pour que le navigateur y accède
-  const publicSelfiesDir = path.join(
-    process.cwd(),
-    IMAGE_CONFIG.PUBLIC_DIR,
-    IMAGE_CONFIG.SELFIES_SUBDIR
-  );
+  try {
+    // Dossier public/selfies pour que le navigateur y accède
+    const publicSelfiesDir = path.join(
+      process.cwd(),
+      IMAGE_CONFIG.PUBLIC_DIR,
+      IMAGE_CONFIG.SELFIES_SUBDIR
+    );
 
-  // Crée le dossier si nécessaire
-  if (!fs.existsSync(publicSelfiesDir)) {
-    fs.mkdirSync(publicSelfiesDir, { recursive: true });
+    // Crée le dossier si nécessaire
+    if (!fs.existsSync(publicSelfiesDir)) {
+      fs.mkdirSync(publicSelfiesDir, { recursive: true });
+    }
+
+    // Extraire les données base64
+    const base64Data = imageUrl.replace(IMAGE_CONFIG.BASE64_PREFIX, '');
+    const fileName = `${IMAGE_CONFIG.FILENAME_PREFIX}${Date.now()}.${IMAGE_CONFIG.OUTPUT_FORMAT}`;
+    const filePath = path.join(publicSelfiesDir, fileName);
+
+    // Écrire le fichier
+    fs.writeFileSync(filePath, base64Data, 'base64');
+
+    // Retourner le chemin relatif pour JSON (accessible dans le navigateur)
+    return `${IMAGE_CONFIG.SELFIES_SUBDIR}/${fileName}`;
+  } catch (err) {
+    console.error('Error saving image:', err);
+    return null;
   }
-
-  // Extraire les données base64
-  const base64Data = imageUrl.replace(IMAGE_CONFIG.BASE64_PREFIX, '');
-  const fileName = `${IMAGE_CONFIG.FILENAME_PREFIX}${Date.now()}.${IMAGE_CONFIG.OUTPUT_FORMAT}`;
-  const filePath = path.join(publicSelfiesDir, fileName);
-
-  // Écrire le fichier
-  fs.writeFileSync(filePath, base64Data, 'base64');
-
-  // Retourner le chemin relatif pour JSON (accessible dans le navigateur)
-  return `${IMAGE_CONFIG.SELFIES_SUBDIR}/${fileName}`;
 }
 
 module.exports = { saveBase64Image };
