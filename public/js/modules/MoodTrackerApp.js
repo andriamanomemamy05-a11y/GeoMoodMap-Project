@@ -10,6 +10,7 @@ import { CameraManager } from './CameraManager.js';
 import { AutocompleteManager } from './AutocompleteManager.js';
 import { ModalManager } from './ModalManager.js';
 import { FormManager } from './FormManager.js';
+import { MAP_CONFIG, GEOLOCATION_CONFIG, ERROR_MESSAGES } from './constants.js';
 
 export class MoodTrackerApp {
   constructor() {
@@ -24,19 +25,20 @@ export class MoodTrackerApp {
     try {
       console.log("Initialisation de MoodTracker...");
 
-      this.mapManager = new MapManager("map", 48.8566, 2.3522);
+      this.mapManager = new MapManager("map", MAP_CONFIG.PARIS_LAT, MAP_CONFIG.PARIS_LON);
       console.log("✓ Carte initialisée");
+
+      this.modalManager = new ModalManager("feedbackModal", "modalBody");
+      console.log("✓ Modal initialisé");
 
       this.cameraManager = new CameraManager(
         "camera",
         "canvas",
         "selfiePreview",
-        "snap"
+        "snap",
+        this.modalManager
       );
       console.log("✓ Caméra initialisée");
-
-      this.modalManager = new ModalManager("feedbackModal", "modalBody");
-      console.log("✓ Modal initialisé");
 
       this.autocompleteManager = new AutocompleteManager(
         "address",
@@ -58,7 +60,11 @@ export class MoodTrackerApp {
       this.tryGeolocation();
     } catch (error) {
       console.error("Erreur lors de l'initialisation:", error);
-      alert("Une erreur est survenue lors du chargement de l'application.");
+      if (this.modalManager) {
+        this.modalManager.showError(ERROR_MESSAGES.APP_LOAD_ERROR);
+      } else {
+        alert(ERROR_MESSAGES.APP_LOAD_ERROR);
+      }
     }
   }
 
@@ -67,16 +73,16 @@ export class MoodTrackerApp {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          this.mapManager.setLocation(latitude, longitude, 13);
+          this.mapManager.setLocation(latitude, longitude, MAP_CONFIG.DEFAULT_ZOOM);
           console.log("✓ Géolocalisation réussie:", latitude, longitude);
         },
         (error) => {
           console.warn("Géolocalisation refusée ou impossible:", error.message);
         },
         {
-          enableHighAccuracy: false,
-          timeout: 5000,
-          maximumAge: 0,
+          enableHighAccuracy: GEOLOCATION_CONFIG.ENABLE_HIGH_ACCURACY,
+          timeout: GEOLOCATION_CONFIG.TIMEOUT,
+          maximumAge: GEOLOCATION_CONFIG.MAXIMUM_AGE,
         }
       );
     }

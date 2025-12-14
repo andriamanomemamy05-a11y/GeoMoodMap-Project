@@ -182,5 +182,51 @@
     "scoreResult": 97,
     "imageUrl": "selfies/selfie_1765646203375.png",
     "createdAt": "2025-12-13T17:16:43.393Z"
+  },
+  {
+    "id": 1765654251739,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 46.4109416,
+    "lon": -74.8721639,
+    "place": {
+      "name": "233, Rue Boileau, Rivière-Rouge, Antoine-Labelle, Laurentides, Québec, J0T 2X0, Canada",
+      "type": "house",
+      "lat": 46.4109416,
+      "lon": -74.8721639
+    },
+    "weather": {
+      "temp": -4.32,
+      "weather": "light snow",
+      "humidity": 93,
+      "wind_speed": 3.49
+    },
+    "textScore": 1,
+    "scoreResult": 97,
+    "imageUrl": null,
+    "createdAt": "2025-12-13T19:30:51.739Z"
+  },
+  {
+    "id": 1765735084394,
+    "text": "Je suis content",
+    "rating": 5,
+    "lat": 43.3097112,
+    "lon": 5.3713173,
+    "place": {
+      "name": "57, Rue Peyssonnel, La Villette, Marseille 3e Arrondissement, Marseille, Bouches-du-Rhône, Provence-Alpes-Côte d'Azur, France métropolitaine, 13003, France",
+      "type": "house",
+      "lat": 43.3097112,
+      "lon": 5.3713173
+    },
+    "weather": {
+      "temp": 10.25,
+      "weather": "clear sky",
+      "humidity": 85,
+      "wind_speed": 1.54
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1765735084379.png",
+    "createdAt": "2025-12-14T17:58:04.394Z"
   }
 ]

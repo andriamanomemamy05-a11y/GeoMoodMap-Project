@@ -5,9 +5,11 @@
  * - Gestion du marqueur
  * - Mise à jour de la position
  */
+import { MAP_CONFIG } from './constants.js';
+
 export class MapManager {
-  constructor(mapElementId, initialLat = 48.8566, initialLon = 2.3522) {
-    this.map = L.map(mapElementId).setView([initialLat, initialLon], 13);
+  constructor(mapElementId, initialLat = MAP_CONFIG.PARIS_LAT, initialLon = MAP_CONFIG.PARIS_LON) {
+    this.map = L.map(mapElementId).setView([initialLat, initialLon], MAP_CONFIG.DEFAULT_ZOOM);
     this.marker = null;
     this.lat = initialLat;
     this.lon = initialLon;
@@ -18,9 +20,9 @@ export class MapManager {
   }
 
   initMap() {
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "© OpenStreetMap contributors",
-      maxZoom: 19,
+    L.tileLayer(MAP_CONFIG.TILE_URL, {
+      attribution: MAP_CONFIG.ATTRIBUTION,
+      maxZoom: MAP_CONFIG.MAX_ZOOM,
     }).addTo(this.map);
   }
 
@@ -46,7 +48,7 @@ export class MapManager {
     this.marker.setLatLng(latlng);
   }
 
-  setLocation(lat, lon, zoom = 13) {
+  setLocation(lat, lon, zoom = MAP_CONFIG.DEFAULT_ZOOM) {
     this.lat = lat;
     this.lon = lon;
     this.marker.setLatLng([lat, lon]);

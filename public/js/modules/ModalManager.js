@@ -5,6 +5,8 @@
  * - Génération du contenu HTML
  * - Gestion des erreurs
  */
+import { MODAL_CONFIG, SCORE_THRESHOLDS, SCORE_BADGE_COLORS } from './constants.js';
+
 export class ModalManager {
   constructor(modalElementId, modalBodyId) {
     this.modalElement = document.getElementById(modalElementId);
@@ -59,14 +61,25 @@ export class ModalManager {
       return "";
     }
 
+    // Validation de sécurité : vérifier que l'URL est sûre
+    if (!this.isValidImageUrl(imageUrl)) {
+      console.warn('URL d\'image potentiellement dangereuse détectée');
+      return "";
+    }
+
     const cleanUrl = imageUrl.replace(/\\/g, "/");
 
     return `
       <div class="mt-3">
         <h6>Selfie</h6>
-        <img src="${cleanUrl}" class="img-fluid rounded" alt="Selfie" style="max-height: 300px;">
+        <img src="${cleanUrl}" class="img-fluid rounded" alt="Selfie" style="max-height: ${MODAL_CONFIG.MAX_IMAGE_HEIGHT}px;">
       </div>
     `;
+  }
+
+  isValidImageUrl(url) {
+    // Accepte uniquement les data URLs et les chemins relatifs vers selfies/
+    return url.startsWith('data:image/') || url.startsWith('selfies/');
   }
 
   generatePlaceHTML(mood) {
@@ -84,13 +97,13 @@ export class ModalManager {
   }
 
   getScoreBadgeColor(score) {
-    if (score === "N/A") return "secondary";
+    if (score === "N/A") return SCORE_BADGE_COLORS.UNKNOWN;
 
     const numericScore = parseFloat(score);
-    if (numericScore >= 80) return "success";
-    if (numericScore >= 60) return "info";
-    if (numericScore >= 40) return "warning";
-    return "danger";
+    if (numericScore >= SCORE_THRESHOLDS.EXCELLENT) return SCORE_BADGE_COLORS.EXCELLENT;
+    if (numericScore >= SCORE_THRESHOLDS.GOOD) return SCORE_BADGE_COLORS.GOOD;
+    if (numericScore >= SCORE_THRESHOLDS.AVERAGE) return SCORE_BADGE_COLORS.AVERAGE;
+    return SCORE_BADGE_COLORS.POOR;
   }
 
   escapeHtml(text) {

@@ -5,13 +5,15 @@
  * - Affichage des suggestions
  * - Debouncing des requêtes
  */
+import { AUTOCOMPLETE_CONFIG, API_ENDPOINTS, MAP_CONFIG, ERROR_MESSAGES } from './constants.js';
+
 export class AutocompleteManager {
   constructor(inputElementId, suggestionsElementId, mapManager) {
     this.input = document.getElementById(inputElementId);
     this.suggestionsContainer = document.getElementById(suggestionsElementId);
     this.mapManager = mapManager;
     this.timeout = null;
-    this.debounceDelay = 300;
+    this.debounceDelay = AUTOCOMPLETE_CONFIG.DEBOUNCE_DELAY;
 
     this.init();
   }
@@ -55,11 +57,11 @@ export class AutocompleteManager {
   async searchAddress(query) {
     try {
       const response = await fetch(
-        `/api/search?q=${encodeURIComponent(query)}`
+        `${API_ENDPOINTS.SEARCH}?q=${encodeURIComponent(query)}`
       );
 
       if (!response.ok) {
-        throw new Error("Erreur lors de la recherche d'adresse");
+        throw new Error(ERROR_MESSAGES.GEOCODE_ERROR);
       }
 
       const data = await response.json();
@@ -104,7 +106,7 @@ export class AutocompleteManager {
       this.mapManager.setLocation(
         parseFloat(item.lat),
         parseFloat(item.lon),
-        15
+        MAP_CONFIG.DETAILED_ZOOM
       );
     }
 

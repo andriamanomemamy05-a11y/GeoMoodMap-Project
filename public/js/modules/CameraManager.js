@@ -5,12 +5,15 @@
  * - Capture de photo
  * - Gestion des erreurs caméra
  */
+import { CAMERA_CONFIG, ERROR_MESSAGES } from './constants.js';
+
 export class CameraManager {
-  constructor(videoElementId, canvasElementId, previewElementId, snapButtonId) {
+  constructor(videoElementId, canvasElementId, previewElementId, snapButtonId, modalManager = null) {
     this.video = document.getElementById(videoElementId);
     this.canvas = document.getElementById(canvasElementId);
     this.preview = document.getElementById(previewElementId);
     this.snapButton = document.getElementById(snapButtonId);
+    this.modalManager = modalManager;
     this.stream = null;
 
     this.init();
@@ -25,9 +28,9 @@ export class CameraManager {
     try {
       this.stream = await navigator.mediaDevices.getUserMedia({
         video: {
-          facingMode: "user",
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
+          facingMode: CAMERA_CONFIG.FACING_MODE,
+          width: { ideal: CAMERA_CONFIG.IDEAL_WIDTH },
+          height: { ideal: CAMERA_CONFIG.IDEAL_HEIGHT },
         },
       });
       this.video.srcObject = this.stream;
@@ -46,7 +49,7 @@ export class CameraManager {
 
   capturePhoto() {
     if (!this.video.srcObject) {
-      alert("La caméra n'est pas disponible");
+      this.showError(ERROR_MESSAGES.CAMERA_UNAVAILABLE);
       return;
     }
 
@@ -56,7 +59,7 @@ export class CameraManager {
     const ctx = this.canvas.getContext("2d");
     ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
 
-    const imageData = this.canvas.toDataURL("image/png");
+    const imageData = this.canvas.toDataURL(CAMERA_CONFIG.IMAGE_FORMAT);
     this.preview.src = imageData;
     this.preview.style.display = "block";
 
@@ -76,16 +79,24 @@ export class CameraManager {
     let errorMessage = "Impossible d'accéder à la caméra. ";
 
     if (error.name === "NotAllowedError") {
-      errorMessage += "Veuillez autoriser l'accès à la caméra.";
+      errorMessage += ERROR_MESSAGES.CAMERA_PERMISSION_DENIED;
     } else if (error.name === "NotFoundError") {
-      errorMessage += "Aucune caméra détectée.";
+      errorMessage += ERROR_MESSAGES.CAMERA_NOT_FOUND;
     } else if (error.name === "NotReadableError") {
-      errorMessage += "La caméra est déjà utilisée par une autre application.";
+      errorMessage += ERROR_MESSAGES.CAMERA_IN_USE;
     } else {
       errorMessage += error.message;
     }
 
-    alert(errorMessage);
+    this.showError(errorMessage);
     this.snapButton.disabled = true;
+  }
+
+  showError(message) {
+    if (this.modalManager) {
+      this.modalManager.showError(message);
+    } else {
+      alert(message);
+    }
   }
 }

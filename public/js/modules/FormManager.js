@@ -6,12 +6,20 @@
  * - Soumission à l'API
  * - Réinitialisation du formulaire
  */
+import { ERROR_MESSAGES, VALIDATION, API_ENDPOINTS } from './constants.js';
+
 export class FormManager {
   constructor(formElementId, mapManager, cameraManager, modalManager) {
     this.form = document.getElementById(formElementId);
     this.mapManager = mapManager;
     this.cameraManager = cameraManager;
     this.modalManager = modalManager;
+
+    // Réduire le couplage DOM : stocker les références aux éléments
+    this.textInput = this.form.querySelector('#text');
+    this.ratingInput = this.form.querySelector('#rating');
+    this.addressInput = this.form.querySelector('#address');
+    this.submitButton = this.form.querySelector('button[type="submit"]');
 
     this.init();
   }
@@ -33,9 +41,8 @@ export class FormManager {
       return;
     }
 
-    const submitButton = this.form.querySelector('button[type="submit"]');
-    submitButton.disabled = true;
-    submitButton.textContent = "Enregistrement...";
+    this.submitButton.disabled = true;
+    this.submitButton.textContent = "Enregistrement...";
 
     try {
       const moodData = this.collectFormData();
@@ -45,25 +52,25 @@ export class FormManager {
     } catch (error) {
       console.error("Erreur lors de l'enregistrement:", error);
       this.modalManager.showError(
-        error.message || "Une erreur est survenue lors de l'enregistrement."
+        error.message || ERROR_MESSAGES.SUBMISSION_ERROR
       );
     } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = "Enregistrer l'humeur";
+      this.submitButton.disabled = false;
+      this.submitButton.textContent = "Enregistrer l'humeur";
     }
   }
 
   validateForm() {
-    const text = document.getElementById("text").value.trim();
-    const rating = document.getElementById("rating").value;
+    const text = this.textInput.value.trim();
+    const rating = this.ratingInput.value;
 
     if (!text) {
-      alert("Veuillez décrire votre humeur");
+      this.modalManager.showError(ERROR_MESSAGES.MOOD_TEXT_REQUIRED);
       return false;
     }
 
-    if (!rating || rating < 1 || rating > 5) {
-      alert("Veuillez saisir une note entre 1 et 5");
+    if (!rating || rating < VALIDATION.MIN_RATING || rating > VALIDATION.MAX_RATING) {
+      this.modalManager.showError(ERROR_MESSAGES.RATING_REQUIRED);
       return false;
     }
 
@@ -74,9 +81,9 @@ export class FormManager {
     const coordinates = this.mapManager.getCoordinates();
 
     return {
-      text: document.getElementById("text").value.trim(),
-      rating: Number(document.getElementById("rating").value),
-      address: document.getElementById("address").value.trim(),
+      text: this.textInput.value.trim(),
+      rating: Number(this.ratingInput.value),
+      address: this.addressInput.value.trim(),
       lat: coordinates.lat,
       lon: coordinates.lon,
       imageUrl: this.cameraManager.getImageData(),
@@ -84,7 +91,7 @@ export class FormManager {
   }
 
   async submitMoodData(data) {
-    const response = await fetch("/api/moods", {
+    const response = await fetch(API_ENDPOINTS.MOODS, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -95,7 +102,7 @@ export class FormManager {
     if (!response.ok) {
       const error = await response
         .json()
-        .catch(() => ({ message: "Erreur serveur" }));
+        .catch(() => ({ message: ERROR_MESSAGES.SUBMISSION_ERROR }));
       throw new Error(error.message || `Erreur HTTP ${response.status}`);
     }
 
