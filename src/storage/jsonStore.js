@@ -7,11 +7,18 @@ const { ERROR_MESSAGES } = require('../config/constants');
 // Chemin vers le fichier JSON qui stocke les moods
 const FILE = path.join(process.cwd(), 'data', 'moods.json');
 
+/**
+ * Réinitialise le fichier avec un tableau vide
+ */
+function resetFile() {
+  fs.writeFileSync(FILE, '[]', 'utf8');
+}
+
 // Vérifie que le dossier et le fichier existent, sinon les crée
 function ensure() {
   const dir = path.dirname(FILE);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  if (!fs.existsSync(FILE)) fs.writeFileSync(FILE, '[]', 'utf8');
+  if (!fs.existsSync(FILE)) resetFile();
 }
 
 
@@ -32,14 +39,14 @@ function loadAll() {
     // Si ce n'est pas un tableau, on réinitialise
     if (!Array.isArray(data)) {
       console.warn('jsonStore: data is not an array, resetting file');
-      fs.writeFileSync(FILE, '[]', 'utf8');
+      resetFile();
       return [];
     }
     return data;
   } catch (err) {
     // Si le JSON est corrompu, réinitialise le fichier
     console.error('jsonStore: JSON parse error, resetting file', err);
-    fs.writeFileSync(FILE, '[]', 'utf8');
+    resetFile();
     return [];
   }
 }

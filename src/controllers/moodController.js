@@ -99,57 +99,48 @@ function buildMoodEntry(text, rating, location, weather, textScore, scoreResult,
 }
 
 /**
+ * Orchestre la création complète d'un mood
+ */
+async function createMoodFromRequest(requestBody) {
+  const { text = '', rating, lat, lon, address, imageUrl } = requestBody;
+
+  // Validation
+  const inputValidation = validateMoodInput(text, rating);
+  if (!inputValidation.valid) return { error: inputValidation.error, status: HTTP_STATUS.BAD_REQUEST };
+
+  const locationValidation = validateLocationInput(lat, lon, address);
+  if (!locationValidation.valid) return { error: locationValidation.error, status: HTTP_STATUS.BAD_REQUEST };
+
+  // Récupération données
+  const location = await resolveLocation(lat, lon, address, locationValidation.hasCoords);
+  const weather = await fetchWeatherData(location.lat, location.lon);
+  const textScore = analyzeText(text);
+  const scoreResult = computeScoreWithBreakdown({ rating: inputValidation.numericRating, textScore, weather });
+  const savedImagePath = saveBase64Image(imageUrl);
+
+  // Construction
+  return {
+    mood: buildMoodEntry(text, inputValidation.numericRating, location, weather, textScore, scoreResult, savedImagePath),
+    status: HTTP_STATUS.CREATED
+  };
+}
+
+/**
  * addMood - Controller principal pour ajouter un mood
  */
 async function addMood(req, res) {
   try {
-    const { text = '', rating, lat, lon, address, imageUrl } = req.body;
+    const result = await createMoodFromRequest(req.body);
 
-    // Validation des données
-    const inputValidation = validateMoodInput(text, rating);
-    if (!inputValidation.valid) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: inputValidation.error });
+    if (result.error) {
+      return res.status(result.status).json({ error: result.error });
     }
 
-    const locationValidation = validateLocationInput(lat, lon, address);
-    if (!locationValidation.valid) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: locationValidation.error });
-    }
-
-    // Récupération des coordonnées et lieu
-    const location = await resolveLocation(lat, lon, address, locationValidation.hasCoords);
-
-    // Récupération météo
-    const weather = await fetchWeatherData(location.lat, location.lon);
-
-    // Analyse de texte et calcul du score
-    const textScore = analyzeText(text);
-    const scoreResult = computeScoreWithBreakdown({
-      rating: inputValidation.numericRating,
-      textScore,
-      weather
-    });
-
-    // Sauvegarde de l'image
-    const savedImagePath = saveBase64Image(imageUrl);
-
-    // Construction et sauvegarde du mood
-    const mood = buildMoodEntry(
-      text,
-      inputValidation.numericRating,
-      location,
-      weather,
-      textScore,
-      scoreResult,
-      savedImagePath
-    );
-
-    jsonStore.save(mood);
-
-    return res.status(HTTP_STATUS.CREATED).json(mood);
+    jsonStore.save(result.mood);
+    return res.status(result.status).json(result.mood);
   } catch (err) {
     console.error('addMood error:', err && (err.stack || err));
-    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: err.message || 'Internal Server Error' });
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: err.message || ERROR_MESSAGES.INTERNAL_SERVER_ERROR });
   }
 }
 

@@ -297,5 +297,28 @@
     "scoreResult": 100,
     "imageUrl": "selfies/selfie_1765750312457.png",
     "createdAt": "2025-12-14T22:11:52.463Z"
+  },
+  {
+    "id": 1765751161591,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 63.925419,
+    "lon": -22.687033,
+    "place": {
+      "name": "Nesvegur, Merkines, Reykjanesbær, Suðurnes, 233, Ísland",
+      "type": "secondary",
+      "lat": 63.925419,
+      "lon": -22.687033
+    },
+    "weather": {
+      "temp": 0.27,
+      "weather": "broken clouds",
+      "humidity": 100,
+      "wind_speed": 3.09
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": null,
+    "createdAt": "2025-12-14T22:26:01.591Z"
   }
 ]

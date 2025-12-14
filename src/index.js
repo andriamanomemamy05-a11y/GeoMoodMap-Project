@@ -4,7 +4,7 @@ const path = require('path');
 const { addMood, getMoods } = require('./controllers/moodController');
 const { searchAddress } = require('./controllers/searchController');
 const { uploadSelfie } = require('./controllers/selfieController');
-const { HTTP_STATUS, IMAGE_CONFIG } = require('./config/constants');
+const { HTTP_STATUS, IMAGE_CONFIG, ERROR_MESSAGES } = require('./config/constants');
 
 const app = express();
 
@@ -28,13 +28,13 @@ app.post('/api/selfie', express.json({ limit: IMAGE_CONFIG.SELFIE_MAX_SIZE }), u
 
 // Check de l'erreur 404
 app.use((req, res) => {
-  res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Not Found', path: req.originalUrl });
+  res.status(HTTP_STATUS.NOT_FOUND).json({ error: ERROR_MESSAGES.NOT_FOUND, path: req.originalUrl });
 });
 
 // Erreur handler sur le serveur
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err && (err.stack || err));
-  res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
+  res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: ERROR_MESSAGES.INTERNAL_SERVER_ERROR });
 });
 
 module.exports = app;

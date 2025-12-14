@@ -69,7 +69,19 @@ const ERROR_MESSAGES = {
   IMAGE_SAVE_FAILED: 'Failed to save image',
   OPENWEATHER_KEY_MISSING: 'OPENWEATHER_API_KEY not set',
   ADDRESS_INVALID: 'address must be a non-empty string',
-  ENTRY_REQUIRED: 'entry is required'
+  ENTRY_REQUIRED: 'entry is required',
+  INTERNAL_SERVER_ERROR: 'Internal Server Error',
+  NOT_FOUND: 'Not Found'
+};
+
+// Configuration du serveur
+const SERVER_CONFIG = {
+  DEFAULT_PORT: 3030
+};
+
+// Constantes de réponse
+const RESPONSE_CONSTANTS = {
+  EMPTY_ARRAY: []
 };
 
 module.exports = {
@@ -77,5 +89,7 @@ module.exports = {
   MOOD_SCORE,
   TEXT_ANALYSIS,
   IMAGE_CONFIG,
-  ERROR_MESSAGES
+  ERROR_MESSAGES,
+  SERVER_CONFIG,
+  RESPONSE_CONSTANTS
 };
