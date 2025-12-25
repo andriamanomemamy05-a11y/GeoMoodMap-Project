@@ -90,5 +90,350 @@
     "scoreResult": 95,
     "imageUrl": null,
     "createdAt": "2025-12-03T12:01:31.712Z"
+  },
+  {
+    "id": 1766684953829,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": -0.03,
+      "weather": "clear sky",
+      "humidity": 83,
+      "wind_speed": 3.09
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766684953826.png",
+    "createdAt": "2025-12-25T17:49:13.829Z"
+  },
+  {
+    "id": 1766684987530,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": -0.03,
+      "weather": "clear sky",
+      "humidity": 83,
+      "wind_speed": 3.09
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766684987526.png",
+    "createdAt": "2025-12-25T17:49:47.530Z"
+  },
+  {
+    "id": 1766685019684,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": -0.03,
+      "weather": "clear sky",
+      "humidity": 83,
+      "wind_speed": 3.09
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766685019676.png",
+    "createdAt": "2025-12-25T17:50:19.684Z"
+  },
+  {
+    "id": 1766685100475,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.8439098,
+    "lon": 2.2633808,
+    "place": {
+      "name": "42, Rue Boileau, Quartier d'Auteuil, Paris 16e Arrondissement, Paris, Île-de-France, France métropolitaine, 75016, France",
+      "type": "house",
+      "lat": 48.8439098,
+      "lon": 2.2633808
+    },
+    "weather": {
+      "temp": 0.56,
+      "weather": "clear sky",
+      "humidity": 79,
+      "wind_speed": 5.14
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": null,
+    "createdAt": "2025-12-25T17:51:40.475Z"
+  },
+  {
+    "id": 1766685126659,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": -0.03,
+      "weather": "clear sky",
+      "humidity": 83,
+      "wind_speed": 3.09
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766685126655.png",
+    "createdAt": "2025-12-25T17:52:06.659Z"
+  },
+  {
+    "id": 1766685314156,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": -0.03,
+      "weather": "clear sky",
+      "humidity": 83,
+      "wind_speed": 3.09
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766685314152.png",
+    "createdAt": "2025-12-25T17:55:14.156Z"
+  },
+  {
+    "id": 1766685637478,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": -0.04,
+      "weather": "clear sky",
+      "humidity": 83,
+      "wind_speed": 3.09
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766685637476.png",
+    "createdAt": "2025-12-25T18:00:37.478Z"
+  },
+  {
+    "id": 1766685819897,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": -0.04,
+      "weather": "clear sky",
+      "humidity": 83,
+      "wind_speed": 3.09
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766685819886.jpg",
+    "createdAt": "2025-12-25T18:03:39.897Z"
+  },
+  {
+    "id": 1766685864328,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": -0.04,
+      "weather": "clear sky",
+      "humidity": 83,
+      "wind_speed": 3.09
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766685864325.jpg",
+    "createdAt": "2025-12-25T18:04:24.328Z"
+  },
+  {
+    "id": 1766685901583,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.8439098,
+    "lon": 2.2633808,
+    "place": {
+      "name": "42, Rue Boileau, Quartier d'Auteuil, Paris 16e Arrondissement, Paris, Île-de-France, France métropolitaine, 75016, France",
+      "type": "house",
+      "lat": 48.8439098,
+      "lon": 2.2633808
+    },
+    "weather": {
+      "temp": 0.52,
+      "weather": "clear sky",
+      "humidity": 79,
+      "wind_speed": 4.63
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766685901571.png",
+    "createdAt": "2025-12-25T18:05:01.583Z"
+  },
+  {
+    "id": 1766685997019,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 46.6356542,
+    "lon": 4.6896987,
+    "place": {
+      "name": "5, Rue du Centre, Étiveau, Saint-Boil, Chalon-sur-Saône, Bourgogne-Franche-Comté, France métropolitaine, 71390, France",
+      "type": "house",
+      "lat": 46.6356542,
+      "lon": 4.6896987
+    },
+    "weather": {
+      "temp": 0.84,
+      "weather": "clear sky",
+      "humidity": 89,
+      "wind_speed": 1.45
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766685997014.jpg",
+    "createdAt": "2025-12-25T18:06:37.019Z"
+  },
+  {
+    "id": 1766686737805,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": -0.04,
+      "weather": "clear sky",
+      "humidity": 86,
+      "wind_speed": 2.06
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766686737801.jpg",
+    "createdAt": "2025-12-25T18:18:57.805Z"
+  },
+  {
+    "id": 1766686852109,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": -0.04,
+      "weather": "clear sky",
+      "humidity": 86,
+      "wind_speed": 2.06
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766686852104.png",
+    "createdAt": "2025-12-25T18:20:52.109Z"
+  },
+  {
+    "id": 1766688186464,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": -0.22,
+      "weather": "clear sky",
+      "humidity": 84,
+      "wind_speed": 2.57
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766688186463.jpg",
+    "createdAt": "2025-12-25T18:43:06.464Z"
+  },
+  {
+    "id": 1766688229492,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.8439098,
+    "lon": 2.2633808,
+    "place": {
+      "name": "42, Rue Boileau, Quartier d'Auteuil, Paris 16e Arrondissement, Paris, Île-de-France, France métropolitaine, 75016, France",
+      "type": "house",
+      "lat": 48.8439098,
+      "lon": 2.2633808
+    },
+    "weather": {
+      "temp": 0.1,
+      "weather": "clear sky",
+      "humidity": 80,
+      "wind_speed": 4.63
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766688229490.png",
+    "createdAt": "2025-12-25T18:43:49.492Z"
   }
 ]

@@ -91,16 +91,21 @@ async function addMood(req, res) {
       // Crée le dossier si nécessaire
       if (!fs.existsSync(publicSelfiesDir)) fs.mkdirSync(publicSelfiesDir, { recursive: true });
 
-      // Extraire les données base64
-      const base64Data = imageUrl.replace(/^data:image\/png;base64,/, '');
-      const fileName = `selfie_${Date.now()}.png`;
-      const filePath = path.join(publicSelfiesDir, fileName);
+      // Extraire le type d'image et les données base64 (supporte png, jpeg, jpg, webp, etc.)
+      const matches = imageUrl.match(/^data:image\/(\w+);base64,(.*)$/);
+      if (matches) {
+        const imageType = matches[1]; // png, jpeg, jpg, webp, etc.
+        const base64Data = matches[2];
+        const extension = imageType === 'jpeg' ? 'jpg' : imageType;
+        const fileName = `selfie_${Date.now()}.${extension}`;
+        const filePath = path.join(publicSelfiesDir, fileName);
 
-      // Écrire le fichier
-      fs.writeFileSync(filePath, base64Data, 'base64');
+        // Écrire le fichier
+        fs.writeFileSync(filePath, base64Data, 'base64');
 
-      // Sauvegarder le chemin relatif pour JSON (accessible dans le navigateur)
-      savedImagePath = `selfies/${fileName}`;
+        // Sauvegarder le chemin relatif pour JSON (accessible dans le navigateur)
+        savedImagePath = `selfies/${fileName}`;
+      }
     }
 
     // Construire une entrée d’humeur

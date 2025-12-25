@@ -27,6 +27,7 @@
           <!-- Contenu ajouté via JS -->
         </div>
         <div class="modal-footer">
+          <button type="button" id="exportBtn" class="btn btn-success">📄 Exporter en .txt</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
         </div>
       </div>
@@ -57,8 +58,15 @@
         </div>
 
         <div class="mb-3 position-relative">
-          <label for="selfie" class="form-label">Prenez une photo</label>
+          <label for="selfie" class="form-label">Ajoutez une photo</label>
 
+          <!-- Choix entre selfie et upload -->
+          <div class="mb-2">
+            <button id="selfieBtn" type="button" class="btn btn-outline-primary btn-sm me-2 active">📷 Selfie</button>
+            <button id="uploadBtn" type="button" class="btn btn-outline-primary btn-sm">📁 Upload</button>
+          </div>
+
+          <!-- Container pour le selfie -->
           <div id="cameraContainer" class="position-relative">
             <video id="camera" autoplay playsinline class="w-100 rounded"></video>
 
@@ -68,9 +76,14 @@
             </button>
           </div>
 
+          <!-- Container pour l'upload -->
+          <div id="uploadContainer" class="position-relative d-none">
+            <input type="file" id="fileInput" accept="image/*" class="form-control" />
+          </div>
+
           <!-- Aperçu image -->
           <div id="photoContainer" class="position-relative d-none">
-            <img id="selfiePreview" class="img-fluid rounded" alt="Selfie">
+            <img id="selfiePreview" class="img-fluid rounded" alt="Photo">
 
             <!-- Bouton supprimer -->
             <button id="deletePhoto" type="button" class="delete-btn">✖️</button>

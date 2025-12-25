@@ -89,7 +89,7 @@ addressInput.addEventListener('input', () => {
 
 
 /************************************************************
- * CAMERA + SELFIE
+ * CAMERA + SELFIE + UPLOAD
  ************************************************************/
 const video = document.getElementById('camera');
 const canvas = document.getElementById('canvas');
@@ -98,12 +98,56 @@ const selfiePreview = document.getElementById('selfiePreview');
 const deletePhoto = document.getElementById('deletePhoto');
 
 const cameraContainer = document.getElementById('cameraContainer');
+const uploadContainer = document.getElementById('uploadContainer');
 const photoContainer = document.getElementById('photoContainer');
 
-// Active la caméra
+const selfieBtn = document.getElementById('selfieBtn');
+const uploadBtn = document.getElementById('uploadBtn');
+const fileInput = document.getElementById('fileInput');
+
+let cameraStream = null;
+
+// Active la caméra au démarrage
 navigator.mediaDevices.getUserMedia({ video: true })
-  .then(stream => (video.srcObject = stream))
+  .then(stream => {
+    video.srcObject = stream;
+    cameraStream = stream;
+  })
   .catch(err => console.error("Erreur caméra:", err));
+
+/**
+ * Basculer vers mode selfie
+ */
+selfieBtn.addEventListener('click', () => {
+  selfieBtn.classList.add('active');
+  uploadBtn.classList.remove('active');
+
+  cameraContainer.classList.remove('d-none');
+  uploadContainer.classList.add('d-none');
+  photoContainer.classList.add('d-none');
+
+  // Réactiver la caméra si elle était arrêtée
+  if (!cameraStream) {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+        cameraStream = stream;
+      })
+      .catch(err => console.error("Erreur caméra:", err));
+  }
+});
+
+/**
+ * Basculer vers mode upload
+ */
+uploadBtn.addEventListener('click', () => {
+  uploadBtn.classList.add('active');
+  selfieBtn.classList.remove('active');
+
+  uploadContainer.classList.remove('d-none');
+  cameraContainer.classList.add('d-none');
+  photoContainer.classList.add('d-none');
+});
 
 /**
  * Capture une photo depuis la cam
@@ -124,12 +168,37 @@ snapBtn.addEventListener('click', () => {
 });
 
 /**
- * Supprime le selfie et réactive la caméra
+ * Gère l'upload de fichier
+ */
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      selfiePreview.src = event.target.result;
+      uploadContainer.classList.add('d-none');
+      photoContainer.classList.remove('d-none');
+    };
+
+    reader.readAsDataURL(file);
+  }
+});
+
+/**
+ * Supprime la photo et réactive le mode actuel
  */
 deletePhoto.addEventListener('click', () => {
   selfiePreview.src = '';
-  cameraContainer.classList.remove('d-none');
+  fileInput.value = '';
   photoContainer.classList.add('d-none');
+
+  // Réafficher le mode actif
+  if (selfieBtn.classList.contains('active')) {
+    cameraContainer.classList.remove('d-none');
+  } else {
+    uploadContainer.classList.remove('d-none');
+  }
 });
 
 
@@ -207,5 +276,56 @@ function showModal(mood) {
     ${imgHTML}
   `;
 
+  // Stocker les données pour l'export
+  feedbackModal._currentMoodData = mood;
+
   feedbackModal.show();
 }
+
+
+/************************************************************
+ * EXPORT EN FICHIER TEXTE
+ ************************************************************/
+const exportBtn = document.getElementById('exportBtn');
+
+exportBtn.addEventListener('click', () => {
+  const mood = feedbackModal._currentMoodData;
+  if (!mood) return;
+
+  // Construire le contenu du fichier texte
+  const content = `==============================================
+RAPPORT D'HUMEUR - ${new Date(mood.createdAt).toLocaleString('fr-FR')}
+==============================================
+
+HUMEUR
+------
+Description : ${mood.text}
+Note : ${mood.rating}/5
+Score final : ${mood.scoreResult ?? 'N/A'}%
+
+LOCALISATION
+------------
+Adresse : ${mood.place?.name || mood.address || 'N/A'}
+Coordonnées : ${mood.lat}, ${mood.lon}
+
+MÉTÉO
+-----
+${mood.weather ? `Température : ${mood.weather.temp} °C
+Humidité : ${mood.weather.humidity} %
+Conditions : ${mood.weather.weather}
+Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
+
+==============================================
+`;
+
+  // Créer un blob et télécharger le fichier
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `humeur_${Date.now()}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
