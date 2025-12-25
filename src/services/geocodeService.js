@@ -11,7 +11,7 @@ const USER_AGENT = process.env.NOMINATIM_USER_AGENT || 'MoodApp/1.0 (andriamanom
  */
 async function reverseGeocode(lat, lon) {
   // Les coordonnées géographiquessont obligatoires
-  if (!isFinite(lat) || !isFinite(lon)) {
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
     throw new Error('Invalid coordinates for reverseGeocode');
   }
 
