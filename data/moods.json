@@ -481,5 +481,28 @@
     "scoreResult": 100,
     "imageUrl": "selfies/selfie_1766699233324.jpg",
     "createdAt": "2025-12-25T21:47:13.326Z"
+  },
+  {
+    "id": 1766702828288,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 50.272874,
+    "lon": 1.6673051,
+    "place": {
+      "name": "4, Rue des Soufflets, Rue, Abbeville, Somme, Hauts-de-France, France métropolitaine, 80120, France",
+      "type": "house",
+      "lat": 50.272874,
+      "lon": 1.6673051
+    },
+    "weather": {
+      "temp": -2.04,
+      "weather": "clear sky",
+      "humidity": 74,
+      "wind_speed": 4.93
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766702828285.jpg",
+    "createdAt": "2025-12-25T22:47:08.288Z"
   }
 ]
