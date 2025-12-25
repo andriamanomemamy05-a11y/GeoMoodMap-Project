@@ -276,5 +276,56 @@ function showModal(mood) {
     ${imgHTML}
   `;
 
+  // Stocker les données pour l'export
+  feedbackModal._currentMoodData = mood;
+
   feedbackModal.show();
 }
+
+
+/************************************************************
+ * EXPORT EN FICHIER TEXTE
+ ************************************************************/
+const exportBtn = document.getElementById('exportBtn');
+
+exportBtn.addEventListener('click', () => {
+  const mood = feedbackModal._currentMoodData;
+  if (!mood) return;
+
+  // Construire le contenu du fichier texte
+  const content = `==============================================
+RAPPORT D'HUMEUR - ${new Date(mood.createdAt).toLocaleString('fr-FR')}
+==============================================
+
+HUMEUR
+------
+Description : ${mood.text}
+Note : ${mood.rating}/5
+Score final : ${mood.scoreResult ?? 'N/A'}%
+
+LOCALISATION
+------------
+Adresse : ${mood.place?.name || mood.address || 'N/A'}
+Coordonnées : ${mood.lat}, ${mood.lon}
+
+MÉTÉO
+-----
+${mood.weather ? `Température : ${mood.weather.temp} °C
+Humidité : ${mood.weather.humidity} %
+Conditions : ${mood.weather.weather}
+Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
+
+==============================================
+`;
+
+  // Créer un blob et télécharger le fichier
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `humeur_${Date.now()}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
