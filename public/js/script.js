@@ -89,7 +89,7 @@ addressInput.addEventListener('input', () => {
 
 
 /************************************************************
- * CAMERA + SELFIE
+ * CAMERA + SELFIE + UPLOAD
  ************************************************************/
 const video = document.getElementById('camera');
 const canvas = document.getElementById('canvas');
@@ -98,12 +98,56 @@ const selfiePreview = document.getElementById('selfiePreview');
 const deletePhoto = document.getElementById('deletePhoto');
 
 const cameraContainer = document.getElementById('cameraContainer');
+const uploadContainer = document.getElementById('uploadContainer');
 const photoContainer = document.getElementById('photoContainer');
 
-// Active la caméra
+const selfieBtn = document.getElementById('selfieBtn');
+const uploadBtn = document.getElementById('uploadBtn');
+const fileInput = document.getElementById('fileInput');
+
+let cameraStream = null;
+
+// Active la caméra au démarrage
 navigator.mediaDevices.getUserMedia({ video: true })
-  .then(stream => (video.srcObject = stream))
+  .then(stream => {
+    video.srcObject = stream;
+    cameraStream = stream;
+  })
   .catch(err => console.error("Erreur caméra:", err));
+
+/**
+ * Basculer vers mode selfie
+ */
+selfieBtn.addEventListener('click', () => {
+  selfieBtn.classList.add('active');
+  uploadBtn.classList.remove('active');
+
+  cameraContainer.classList.remove('d-none');
+  uploadContainer.classList.add('d-none');
+  photoContainer.classList.add('d-none');
+
+  // Réactiver la caméra si elle était arrêtée
+  if (!cameraStream) {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+        cameraStream = stream;
+      })
+      .catch(err => console.error("Erreur caméra:", err));
+  }
+});
+
+/**
+ * Basculer vers mode upload
+ */
+uploadBtn.addEventListener('click', () => {
+  uploadBtn.classList.add('active');
+  selfieBtn.classList.remove('active');
+
+  uploadContainer.classList.remove('d-none');
+  cameraContainer.classList.add('d-none');
+  photoContainer.classList.add('d-none');
+});
 
 /**
  * Capture une photo depuis la cam
@@ -124,12 +168,37 @@ snapBtn.addEventListener('click', () => {
 });
 
 /**
- * Supprime le selfie et réactive la caméra
+ * Gère l'upload de fichier
+ */
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      selfiePreview.src = event.target.result;
+      uploadContainer.classList.add('d-none');
+      photoContainer.classList.remove('d-none');
+    };
+
+    reader.readAsDataURL(file);
+  }
+});
+
+/**
+ * Supprime la photo et réactive le mode actuel
  */
 deletePhoto.addEventListener('click', () => {
   selfiePreview.src = '';
-  cameraContainer.classList.remove('d-none');
+  fileInput.value = '';
   photoContainer.classList.add('d-none');
+
+  // Réafficher le mode actif
+  if (selfieBtn.classList.contains('active')) {
+    cameraContainer.classList.remove('d-none');
+  } else {
+    uploadContainer.classList.remove('d-none');
+  }
 });
 
 
