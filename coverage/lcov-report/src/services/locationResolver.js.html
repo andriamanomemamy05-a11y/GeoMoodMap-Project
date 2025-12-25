@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/storage/jsonStore.js</title>
+    <title>Code coverage report for src/services/locationResolver.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/storage</a> jsonStore.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/services</a> locationResolver.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.07% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/26</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/10</span>
+                <span class='fraction'>12/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.91% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/23</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
@@ -113,139 +113,106 @@
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Ce fichier centralise la persistance, gère la création du dossier, la récupération et la réparation si JSON corrompu.
-&nbsp;
-const fs = require('fs');
-const path = require('path');
-&nbsp;
-// Chemin vers le fichier JSON qui stocke les moods
-const FILE = path.join(process.cwd(), 'data', 'moods.json');
-&nbsp;
-// Vérifie que le dossier et le fichier existent, sinon les crée
-function ensure() {
-  const dir = path.dirname(FILE);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  if (!fs.existsSync(FILE)) fs.writeFileSync(FILE, '[]', 'utf8');
-}
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const geocodeService = require('./geocodeService');
 &nbsp;
 /**
- * Lit et parse le fichier JSON
- * Retourne toujous un tableau
+ * Service de résolution de localisation
+ * Responsabilité : Résoudre les coordonnées ↔ adresse via geocoding
  */
-function loadAll() {
-  // Assure l'existence du fichier
-  ensure();
 &nbsp;
-  // Lit le contenu du fichier
-  const raw = fs.readFileSync(FILE, 'utf8');
-  try {
-    // Parse le JSON et retourne le tableau contenant la liste
-    const data = JSON.parse(raw || <span class="branch-1 cbranch-no" title="branch not covered" >'[]')</span>;
+/**
+ * Résout la localisation à partir de coordonnées ou d'une adresse
+ * @param {Object} params - Paramètres de localisation
+ * @param {number|null} params.lat - Latitude
+ * @param {number|null} params.lon - Longitude
+ * @param {string|null} params.address - Adresse textuelle
+ * @returns {Promise&lt;Object&gt;} { lat, lon, place }
+ */
+async function resolveLocation({ lat, lon, address }) {
+  let usedLat = lat;
+  let usedLon = lon;
+  let place = null;
 &nbsp;
-    // Si ce n'est pas un tableau, on réinitialise
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!Array.isArray(data)) {
-<span class="cstat-no" title="statement not covered" >      console.warn('jsonStore: data is not an array, resetting file');</span>
-<span class="cstat-no" title="statement not covered" >      fs.writeFileSync(FILE, '[]', 'utf8');</span>
-<span class="cstat-no" title="statement not covered" >      return [];</span>
+  const hasCoords =
+    usedLat !== null &amp;&amp; usedLon !== null &amp;&amp; !Number.isNaN(usedLat) &amp;&amp; !Number.isNaN(usedLon);
+&nbsp;
+  if (hasCoords) {
+    // Reverse geocode : récupérer l'adresse depuis les coords
+    try {
+      place = await geocodeService.reverseGeocode(usedLat, usedLon);
+    } catch (err) {
+      console.warn('reverseGeocode failed:', err.message || <span class="branch-1 cbranch-no" title="branch not covered" >err)</span>;
     }
-    return data;
-  } catch (err) {
-    // Si le JSON est corrompu, réinitialise le fichier
-<span class="cstat-no" title="statement not covered" >    console.error('jsonStore: JSON parse error, resetting file', err);</span>
-<span class="cstat-no" title="statement not covered" >    fs.writeFileSync(FILE, '[]', 'utf8');</span>
-<span class="cstat-no" title="statement not covered" >    return [];</span>
+  } else if (address) {
+    // Forward geocode : récupérer les coords depuis l'adresse
+    try {
+      const result = await geocodeService.forwardGeocode(address);
+      usedLat = result.lat ? Number(result.lat) : <span class="branch-1 cbranch-no" title="branch not covered" >null;</span>
+      usedLon = result.lon ? Number(result.lon) : <span class="branch-1 cbranch-no" title="branch not covered" >null;</span>
+      place = result;
+    } catch (err) {
+      console.warn('forwardGeocode failed:', err.message || <span class="branch-1 cbranch-no" title="branch not covered" >err)</span>;
+    }
   }
+&nbsp;
+  return {
+    lat: usedLat,
+    lon: usedLon,
+    place,
+  };
 }
 &nbsp;
-/**
- * Sauvegarde une entrée dans le fichier JSON.
- */
-function save(entry) {
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (!entry) <span class="cstat-no" title="statement not covered" >throw new Error('entry is required');</span>
-&nbsp;
-  // Charge toutes les entrées existantes depuis le fichier
-  const arr = loadAll();
-&nbsp;
-  // Ajoute la nouvelle entrée au tableau
-  arr.push(entry);
-&nbsp;
-  // Écrit le tableau mis à jour dans le fichier JSON
-  fs.writeFileSync(FILE, JSON.stringify(arr, null, 2), 'utf8');
-}
-&nbsp;
-module.exports = { loadAll, save };
+module.exports = { resolveLocation };
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
