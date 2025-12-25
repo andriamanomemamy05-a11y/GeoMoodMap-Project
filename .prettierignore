@@ -1,0 +1,6 @@
+node_modules/
+data/
+public/selfies/
+coverage/
+*.min.js
+package-lock.json

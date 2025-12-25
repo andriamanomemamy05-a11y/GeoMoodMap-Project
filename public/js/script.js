@@ -1,10 +1,10 @@
-/************************************************************
+/** **********************************************************
  * INITIALISATION DE LA MAP + MARQUEUR
- ************************************************************/
+ *********************************************************** */
 const map = L.map('map').setView([48.8566, 2.3522], 13);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors'
+  attribution: '© OpenStreetMap contributors',
 }).addTo(map);
 
 // Coordonnées de départ
@@ -12,7 +12,7 @@ let lat = 48.8566;
 let lon = 2.3522;
 
 // Marqueur draggable
-let marker = L.marker([lat, lon], { draggable: true }).addTo(map);
+const marker = L.marker([lat, lon], { draggable: true }).addTo(map);
 
 /**
  * Met à jour les coordonnées lat/lon
@@ -31,10 +31,9 @@ map.on('click', e => {
 });
 marker.on('dragend', updateCoords);
 
-
-/************************************************************
+/** **********************************************************
  * AUTOCOMPLETE AVEC API /search (Nominatim backend)
- ************************************************************/
+ *********************************************************** */
 const addressInput = document.getElementById('address');
 const autocompleteDiv = document.getElementById('autocomplete');
 let timeout = null;
@@ -82,15 +81,14 @@ addressInput.addEventListener('input', () => {
         autocompleteDiv.appendChild(div);
       });
     } catch (err) {
-      console.error("Erreur autocomplete:", err);
+      console.error('Erreur autocomplete:', err);
     }
   }, 300);
 });
 
-
-/************************************************************
+/** **********************************************************
  * CAMERA + SELFIE + UPLOAD
- ************************************************************/
+ *********************************************************** */
 const video = document.getElementById('camera');
 const canvas = document.getElementById('canvas');
 const snapBtn = document.getElementById('snap');
@@ -108,12 +106,13 @@ const fileInput = document.getElementById('fileInput');
 let cameraStream = null;
 
 // Active la caméra au démarrage
-navigator.mediaDevices.getUserMedia({ video: true })
+navigator.mediaDevices
+  .getUserMedia({ video: true })
   .then(stream => {
     video.srcObject = stream;
     cameraStream = stream;
   })
-  .catch(err => console.error("Erreur caméra:", err));
+  .catch(err => console.error('Erreur caméra:', err));
 
 /**
  * Basculer vers mode selfie
@@ -128,12 +127,13 @@ selfieBtn.addEventListener('click', () => {
 
   // Réactiver la caméra si elle était arrêtée
   if (!cameraStream) {
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
       .then(stream => {
         video.srcObject = stream;
         cameraStream = stream;
       })
-      .catch(err => console.error("Erreur caméra:", err));
+      .catch(err => console.error('Erreur caméra:', err));
   }
 });
 
@@ -170,12 +170,12 @@ snapBtn.addEventListener('click', () => {
 /**
  * Gère l'upload de fichier
  */
-fileInput.addEventListener('change', (e) => {
+fileInput.addEventListener('change', e => {
   const file = e.target.files[0];
   if (file && file.type.startsWith('image/')) {
     const reader = new FileReader();
 
-    reader.onload = (event) => {
+    reader.onload = event => {
       selfiePreview.src = event.target.result;
       uploadContainer.classList.add('d-none');
       photoContainer.classList.remove('d-none');
@@ -201,10 +201,9 @@ deletePhoto.addEventListener('click', () => {
   }
 });
 
-
-/************************************************************
+/** **********************************************************
  * SOUMISSION FORMULAIRE
- ************************************************************/
+ *********************************************************** */
 document.getElementById('moodForm').addEventListener('submit', async e => {
   e.preventDefault();
 
@@ -214,14 +213,14 @@ document.getElementById('moodForm').addEventListener('submit', async e => {
     address: document.getElementById('address').value,
     lat,
     lon,
-    imageUrl: selfiePreview.src || null
+    imageUrl: selfiePreview.src || null,
   };
 
   try {
     const res = await fetch('/api/moods', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
 
     const result = await res.json();
@@ -230,17 +229,15 @@ document.getElementById('moodForm').addEventListener('submit', async e => {
     showModal(result); // ← affichage modal
     document.getElementById('moodForm').reset();
     selfiePreview.src = '';
-
   } catch (err) {
-    console.error("Erreur POST /moods:", err);
+    console.error('Erreur POST /moods:', err);
     alert('Erreur lors de l’enregistrement.');
   }
 });
 
-
-/************************************************************
+/** **********************************************************
  * MODAL BOOTSTRAP (résultat)
- ************************************************************/
+ *********************************************************** */
 const feedbackModalEl = document.getElementById('feedbackModal');
 const feedbackModal = new bootstrap.Modal(feedbackModalEl);
 const modalBody = document.getElementById('modalBody');
@@ -251,7 +248,7 @@ const modalBody = document.getElementById('modalBody');
  */
 function showModal(mood) {
   const score = mood.scoreResult ?? 'N/A';
-  const weather = mood.weather;
+  const { weather } = mood;
 
   const weatherHTML = weather
     ? `<ul>
@@ -282,10 +279,9 @@ function showModal(mood) {
   feedbackModal.show();
 }
 
-
-/************************************************************
+/** **********************************************************
  * EXPORT EN FICHIER TEXTE
- ************************************************************/
+ *********************************************************** */
 const exportBtn = document.getElementById('exportBtn');
 
 exportBtn.addEventListener('click', () => {
@@ -310,10 +306,14 @@ Coordonnées : ${mood.lat}, ${mood.lon}
 
 MÉTÉO
 -----
-${mood.weather ? `Température : ${mood.weather.temp} °C
+${
+  mood.weather
+    ? `Température : ${mood.weather.temp} °C
 Humidité : ${mood.weather.humidity} %
 Conditions : ${mood.weather.weather}
-Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
+Vent : ${mood.weather.wind_speed} m/s`
+    : 'Pas de données météo disponibles'
+}
 
 ==============================================
 `;

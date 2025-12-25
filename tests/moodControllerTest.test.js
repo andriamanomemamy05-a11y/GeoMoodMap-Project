@@ -3,9 +3,9 @@ jest.mock('../src/services/geocodeService');
 jest.mock('../src/services/weatherService');
 jest.mock('fs');
 
+const fs = require('fs');
 const geocodeService = require('../src/services/geocodeService');
 const weatherService = require('../src/services/weatherService');
-const fs = require('fs');
 
 // Après les mocks, on importe le controller (module qui utilise les services)
 const { addMood } = require('../src/controllers/moodController');
@@ -23,9 +23,22 @@ describe('moodController addMood behavior', () => {
 
   test('privilégie lat/lon quand lat+lon ET address fournis (appel reverseGeocode)', async () => {
     // Préparation des mocks
-    geocodeService.reverseGeocode.mockResolvedValue({ name: 'PlaceFromCoords', type: 'park', lat: 43.2820455, lon: 5.3812726 });
-    geocodeService.forwardGeocode.mockResolvedValue({ name: 'PlaceFromAddress', type: 'street', lat: '43.999', lon: '5.999' }); // ne doit pas être appelé
-    weatherService.getWeather.mockResolvedValue({ source: 'mock', data: { temp: 20, weather: 'clear sky' } });
+    geocodeService.reverseGeocode.mockResolvedValue({
+      name: 'PlaceFromCoords',
+      type: 'park',
+      lat: 43.2820455,
+      lon: 5.3812726,
+    });
+    geocodeService.forwardGeocode.mockResolvedValue({
+      name: 'PlaceFromAddress',
+      type: 'street',
+      lat: '43.999',
+      lon: '5.999',
+    }); // ne doit pas être appelé
+    weatherService.getWeather.mockResolvedValue({
+      source: 'mock',
+      data: { temp: 20, weather: 'clear sky' },
+    });
 
     // Data simulées
     const req = {
@@ -34,12 +47,12 @@ describe('moodController addMood behavior', () => {
         rating: 3,
         lat: 43.2820455,
         lon: 5.3812726,
-        address: 'Avenue de la Viste, La Viste, Marseille'
-      }
+        address: 'Avenue de la Viste, La Viste, Marseille',
+      },
     };
     const res = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn()
+      json: jest.fn(),
     };
 
     await addMood(req, res);
@@ -61,25 +74,35 @@ describe('moodController addMood behavior', () => {
   test('utilise forwardGeocode quand seule address fournie', async () => {
     // Appel des mocks dans les services
     geocodeService.reverseGeocode.mockResolvedValue(null);
-    geocodeService.forwardGeocode.mockResolvedValue({ name: 'PlaceFromAddress', type: 'street', lat: '43.999', lon: '5.999' });
-    weatherService.getWeather.mockResolvedValue({ source: 'mock', data: { temp: 15, weather: 'light rain' } });
+    geocodeService.forwardGeocode.mockResolvedValue({
+      name: 'PlaceFromAddress',
+      type: 'street',
+      lat: '43.999',
+      lon: '5.999',
+    });
+    weatherService.getWeather.mockResolvedValue({
+      source: 'mock',
+      data: { temp: 15, weather: 'light rain' },
+    });
 
     const req = {
       body: {
         text: 'Tranquille',
         rating: 4,
-        address: 'Avenue de la Viste, La Viste, Marseille'
-      }
+        address: 'Avenue de la Viste, La Viste, Marseille',
+      },
     };
     const res = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn()
+      json: jest.fn(),
     };
 
     await addMood(req, res);
 
     // forwardGeocode doit avoir été appelé
-    expect(geocodeService.forwardGeocode).toHaveBeenCalledWith('Avenue de la Viste, La Viste, Marseille');
+    expect(geocodeService.forwardGeocode).toHaveBeenCalledWith(
+      'Avenue de la Viste, La Viste, Marseille'
+    );
     expect(geocodeService.reverseGeocode).not.toHaveBeenCalled();
     expect(weatherService.getWeather).toHaveBeenCalled();
 

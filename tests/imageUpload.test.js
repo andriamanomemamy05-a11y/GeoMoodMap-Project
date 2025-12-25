@@ -3,9 +3,9 @@ jest.mock('../src/services/geocodeService');
 jest.mock('../src/services/weatherService');
 jest.mock('fs');
 
+const fs = require('fs');
 const geocodeService = require('../src/services/geocodeService');
 const weatherService = require('../src/services/weatherService');
-const fs = require('fs');
 
 const { addMood } = require('../src/controllers/moodController');
 
@@ -24,7 +24,7 @@ describe('Image Upload (Selfie and File Upload)', () => {
       name: 'Test Location',
       type: 'city',
       lat: 48.8566,
-      lon: 2.3522
+      lon: 2.3522,
     });
     weatherService.getWeather.mockResolvedValue({
       source: 'mock',
@@ -32,13 +32,14 @@ describe('Image Upload (Selfie and File Upload)', () => {
         temp: 20,
         weather: 'clear sky',
         humidity: 60,
-        wind_speed: 5
-      }
+        wind_speed: 5,
+      },
     });
   });
 
   test('sauvegarde une image base64 depuis selfie', async () => {
-    const base64Image = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+    const base64Image =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
 
     const req = {
       body: {
@@ -46,21 +47,21 @@ describe('Image Upload (Selfie and File Upload)', () => {
         rating: 4,
         lat: 48.8566,
         lon: 2.3522,
-        imageUrl: base64Image
-      }
+        imageUrl: base64Image,
+      },
     };
 
     const res = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn()
+      json: jest.fn(),
     };
 
     await addMood(req, res);
 
     // Vérifie que fs.writeFileSync a été appelé pour sauvegarder l'image
     expect(fs.writeFileSync).toHaveBeenCalled();
-    const writeCall = fs.writeFileSync.mock.calls.find(call =>
-      call[0].includes('selfie_') && call[0].endsWith('.png')
+    const writeCall = fs.writeFileSync.mock.calls.find(
+      call => call[0].includes('selfie_') && call[0].endsWith('.png')
     );
     expect(writeCall).toBeDefined();
     expect(writeCall[2]).toBe('base64');
@@ -73,7 +74,8 @@ describe('Image Upload (Selfie and File Upload)', () => {
 
   test('sauvegarde une image base64 depuis upload de fichier JPEG', async () => {
     // Une image uploadée via FileReader est aussi convertie en base64
-    const base64Image = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/wAALCAABAAEBAREA/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/AKp/2Q==';
+    const base64Image =
+      'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/wAALCAABAAEBAREA/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/AKp/2Q==';
 
     const req = {
       body: {
@@ -81,21 +83,21 @@ describe('Image Upload (Selfie and File Upload)', () => {
         rating: 5,
         lat: 48.8566,
         lon: 2.3522,
-        imageUrl: base64Image
-      }
+        imageUrl: base64Image,
+      },
     };
 
     const res = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn()
+      json: jest.fn(),
     };
 
     await addMood(req, res);
 
     // Vérifie que l'image a bien été sauvegardée en .jpg (jpeg → jpg)
     expect(fs.writeFileSync).toHaveBeenCalled();
-    const writeCall = fs.writeFileSync.mock.calls.find(call =>
-      call[0].includes('selfie_') && call[0].endsWith('.jpg')
+    const writeCall = fs.writeFileSync.mock.calls.find(
+      call => call[0].includes('selfie_') && call[0].endsWith('.jpg')
     );
     expect(writeCall).toBeDefined();
 
@@ -105,28 +107,26 @@ describe('Image Upload (Selfie and File Upload)', () => {
     expect(returned.imageUrl).toMatch(/^selfies\/selfie_\d+\.jpg$/);
   });
 
-  test('ne sauvegarde pas d\'image si imageUrl est null', async () => {
+  test("ne sauvegarde pas d'image si imageUrl est null", async () => {
     const req = {
       body: {
         text: 'Humeur sans photo',
         rating: 3,
         lat: 48.8566,
         lon: 2.3522,
-        imageUrl: null
-      }
+        imageUrl: null,
+      },
     };
 
     const res = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn()
+      json: jest.fn(),
     };
 
     await addMood(req, res);
 
     // Vérifie qu'aucune image n'a été sauvegardée
-    const writeCall = fs.writeFileSync.mock.calls.find(call =>
-      call[0].includes('selfie_')
-    );
+    const writeCall = fs.writeFileSync.mock.calls.find(call => call[0].includes('selfie_'));
     expect(writeCall).toBeUndefined();
 
     // Vérifie que imageUrl est null dans la réponse
@@ -135,28 +135,26 @@ describe('Image Upload (Selfie and File Upload)', () => {
     expect(returned.imageUrl).toBeNull();
   });
 
-  test('ne sauvegarde pas d\'image si imageUrl n\'est pas en base64', async () => {
+  test("ne sauvegarde pas d'image si imageUrl n'est pas en base64", async () => {
     const req = {
       body: {
         text: 'Humeur avec URL invalide',
         rating: 3,
         lat: 48.8566,
         lon: 2.3522,
-        imageUrl: 'http://example.com/image.jpg'
-      }
+        imageUrl: 'http://example.com/image.jpg',
+      },
     };
 
     const res = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn()
+      json: jest.fn(),
     };
 
     await addMood(req, res);
 
     // Vérifie qu'aucune image n'a été sauvegardée (pas de data:image)
-    const writeCall = fs.writeFileSync.mock.calls.find(call =>
-      call[0].includes('selfie_')
-    );
+    const writeCall = fs.writeFileSync.mock.calls.find(call => call[0].includes('selfie_'));
     expect(writeCall).toBeUndefined();
 
     // Vérifie que imageUrl est null
@@ -164,11 +162,12 @@ describe('Image Upload (Selfie and File Upload)', () => {
     expect(returned.imageUrl).toBeNull();
   });
 
-  test('crée le dossier selfies s\'il n\'existe pas', async () => {
+  test("crée le dossier selfies s'il n'existe pas", async () => {
     // Simule que le dossier n'existe pas
     fs.existsSync.mockReturnValue(false);
 
-    const base64Image = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+    const base64Image =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
 
     const req = {
       body: {
@@ -176,22 +175,20 @@ describe('Image Upload (Selfie and File Upload)', () => {
         rating: 4,
         lat: 48.8566,
         lon: 2.3522,
-        imageUrl: base64Image
-      }
+        imageUrl: base64Image,
+      },
     };
 
     const res = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn()
+      json: jest.fn(),
     };
 
     await addMood(req, res);
 
     // Vérifie que mkdirSync a été appelé
     expect(fs.mkdirSync).toHaveBeenCalled();
-    const mkdirCall = fs.mkdirSync.mock.calls.find(call =>
-      call[0].includes('selfies')
-    );
+    const mkdirCall = fs.mkdirSync.mock.calls.find(call => call[0].includes('selfies'));
     expect(mkdirCall).toBeDefined();
     expect(mkdirCall[1]).toEqual({ recursive: true });
   });

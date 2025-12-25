@@ -13,11 +13,10 @@ function ensure() {
   if (!fs.existsSync(FILE)) fs.writeFileSync(FILE, '[]', 'utf8');
 }
 
-
 /**
  * Lit et parse le fichier JSON
  * Retourne toujous un tableau
-*/
+ */
 function loadAll() {
   // Assure l'existence du fichier
   ensure();
@@ -43,11 +42,9 @@ function loadAll() {
   }
 }
 
-
-
 /**
-  * Sauvegarde une entrée dans le fichier JSON.
-*/
+ * Sauvegarde une entrée dans le fichier JSON.
+ */
 function save(entry) {
   if (!entry) throw new Error('entry is required');
 
