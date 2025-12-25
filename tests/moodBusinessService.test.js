@@ -56,7 +56,7 @@ describe('moodBusinessService', () => {
   });
 
   describe('createNewMood', () => {
-    test('orchestre correctement la création d\'un mood complet', async () => {
+    test("orchestre correctement la création d'un mood complet", async () => {
       const validatedData = {
         text: 'Je me sens bien',
         rating: 4,
@@ -89,7 +89,7 @@ describe('moodBusinessService', () => {
       expect(result.id).toBe(123456);
     });
 
-    test('gère l\'absence de météo si coordonnées invalides', async () => {
+    test("gère l'absence de météo si coordonnées invalides", async () => {
       resolveLocation.mockResolvedValue({
         lat: null,
         lon: null,
@@ -136,7 +136,7 @@ describe('moodBusinessService', () => {
       });
     });
 
-    test('gère l\'absence d\'image correctement', async () => {
+    test("gère l'absence d'image correctement", async () => {
       saveImageFromBase64.mockReturnValue(null);
 
       const validatedData = {
@@ -153,7 +153,7 @@ describe('moodBusinessService', () => {
       expect(buildMood).toHaveBeenCalledWith(
         expect.objectContaining({
           imageUrl: null,
-        }),
+        })
       );
     });
 
