@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node src/index.js",
     "test": "jest --runInBand",
+    "test:coverage": "jest --runInBand --coverage",
     "lint": "eslint src/ public/js/ tests/",
     "lint:fix": "eslint src/ public/js/ tests/ --fix",
     "format": "prettier --write \"src/**/*.js\" \"public/js/**/*.js\" \"tests/**/*.js\"",
