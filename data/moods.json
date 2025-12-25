@@ -435,5 +435,51 @@
     "scoreResult": 100,
     "imageUrl": "selfies/selfie_1766688229490.png",
     "createdAt": "2025-12-25T18:43:49.492Z"
+  },
+  {
+    "id": 1766695766845,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "place": {
+      "name": "6, Place de l'Hôtel-de-Ville - Esplanade de la Libération, Quartier Saint-Merri, Paris 4e Arrondissement, Paris, Île-de-France, France métropolitaine, 75004, France",
+      "type": "clock",
+      "lat": 48.8566,
+      "lon": 2.3522
+    },
+    "weather": {
+      "temp": -0.11,
+      "weather": "clear sky",
+      "humidity": 83,
+      "wind_speed": 4.12
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766695766843.jpg",
+    "createdAt": "2025-12-25T20:49:26.845Z"
+  },
+  {
+    "id": 1766699233326,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 50.272874,
+    "lon": 1.6673051,
+    "place": {
+      "name": "4, Rue des Soufflets, Rue, Abbeville, Somme, Hauts-de-France, France métropolitaine, 80120, France",
+      "type": "house",
+      "lat": 50.272874,
+      "lon": 1.6673051
+    },
+    "weather": {
+      "temp": -2.04,
+      "weather": "clear sky",
+      "humidity": 73,
+      "wind_speed": 4.51
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766699233324.jpg",
+    "createdAt": "2025-12-25T21:47:13.326Z"
   }
 ]

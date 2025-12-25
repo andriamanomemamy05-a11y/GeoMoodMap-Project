@@ -22,7 +22,12 @@ describe('moodFactory', () => {
       expect(mood.lat).toBe(48.8566);
       expect(mood.lon).toBe(2.3522);
       expect(mood.place).toEqual({ name: 'Paris, France', type: 'city' });
-      expect(mood.weather).toEqual({ temp: 22, humidity: 65, weather: 'clear sky', wind_speed: 3.5 });
+      expect(mood.weather).toEqual({
+        temp: 22,
+        humidity: 65,
+        weather: 'clear sky',
+        wind_speed: 3.5,
+      });
       expect(mood.textScore).toBe(2);
       expect(mood.scoreResult).toBe(75);
       expect(mood.imageUrl).toBe('selfies/selfie_123456.png');
