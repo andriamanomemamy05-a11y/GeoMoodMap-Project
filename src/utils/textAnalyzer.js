@@ -30,10 +30,10 @@ function analyzeText(text) {
   let score = 0;
 
   // On ajoute au fur et à mesure si les textes contiennent des mots positives ou négatives
-  for (const w of words) {
+  words.forEach(w => {
     if (positives.includes(w)) score += 1;
     if (negatives.includes(w)) score -= 1;
-  }
+  });
 
   // Limitez le scrore à une plage raisonnable pour éviter une influence excessive
   if (score > 5) score = 5;

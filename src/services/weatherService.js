@@ -13,7 +13,9 @@ const OPENWEATHER_KEY = process.env.OPENWEATHER_API_KEY || '';
  */
 async function getWeather(lat, lon) {
   // Les coordonnées sont obligatoires pour récupérer la météo
-  if (!isFinite(lat) || !isFinite(lon)) throw new Error('Invalid coordinates for getWeather');
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+    throw new Error('Invalid coordinates for getWeather');
+  }
 
   // Si mock est true, on utilise les données de test simulées
   if (USE_MOCKS) {
