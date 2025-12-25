@@ -9,11 +9,11 @@
 describe('Export Feature', () => {
   test('génère le contenu formaté correctement avec toutes les données', () => {
     const mood = {
-      text: 'Je me sens très bien aujourd\'hui',
+      text: "Je me sens très bien aujourd'hui",
       rating: 5,
       scoreResult: 85,
       place: {
-        name: 'Paris, France'
+        name: 'Paris, France',
       },
       lat: 48.8566,
       lon: 2.3522,
@@ -21,9 +21,9 @@ describe('Export Feature', () => {
         temp: 22,
         humidity: 65,
         weather: 'clear sky',
-        wind_speed: 3.5
+        wind_speed: 3.5,
       },
-      createdAt: '2025-12-25T10:30:00.000Z'
+      createdAt: '2025-12-25T10:30:00.000Z',
     };
 
     const expectedContent = `==============================================
@@ -69,10 +69,14 @@ Coordonnées : ${mood.lat}, ${mood.lon}
 
 MÉTÉO
 -----
-${mood.weather ? `Température : ${mood.weather.temp} °C
+${
+  mood.weather
+    ? `Température : ${mood.weather.temp} °C
 Humidité : ${mood.weather.humidity} %
 Conditions : ${mood.weather.weather}
-Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
+Vent : ${mood.weather.wind_speed} m/s`
+    : 'Pas de données météo disponibles'
+}
 
 ==============================================
 `;
@@ -89,7 +93,7 @@ Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
       lat: 45.5,
       lon: -73.5,
       weather: null,
-      createdAt: '2025-12-25T10:30:00.000Z'
+      createdAt: '2025-12-25T10:30:00.000Z',
     };
 
     const content = `==============================================
@@ -109,10 +113,14 @@ Coordonnées : ${mood.lat}, ${mood.lon}
 
 MÉTÉO
 -----
-${mood.weather ? `Température : ${mood.weather.temp} °C
+${
+  mood.weather
+    ? `Température : ${mood.weather.temp} °C
 Humidité : ${mood.weather.humidity} %
 Conditions : ${mood.weather.weather}
-Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
+Vent : ${mood.weather.wind_speed} m/s`
+    : 'Pas de données météo disponibles'
+}
 
 ==============================================
 `;
@@ -127,7 +135,7 @@ Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
       rating: 4,
       scoreResult: null,
       place: {
-        name: 'Lyon, France'
+        name: 'Lyon, France',
       },
       lat: 45.764,
       lon: 4.8357,
@@ -135,9 +143,9 @@ Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
         temp: 18,
         humidity: 70,
         weather: 'cloudy',
-        wind_speed: 2.1
+        wind_speed: 2.1,
       },
-      createdAt: '2025-12-25T10:30:00.000Z'
+      createdAt: '2025-12-25T10:30:00.000Z',
     };
 
     const content = `==============================================
@@ -157,10 +165,14 @@ Coordonnées : ${mood.lat}, ${mood.lon}
 
 MÉTÉO
 -----
-${mood.weather ? `Température : ${mood.weather.temp} °C
+${
+  mood.weather
+    ? `Température : ${mood.weather.temp} °C
 Humidité : ${mood.weather.humidity} %
 Conditions : ${mood.weather.weather}
-Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
+Vent : ${mood.weather.wind_speed} m/s`
+    : 'Pas de données météo disponibles'
+}
 
 ==============================================
 `;
@@ -168,7 +180,7 @@ Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
     expect(content).toContain('Score final : N/A%');
   });
 
-  test('gère correctement l\'absence de place (utilise address)', () => {
+  test("gère correctement l'absence de place (utilise address)", () => {
     const mood = {
       text: 'Test sans place',
       rating: 2,
@@ -180,9 +192,9 @@ Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
         temp: 15,
         humidity: 80,
         weather: 'rainy',
-        wind_speed: 5
+        wind_speed: 5,
       },
-      createdAt: '2025-12-25T10:30:00.000Z'
+      createdAt: '2025-12-25T10:30:00.000Z',
     };
 
     const content = `==============================================
@@ -202,10 +214,14 @@ Coordonnées : ${mood.lat}, ${mood.lon}
 
 MÉTÉO
 -----
-${mood.weather ? `Température : ${mood.weather.temp} °C
+${
+  mood.weather
+    ? `Température : ${mood.weather.temp} °C
 Humidité : ${mood.weather.humidity} %
 Conditions : ${mood.weather.weather}
-Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
+Vent : ${mood.weather.wind_speed} m/s`
+    : 'Pas de données météo disponibles'
+}
 
 ==============================================
 `;
@@ -213,7 +229,7 @@ Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
     expect(content).toContain('Adresse : 123 Rue de Test');
   });
 
-  test('gère correctement l\'absence totale d\'adresse', () => {
+  test("gère correctement l'absence totale d'adresse", () => {
     const mood = {
       text: 'Test sans adresse du tout',
       rating: 3,
@@ -221,7 +237,7 @@ Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
       lat: 0,
       lon: 0,
       weather: null,
-      createdAt: '2025-12-25T10:30:00.000Z'
+      createdAt: '2025-12-25T10:30:00.000Z',
     };
 
     const content = `==============================================
@@ -241,10 +257,14 @@ Coordonnées : ${mood.lat}, ${mood.lon}
 
 MÉTÉO
 -----
-${mood.weather ? `Température : ${mood.weather.temp} °C
+${
+  mood.weather
+    ? `Température : ${mood.weather.temp} °C
 Humidité : ${mood.weather.humidity} %
 Conditions : ${mood.weather.weather}
-Vent : ${mood.weather.wind_speed} m/s` : 'Pas de données météo disponibles'}
+Vent : ${mood.weather.wind_speed} m/s`
+    : 'Pas de données météo disponibles'
+}
 
 ==============================================
 `;

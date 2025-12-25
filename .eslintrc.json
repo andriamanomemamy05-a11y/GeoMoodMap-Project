@@ -1,0 +1,52 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true,
+    "jest": true
+  },
+  "globals": {
+    "L": "readonly",
+    "bootstrap": "readonly"
+  },
+  "extends": [
+    "airbnb-base",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+  "rules": {
+    "prettier/prettier": "warn",
+    "no-console": "off",
+    "no-unused-vars": "warn",
+    "prefer-const": "warn",
+    "no-var": "warn",
+    "no-undef": "error",
+    "eqeqeq": "warn",
+    "curly": "warn",
+    "no-alert": "off",
+    "consistent-return": "warn",
+    "no-param-reassign": "warn",
+    "no-shadow": "warn",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "no-use-before-define": "warn",
+    "no-plusplus": "off",
+    "no-underscore-dangle": "off",
+    "complexity": ["warn", 15],
+    "max-lines-per-function": ["warn", { "max": 100, "skipBlankLines": true, "skipComments": true }],
+    "max-depth": ["warn", 4],
+    "max-params": ["warn", 5]
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    "data/",
+    "public/selfies/",
+    "coverage/"
+  ]
+}

@@ -1,19 +1,19 @@
+const fs = require('fs');
+const path = require('path');
 const geocodeService = require('../services/geocodeService');
 const weatherService = require('../services/weatherService');
 const jsonStore = require('../storage/jsonStore');
 const { computeScoreWithBreakdown } = require('../utils/moodScore');
 const { analyzeText } = require('../utils/textAnalyzer');
-const fs = require('fs');
-const path = require('path');
 
 /**
  * addMood
  * - Validatation des données
  * - R2cupération des coordinations ou adresse
- * - Récupérer la météo selon les coord 
+ * - Récupérer la météo selon les coord
  * - Calculer le mood score via utils/moodScore par rapport aux données
  * - Sauvegarder dans data/mood.json via storage/jsonStore
-*/
+ */
 async function addMood(req, res) {
   try {
     const { text = '', rating, lat, lon, address, imageUrl } = req.body;
@@ -23,11 +23,13 @@ async function addMood(req, res) {
       return res.status(400).json({ error: 'text is required and must be a non-empty string' });
     }
     if (rating === undefined || rating === null || isNaN(Number(rating))) {
-      return res.status(400).json({ error: 'rating is required and must be a number (1-5 recommended)' });
+      return res
+        .status(400)
+        .json({ error: 'rating is required and must be a number (1-5 recommended)' });
     }
 
     // Normaliser le rating en nombre
-    let numericRating = Number(rating);
+    const numericRating = Number(rating);
 
     // S'assurer qu'on a des coordonnées ou une adresse
     const hasCoords = lat !== undefined && lon !== undefined && lat !== null && lon !== null;
@@ -63,7 +65,12 @@ async function addMood(req, res) {
     // Obtenir la météo actuel du jour (uniquement si les coordonnées sont présentes ceux qui sont très utiles)
     let weather = null;
     try {
-      if (usedLat !== null && usedLon !== null && !Number.isNaN(usedLat) && !Number.isNaN(usedLon)) {
+      if (
+        usedLat !== null &&
+        usedLon !== null &&
+        !Number.isNaN(usedLat) &&
+        !Number.isNaN(usedLon)
+      ) {
         const w = await weatherService.getWeather(usedLat, usedLon);
         weather = w && w.data ? w.data : null;
       }
@@ -79,7 +86,7 @@ async function addMood(req, res) {
     const scoreResult = computeScoreWithBreakdown({
       rating: numericRating,
       textScore,
-      weather
+      weather,
     });
 
     // --- Sauvegarde du selfie : image en base64 ---
@@ -120,7 +127,7 @@ async function addMood(req, res) {
       textScore,
       scoreResult,
       imageUrl: savedImagePath || null,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
 
     // Récupérer les données et l'envoeyr das jsonStore pour le sauvegarder
@@ -134,8 +141,8 @@ async function addMood(req, res) {
 }
 
 /**
-  * getMoods - retourne la liste complète (simple)
-*/
+ * getMoods - retourne la liste complète (simple)
+ */
 function getMoods(req, res) {
   try {
     const moods = jsonStore.loadAll();

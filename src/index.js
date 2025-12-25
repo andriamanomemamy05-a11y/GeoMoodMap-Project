@@ -1,10 +1,10 @@
 require('dotenv').config();
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const { addMood, getMoods } = require('./controllers/moodController');
 
 const geocodeService = require('./services/geocodeService');
-const fs = require('fs');
-const path = require('path');
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use(express.static(path.join(process.cwd(), 'public')));
 
 // Endpoint de recherche d'adresse pour l'autocomplete
 app.get('/api/search', async (req, res) => {
-  const q = req.query.q;
+  const { q } = req.query;
   if (!q) return res.json([]);
   try {
     const result = await geocodeService.forwardGeocode(q);
