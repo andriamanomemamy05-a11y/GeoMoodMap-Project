@@ -71,4 +71,12 @@ async function createNewMood(validatedData) {
   return mood;
 }
 
-module.exports = { createNewMood };
+/**
+ * Récupère tous les moods (Use Case de lecture)
+ * @returns {Array<Object>} Liste de tous les moods
+ */
+function getAllMoods() {
+  return jsonStore.loadAll();
+}
+
+module.exports = { createNewMood, getAllMoods };

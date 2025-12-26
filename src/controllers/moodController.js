@@ -1,6 +1,5 @@
 const { validateMoodInput } = require('../validators/moodValidator');
-const { createNewMood } = require('../services/moodBusinessService');
-const jsonStore = require('../storage/jsonStore');
+const { createNewMood, getAllMoods } = require('../services/moodBusinessService');
 
 /**
  * Contrôleur HTTP pour les moods
@@ -31,11 +30,11 @@ async function addMood(req, res) {
 }
 
 /**
- * getMoods - retourne la liste complète (simple)
+ * GET /api/moods - Récupérer tous les moods
  */
 function getMoods(req, res) {
   try {
-    const moods = jsonStore.loadAll();
+    const moods = getAllMoods();
     res.json(moods);
   } catch (err) {
     console.error('getMoods error:', err && (err.stack || err));
