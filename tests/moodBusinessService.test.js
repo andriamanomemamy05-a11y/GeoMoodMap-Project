@@ -1,43 +1,51 @@
-jest.mock('../src/infrastructure/adapters/weather/weatherService');
-jest.mock('../src/application/services/LocationResolver');
-jest.mock('../src/infrastructure/adapters/image/ImageStorage');
 jest.mock('../src/domain/text-analysis/TextAnalyzer');
 jest.mock('../src/domain/scoring/ScoreEngine');
 jest.mock('../src/domain/factories/moodFactory');
-jest.mock('../src/infrastructure/persistence/json/jsonStore');
 
-const weatherService = require('../src/infrastructure/adapters/weather/weatherService');
-const { resolveLocation } = require('../src/application/services/LocationResolver');
-const { saveImageFromBase64 } = require('../src/infrastructure/adapters/image/ImageStorage');
 const { analyzeText } = require('../src/domain/text-analysis/TextAnalyzer');
 const { calculateGlobalScore } = require('../src/domain/scoring/ScoreEngine');
 const { buildMood } = require('../src/domain/factories/moodFactory');
-const jsonStore = require('../src/infrastructure/persistence/json/jsonStore');
 
-const { createNewMood, getAllMoods } = require('../src/application/services/MoodService');
+const { createMoodService } = require('../src/application/services/MoodService');
 
 describe('moodBusinessService', () => {
+  let mockWeatherService;
+  let mockLocationResolver;
+  let mockImageStorage;
+  let mockMoodRepository;
+  let moodService;
+
   beforeEach(() => {
     jest.clearAllMocks();
 
-    // Mocks par défaut
-    resolveLocation.mockResolvedValue({
-      lat: 48.8566,
-      lon: 2.3522,
-      place: { name: 'Paris, France', type: 'city' },
-    });
+    // Create mock dependencies
+    mockWeatherService = {
+      getWeather: jest.fn().mockResolvedValue({
+        source: 'mock',
+        data: { temp: 20, weather: 'clear sky', humidity: 60, wind_speed: 5 },
+      }),
+    };
 
-    weatherService.getWeather.mockResolvedValue({
-      source: 'mock',
-      data: { temp: 20, weather: 'clear sky', humidity: 60, wind_speed: 5 },
-    });
+    mockLocationResolver = {
+      resolveLocation: jest.fn().mockResolvedValue({
+        lat: 48.8566,
+        lon: 2.3522,
+        place: { name: 'Paris, France', type: 'city' },
+      }),
+    };
 
+    mockImageStorage = {
+      saveImageFromBase64: jest.fn().mockReturnValue('selfies/selfie_123.png'),
+    };
+
+    mockMoodRepository = {
+      save: jest.fn(),
+      loadAll: jest.fn().mockReturnValue([]),
+    };
+
+    // Mock domain functions
     analyzeText.mockReturnValue(2);
-
     calculateGlobalScore.mockReturnValue(75);
-
-    saveImageFromBase64.mockReturnValue('selfies/selfie_123.png');
-
     buildMood.mockReturnValue({
       id: 123456,
       text: 'Test',
@@ -52,7 +60,13 @@ describe('moodBusinessService', () => {
       createdAt: '2025-12-25T10:00:00.000Z',
     });
 
-    jsonStore.save.mockImplementation(() => {});
+    // Create service instance with mocked dependencies
+    moodService = createMoodService({
+      weatherService: mockWeatherService,
+      locationResolver: mockLocationResolver,
+      imageStorage: mockImageStorage,
+      moodRepository: mockMoodRepository,
+    });
   });
 
   describe('createNewMood', () => {
@@ -66,31 +80,31 @@ describe('moodBusinessService', () => {
         imageUrl: 'data:image/png;base64,abc123',
       };
 
-      const result = await createNewMood(validatedData);
+      const result = await moodService.createNewMood(validatedData);
 
       // Vérifie que tous les services ont été appelés
-      expect(resolveLocation).toHaveBeenCalledWith({
+      expect(mockLocationResolver.resolveLocation).toHaveBeenCalledWith({
         lat: 48.8566,
         lon: 2.3522,
         address: null,
       });
-      expect(weatherService.getWeather).toHaveBeenCalledWith(48.8566, 2.3522);
+      expect(mockWeatherService.getWeather).toHaveBeenCalledWith(48.8566, 2.3522);
       expect(analyzeText).toHaveBeenCalledWith('Je me sens bien');
-      expect(saveImageFromBase64).toHaveBeenCalledWith('data:image/png;base64,abc123');
+      expect(mockImageStorage.saveImageFromBase64).toHaveBeenCalledWith('data:image/png;base64,abc123');
       expect(calculateGlobalScore).toHaveBeenCalledWith({
         rating: 4,
         textScore: 2,
         weather: { temp: 20, weather: 'clear sky', humidity: 60, wind_speed: 5 },
       });
       expect(buildMood).toHaveBeenCalled();
-      expect(jsonStore.save).toHaveBeenCalled();
+      expect(mockMoodRepository.save).toHaveBeenCalled();
 
       expect(result).toBeDefined();
       expect(result.id).toBe(123456);
     });
 
     test("gère l'absence de météo si coordonnées invalides", async () => {
-      resolveLocation.mockResolvedValue({
+      mockLocationResolver.resolveLocation.mockResolvedValue({
         lat: null,
         lon: null,
         place: null,
@@ -105,9 +119,9 @@ describe('moodBusinessService', () => {
         imageUrl: null,
       };
 
-      await createNewMood(validatedData);
+      await moodService.createNewMood(validatedData);
 
-      expect(weatherService.getWeather).not.toHaveBeenCalled();
+      expect(mockWeatherService.getWeather).not.toHaveBeenCalled();
       expect(calculateGlobalScore).toHaveBeenCalledWith({
         rating: 3,
         textScore: 2,
@@ -116,7 +130,7 @@ describe('moodBusinessService', () => {
     });
 
     test('gère les erreurs de météo gracieusement', async () => {
-      weatherService.getWeather.mockRejectedValue(new Error('Weather API error'));
+      mockWeatherService.getWeather.mockRejectedValue(new Error('Weather API error'));
 
       const validatedData = {
         text: 'Test',
@@ -127,7 +141,7 @@ describe('moodBusinessService', () => {
         imageUrl: null,
       };
 
-      await createNewMood(validatedData);
+      await moodService.createNewMood(validatedData);
 
       expect(calculateGlobalScore).toHaveBeenCalledWith({
         rating: 4,
@@ -137,7 +151,7 @@ describe('moodBusinessService', () => {
     });
 
     test("gère l'absence d'image correctement", async () => {
-      saveImageFromBase64.mockReturnValue(null);
+      mockImageStorage.saveImageFromBase64.mockReturnValue(null);
 
       const validatedData = {
         text: 'Test sans image',
@@ -148,7 +162,7 @@ describe('moodBusinessService', () => {
         imageUrl: null,
       };
 
-      await createNewMood(validatedData);
+      await moodService.createNewMood(validatedData);
 
       expect(buildMood).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -167,13 +181,13 @@ describe('moodBusinessService', () => {
         imageUrl: 'data:image/jpeg;base64,xyz789',
       };
 
-      resolveLocation.mockResolvedValue({
+      mockLocationResolver.resolveLocation.mockResolvedValue({
         lat: 45.764,
         lon: 4.8357,
         place: { name: 'Lyon, France' },
       });
 
-      await createNewMood(validatedData);
+      await moodService.createNewMood(validatedData);
 
       expect(buildMood).toHaveBeenCalledWith({
         text: 'Test complet',
@@ -198,9 +212,9 @@ describe('moodBusinessService', () => {
         imageUrl: null,
       };
 
-      const result = await createNewMood(validatedData);
+      const result = await moodService.createNewMood(validatedData);
 
-      expect(jsonStore.save).toHaveBeenCalledWith(result);
+      expect(mockMoodRepository.save).toHaveBeenCalledWith(result);
     });
   });
 
@@ -212,30 +226,30 @@ describe('moodBusinessService', () => {
         { id: 3, text: 'Mood 3', rating: 5 },
       ];
 
-      jsonStore.loadAll.mockReturnValue(mockMoods);
+      mockMoodRepository.loadAll.mockReturnValue(mockMoods);
 
-      const result = getAllMoods();
+      const result = moodService.getAllMoods();
 
-      expect(jsonStore.loadAll).toHaveBeenCalledTimes(1);
+      expect(mockMoodRepository.loadAll).toHaveBeenCalledTimes(1);
       expect(result).toEqual(mockMoods);
     });
 
     test('retourne un tableau vide si aucun mood', () => {
-      jsonStore.loadAll.mockReturnValue([]);
+      mockMoodRepository.loadAll.mockReturnValue([]);
 
-      const result = getAllMoods();
+      const result = moodService.getAllMoods();
 
-      expect(jsonStore.loadAll).toHaveBeenCalledTimes(1);
+      expect(mockMoodRepository.loadAll).toHaveBeenCalledTimes(1);
       expect(result).toEqual([]);
     });
 
-    test('délègue correctement à jsonStore.loadAll', () => {
+    test('délègue correctement à moodRepository.loadAll', () => {
       const mockMoods = [{ id: 123, text: 'Test' }];
-      jsonStore.loadAll.mockReturnValue(mockMoods);
+      mockMoodRepository.loadAll.mockReturnValue(mockMoods);
 
-      getAllMoods();
+      moodService.getAllMoods();
 
-      expect(jsonStore.loadAll).toHaveBeenCalledWith();
+      expect(mockMoodRepository.loadAll).toHaveBeenCalledWith();
     });
   });
 });
