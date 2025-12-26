@@ -183,6 +183,7 @@ app.use((req, res) => {
 });
 
 // Erreur handler sur le serveur
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err && (err.stack || err));
   res.status(500).json({ error: 'Internal Server Error' });
