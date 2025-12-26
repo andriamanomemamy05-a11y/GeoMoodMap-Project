@@ -9,7 +9,7 @@
 const path = require('path');
 const { parseBase64Image, isSupportedImageType } = require('./ImageParser');
 const { generateUniqueFileName, generateRelativePath } = require('./NamingStrategy');
-const fileSystemAdapter = require('../../storage/fileSystemAdapter');
+const fileSystemAdapter = require('../../persistence/json/fileSystemAdapter');
 
 /**
  * Sauvegarde une image base64 dans le système de fichiers

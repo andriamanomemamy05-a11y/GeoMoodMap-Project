@@ -1,4 +1,4 @@
-const { calculateSentimentScore } = require('../src/scoring/rules/SentimentRule');
+const { calculateSentimentScore } = require('../src/domain/scoring/rules/SentimentRule');
 
 describe('SentimentRule', () => {
   describe('calculateSentimentScore', () => {

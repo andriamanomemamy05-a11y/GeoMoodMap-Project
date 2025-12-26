@@ -1,4 +1,4 @@
-const geocodeService = require('../services/geocodeService');
+const geocodeService = require('../../adapters/geocode/geocodeService');
 
 /**
  * Contrôleur HTTP pour la recherche d'adresses

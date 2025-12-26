@@ -1,14 +1,14 @@
 // On mocke modules externes avant de require le controller
-jest.mock('../src/services/geocodeService');
-jest.mock('../src/services/weatherService');
+jest.mock('../src/infrastructure/adapters/geocode/geocodeService');
+jest.mock('../src/infrastructure/adapters/weather/weatherService');
 jest.mock('fs');
 
 const fs = require('fs');
-const geocodeService = require('../src/services/geocodeService');
-const weatherService = require('../src/services/weatherService');
+const geocodeService = require('../src/infrastructure/adapters/geocode/geocodeService');
+const weatherService = require('../src/infrastructure/adapters/weather/weatherService');
 
 // Après les mocks, on importe le controller (module qui utilise les services)
-const { addMood } = require('../src/controllers/moodController');
+const { addMood } = require('../src/infrastructure/web/controllers/moodController');
 
 describe('moodController addMood behavior', () => {
   beforeEach(() => {

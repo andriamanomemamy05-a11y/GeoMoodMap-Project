@@ -1,7 +1,7 @@
-jest.mock('../src/services/image/ImageStorage');
+jest.mock('../src/infrastructure/adapters/image/ImageStorage');
 
-const { saveImageFromBase64 } = require('../src/services/image/ImageStorage');
-const { saveSelfie } = require('../src/controllers/selfieController');
+const { saveImageFromBase64 } = require('../src/infrastructure/adapters/image/ImageStorage');
+const { saveSelfie } = require('../src/infrastructure/web/controllers/selfieController');
 
 describe('selfieController', () => {
   beforeEach(() => {

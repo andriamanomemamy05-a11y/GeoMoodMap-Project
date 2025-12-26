@@ -573,5 +573,51 @@
     "scoreResult": 100,
     "imageUrl": "selfies/selfie_1766765324109.jpg",
     "createdAt": "2025-12-26T16:08:44.114Z"
+  },
+  {
+    "id": 1766766936933,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": -22.9110137,
+    "lon": -43.2093727,
+    "place": {
+      "name": "Viaduto dos Fuzileiros, Praça da Bandeira, Rio de Janeiro, Região Geográfica Imediata do Rio de Janeiro, Região Metropolitana do Rio de Janeiro, Região Geográfica Intermediária do Rio de Janeiro, Rio de Janeiro, Região Sudeste, 22250-905, Brasil",
+      "type": "primary",
+      "lat": -22.9110137,
+      "lon": -43.2093727
+    },
+    "weather": {
+      "temp": 34.22,
+      "weather": "clear sky",
+      "humidity": 57,
+      "wind_speed": 5.14
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766766936928.jpg",
+    "createdAt": "2025-12-26T16:35:36.933Z"
+  },
+  {
+    "id": 1766779317901,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 50.272874,
+    "lon": 1.6673051,
+    "place": {
+      "name": "4, Rue des Soufflets, Rue, Abbeville, Somme, Hauts-de-France, France métropolitaine, 80120, France",
+      "type": "house",
+      "lat": 50.272874,
+      "lon": 1.6673051
+    },
+    "weather": {
+      "temp": -2.04,
+      "weather": "broken clouds",
+      "humidity": 84,
+      "wind_speed": 3.54
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766779317897.jpg",
+    "createdAt": "2025-12-26T20:01:57.901Z"
   }
 ]

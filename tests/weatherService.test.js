@@ -1,5 +1,5 @@
 process.env.USE_MOCKS = 'true';
-const weatherService = require('../src/services/weatherService');
+const weatherService = require('../src/infrastructure/adapters/weather/weatherService');
 
 describe('Services weather (avec mocks)', () => {
   test('weatherService.getWeather : retourner des données météo simulées avec les variables demandées', async () => {

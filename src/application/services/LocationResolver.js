@@ -1,4 +1,4 @@
-const geocodeService = require('./geocodeService');
+const geocodeService = require('../../infrastructure/adapters/geocode/geocodeService');
 
 /**
  * Service de résolution de localisation

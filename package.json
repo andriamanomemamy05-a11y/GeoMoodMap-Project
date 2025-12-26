@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node src/infrastructure/web/server.js",
     "test": "jest --runInBand",
     "test:coverage": "jest --runInBand --coverage",
     "lint": "eslint src/ public/js/ tests/",

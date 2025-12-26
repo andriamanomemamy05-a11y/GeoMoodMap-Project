@@ -1,4 +1,4 @@
-const { calculateWeatherScore } = require('../src/scoring/rules/WeatherRule');
+const { calculateWeatherScore } = require('../src/domain/scoring/rules/WeatherRule');
 
 describe('WeatherRule', () => {
   describe('calculateWeatherScore', () => {

@@ -1,4 +1,4 @@
-const { buildMood } = require('../src/factories/moodFactory');
+const { buildMood } = require('../src/domain/factories/moodFactory');
 
 describe('moodFactory', () => {
   describe('buildMood', () => {

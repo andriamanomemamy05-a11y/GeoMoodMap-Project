@@ -1,5 +1,5 @@
-const { validateMoodInput } = require('../validators/moodValidator');
-const { createNewMood, getAllMoods } = require('../services/moodBusinessService');
+const { validateMoodInput } = require('../../../application/validators/moodValidator');
+const { createNewMood, getAllMoods } = require('../../../application/services/MoodService');
 
 /**
  * Contrôleur HTTP pour les moods
