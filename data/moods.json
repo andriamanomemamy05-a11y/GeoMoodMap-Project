@@ -435,5 +435,143 @@
     "scoreResult": 100,
     "imageUrl": "selfies/selfie_1766688229490.png",
     "createdAt": "2025-12-25T18:43:49.492Z"
+  },
+  {
+    "id": 1766695766845,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "place": {
+      "name": "6, Place de l'Hôtel-de-Ville - Esplanade de la Libération, Quartier Saint-Merri, Paris 4e Arrondissement, Paris, Île-de-France, France métropolitaine, 75004, France",
+      "type": "clock",
+      "lat": 48.8566,
+      "lon": 2.3522
+    },
+    "weather": {
+      "temp": -0.11,
+      "weather": "clear sky",
+      "humidity": 83,
+      "wind_speed": 4.12
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766695766843.jpg",
+    "createdAt": "2025-12-25T20:49:26.845Z"
+  },
+  {
+    "id": 1766699233326,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 50.272874,
+    "lon": 1.6673051,
+    "place": {
+      "name": "4, Rue des Soufflets, Rue, Abbeville, Somme, Hauts-de-France, France métropolitaine, 80120, France",
+      "type": "house",
+      "lat": 50.272874,
+      "lon": 1.6673051
+    },
+    "weather": {
+      "temp": -2.04,
+      "weather": "clear sky",
+      "humidity": 73,
+      "wind_speed": 4.51
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766699233324.jpg",
+    "createdAt": "2025-12-25T21:47:13.326Z"
+  },
+  {
+    "id": 1766702828288,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 50.272874,
+    "lon": 1.6673051,
+    "place": {
+      "name": "4, Rue des Soufflets, Rue, Abbeville, Somme, Hauts-de-France, France métropolitaine, 80120, France",
+      "type": "house",
+      "lat": 50.272874,
+      "lon": 1.6673051
+    },
+    "weather": {
+      "temp": -2.04,
+      "weather": "clear sky",
+      "humidity": 74,
+      "wind_speed": 4.93
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766702828285.jpg",
+    "createdAt": "2025-12-25T22:47:08.288Z"
+  },
+  {
+    "id": 1766707436800,
+    "text": "Je me sens super bien",
+    "rating": 5,
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "place": {
+      "name": "6, Place de l'Hôtel-de-Ville - Esplanade de la Libération, Quartier Saint-Merri, Paris 4e Arrondissement, Paris, Île-de-France, France métropolitaine, 75004, France",
+      "type": "clock",
+      "lat": 48.8566,
+      "lon": 2.3522
+    },
+    "weather": {
+      "temp": -0.98,
+      "weather": "clear sky",
+      "humidity": 85,
+      "wind_speed": 3.6
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": null,
+    "createdAt": "2025-12-26T00:03:56.800Z"
+  },
+  {
+    "id": 1766707446161,
+    "text": "Je suis triste",
+    "rating": 2,
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "place": {
+      "name": "6, Place de l'Hôtel-de-Ville - Esplanade de la Libération, Quartier Saint-Merri, Paris 4e Arrondissement, Paris, Île-de-France, France métropolitaine, 75004, France",
+      "type": "clock",
+      "lat": 48.8566,
+      "lon": 2.3522
+    },
+    "weather": {
+      "temp": -0.98,
+      "weather": "clear sky",
+      "humidity": 85,
+      "wind_speed": 3.6
+    },
+    "textScore": -1,
+    "scoreResult": 35,
+    "imageUrl": null,
+    "createdAt": "2025-12-26T00:04:06.161Z"
+  },
+  {
+    "id": 1766765324114,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": 2.26,
+      "weather": "clear sky",
+      "humidity": 85,
+      "wind_speed": 3.12
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766765324109.jpg",
+    "createdAt": "2025-12-26T16:08:44.114Z"
   }
 ]

@@ -1,10 +1,9 @@
 require('dotenv').config();
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
 const { addMood, getMoods } = require('./controllers/moodController');
-
-const geocodeService = require('./services/geocodeService');
+const { searchAddress } = require('./controllers/searchController');
+const { saveSelfie } = require('./controllers/selfieController');
 
 const app = express();
 
@@ -20,46 +19,11 @@ app.use((req, res, next) => {
 // Servir les fichiers statiques du dossier /public
 app.use(express.static(path.join(process.cwd(), 'public')));
 
-// Endpoint de recherche d'adresse pour l'autocomplete
-app.get('/api/search', async (req, res) => {
-  const { q } = req.query;
-  if (!q) return res.json([]);
-  try {
-    const result = await geocodeService.forwardGeocode(q);
-    // Retourne un tableau pour que le front fonctionne avec Leaflet
-    res.json([result]);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Création de l'api et appel de controller pour sauvegarder et lister les moods
+// Routes API
+app.get('/api/search', searchAddress);
 app.post('/api/moods', addMood);
 app.get('/api/moods', getMoods);
-
-// Endpoint pour recevoir et enregistrer la photo
-app.post('/api/selfie', express.json({ limit: '5mb' }), (req, res) => {
-  try {
-    const { image } = req.body; // dataURL base64
-    if (!image) return res.status(400).json({ error: 'No image provided' });
-
-    // Crée le dossier selfies si nécessaire
-    const selfiesDir = path.join(process.cwd(), 'data', 'selfies');
-    if (!fs.existsSync(selfiesDir)) fs.mkdirSync(selfiesDir, { recursive: true });
-
-    // Extraire la partie base64
-    const base64Data = image.replace(/^data:image\/png;base64,/, '');
-    const fileName = `selfie_${Date.now()}.png`;
-    const filePath = path.join(selfiesDir, fileName);
-
-    fs.writeFileSync(filePath, base64Data, 'base64');
-    res.json({ success: true, path: filePath });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to save image' });
-  }
-});
+app.post('/api/selfie', saveSelfie);
 
 // Check de l'erreur 404
 app.use((req, res) => {
