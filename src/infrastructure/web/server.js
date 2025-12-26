@@ -5,20 +5,18 @@
  * C'est ICI et SEULEMENT ICI que nous assemblons les dépendances concrètes.
  *
  * ARCHITECTURE HEXAGONALE - COMPOSITION ROOT PATTERN:
- * 1. Importer les adapters d'infrastructure (implémentations concrètes)
- * 2. Importer les factories de services d'application
- * 3. Instancier les services en injectant les adapters
- * 4. Créer les controllers en injectant les services
- * 5. Configurer Express avec les controllers instanciés
+ * - Importer les adapters d'infrastructure
+ * - Importer les factories de services d'application
+ * - Instancier les services en injectant les adapters
+ * - Créer les controllers en injectant les services
+ * - Configurer Express avec les controllers instanciés
  */
 
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
-// ============================================================================
-// ÉTAPE 1: IMPORTER LES ADAPTERS D'INFRASTRUCTURE (Implémentations concrètes)
-// ============================================================================
+// - IMPORTER LES ADAPTERS D'INFRASTRUCTURE
 
 // Adapters externes
 const weatherService = require('../adapters/weather/weatherService');
@@ -31,17 +29,13 @@ const jsonStore = require('../persistence/json/jsonStore');
 // Validators
 const { validateMoodInput } = require('../../application/validators/moodValidator');
 
-// ============================================================================
-// ÉTAPE 2: IMPORTER LES FACTORIES DE SERVICES D'APPLICATION
-// ============================================================================
+// - IMPORTER LES FACTORIES DE SERVICES D'APPLICATION
 
 const { createMoodService } = require('../../application/services/MoodService');
 const { createLocationResolver } = require('../../application/services/LocationResolver');
 const { createSearchService } = require('../../application/services/SearchService');
 
-// ============================================================================
-// ÉTAPE 3: INSTANCIER LES SERVICES EN INJECTANT LES ADAPTERS
-// ============================================================================
+// - INSTANCIER LES SERVICES EN INJECTANT LES ADAPTERS
 
 // Créer LocationResolver avec geocodeService injecté
 const locationResolver = createLocationResolver({ geocodeService });
@@ -66,9 +60,7 @@ const moodService = createMoodService({
 // Créer SearchService avec geocodeService injecté
 const searchService = createSearchService({ geocodeService });
 
-// ============================================================================
-// ÉTAPE 4: CRÉER LES CONTROLLERS EN INJECTANT LES SERVICES
-// ============================================================================
+// -  CRÉER LES CONTROLLERS EN INJECTANT LES SERVICES
 
 /**
  * Controller pour les moods
@@ -163,9 +155,7 @@ const selfieController = {
   },
 };
 
-// ============================================================================
-// ÉTAPE 5: CONFIGURER EXPRESS AVEC LES CONTROLLERS INSTANCIÉS
-// ============================================================================
+// - CONFIGURER EXPRESS AVEC LES CONTROLLERS INSTANCIÉS
 
 const app = express();
 
