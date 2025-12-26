@@ -1,4 +1,4 @@
-const { analyzeText } = require('../src/services/textAnalysis/TextAnalyzer');
+const { analyzeText } = require('../src/domain/text-analysis/TextAnalyzer');
 
 describe('TextAnalyzer', () => {
   describe('analyzeText', () => {

@@ -1,7 +1,7 @@
-jest.mock('../src/services/geocodeService');
+jest.mock('../src/infrastructure/adapters/geocode/geocodeService');
 
-const geocodeService = require('../src/services/geocodeService');
-const { resolveLocation } = require('../src/services/locationResolver');
+const geocodeService = require('../src/infrastructure/adapters/geocode/geocodeService');
+const { resolveLocation } = require('../src/application/services/LocationResolver');
 
 describe('locationResolver', () => {
   beforeEach(() => {

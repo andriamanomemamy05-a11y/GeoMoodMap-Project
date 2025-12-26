@@ -1,6 +1,6 @@
 // Toujours utiliser les mocks pour les tests unitaires
 process.env.USE_MOCKS = 'true';
-const geocodeService = require('../src/services/geocodeService');
+const geocodeService = require('../src/infrastructure/adapters/geocode/geocodeService');
 
 describe('Services de geolocalisation (avec mocks)', () => {
   test('geocodeService.reverseGeocode : retourne un lieu simulé', async () => {

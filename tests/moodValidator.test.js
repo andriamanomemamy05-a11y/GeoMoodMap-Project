@@ -1,4 +1,4 @@
-const { validateMoodInput } = require('../src/validators/moodValidator');
+const { validateMoodInput } = require('../src/application/validators/moodValidator');
 
 describe('moodValidator', () => {
   describe('validateMoodInput', () => {

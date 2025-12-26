@@ -1,20 +1,20 @@
-jest.mock('../src/services/weatherService');
-jest.mock('../src/services/locationResolver');
-jest.mock('../src/services/image/ImageStorage');
-jest.mock('../src/services/textAnalysis/TextAnalyzer');
-jest.mock('../src/scoring/ScoreEngine');
-jest.mock('../src/factories/moodFactory');
-jest.mock('../src/storage/jsonStore');
+jest.mock('../src/infrastructure/adapters/weather/weatherService');
+jest.mock('../src/application/services/LocationResolver');
+jest.mock('../src/infrastructure/adapters/image/ImageStorage');
+jest.mock('../src/domain/text-analysis/TextAnalyzer');
+jest.mock('../src/domain/scoring/ScoreEngine');
+jest.mock('../src/domain/factories/moodFactory');
+jest.mock('../src/infrastructure/persistence/json/jsonStore');
 
-const weatherService = require('../src/services/weatherService');
-const { resolveLocation } = require('../src/services/locationResolver');
-const { saveImageFromBase64 } = require('../src/services/image/ImageStorage');
-const { analyzeText } = require('../src/services/textAnalysis/TextAnalyzer');
-const { calculateGlobalScore } = require('../src/scoring/ScoreEngine');
-const { buildMood } = require('../src/factories/moodFactory');
-const jsonStore = require('../src/storage/jsonStore');
+const weatherService = require('../src/infrastructure/adapters/weather/weatherService');
+const { resolveLocation } = require('../src/application/services/LocationResolver');
+const { saveImageFromBase64 } = require('../src/infrastructure/adapters/image/ImageStorage');
+const { analyzeText } = require('../src/domain/text-analysis/TextAnalyzer');
+const { calculateGlobalScore } = require('../src/domain/scoring/ScoreEngine');
+const { buildMood } = require('../src/domain/factories/moodFactory');
+const jsonStore = require('../src/infrastructure/persistence/json/jsonStore');
 
-const { createNewMood, getAllMoods } = require('../src/services/moodBusinessService');
+const { createNewMood, getAllMoods } = require('../src/application/services/MoodService');
 
 describe('moodBusinessService', () => {
   beforeEach(() => {

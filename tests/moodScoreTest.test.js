@@ -1,4 +1,4 @@
-const { calculateGlobalScore } = require('../src/scoring/ScoreEngine');
+const { calculateGlobalScore } = require('../src/domain/scoring/ScoreEngine');
 
 describe('calculateGlobalScore', () => {
   test('score maximum avec bon rating, texte positif et météo ensoleillée', () => {

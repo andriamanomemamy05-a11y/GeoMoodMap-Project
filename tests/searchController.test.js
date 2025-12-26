@@ -1,7 +1,7 @@
-jest.mock('../src/services/geocodeService');
+jest.mock('../src/infrastructure/adapters/geocode/geocodeService');
 
-const geocodeService = require('../src/services/geocodeService');
-const { searchAddress } = require('../src/controllers/searchController');
+const geocodeService = require('../src/infrastructure/adapters/geocode/geocodeService');
+const { searchAddress } = require('../src/infrastructure/web/controllers/searchController');
 
 describe('searchController', () => {
   beforeEach(() => {

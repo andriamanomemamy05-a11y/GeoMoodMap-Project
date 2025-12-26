@@ -1,10 +1,10 @@
-const weatherService = require('./weatherService');
-const { resolveLocation } = require('./locationResolver');
-const { saveImageFromBase64 } = require('./image/ImageStorage');
-const { analyzeText } = require('./textAnalysis/TextAnalyzer');
-const { calculateGlobalScore } = require('../scoring/ScoreEngine');
-const { buildMood } = require('../factories/moodFactory');
-const jsonStore = require('../storage/jsonStore');
+const weatherService = require('../../infrastructure/adapters/weather/weatherService');
+const { resolveLocation } = require('./LocationResolver');
+const { saveImageFromBase64 } = require('../../infrastructure/adapters/image/ImageStorage');
+const { analyzeText } = require('../../domain/text-analysis/TextAnalyzer');
+const { calculateGlobalScore } = require('../../domain/scoring/ScoreEngine');
+const { buildMood } = require('../../domain/factories/moodFactory');
+const jsonStore = require('../../infrastructure/persistence/json/jsonStore');
 
 /**
  * Service métier pour la gestion des moods

@@ -1,4 +1,4 @@
-const { positiveWords, negativeWords } = require('../src/services/textAnalysis/dictionaries');
+const { positiveWords, negativeWords } = require('../src/domain/text-analysis/dictionaries');
 
 describe('dictionaries', () => {
   describe('positiveWords', () => {

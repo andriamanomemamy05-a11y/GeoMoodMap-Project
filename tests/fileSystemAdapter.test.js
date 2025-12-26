@@ -7,7 +7,7 @@ const {
   ensureFile,
   readFile,
   writeFile,
-} = require('../src/storage/fileSystemAdapter');
+} = require('../src/infrastructure/persistence/json/fileSystemAdapter');
 
 describe('fileSystemAdapter', () => {
   beforeEach(() => {

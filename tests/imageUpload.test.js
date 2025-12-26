@@ -1,13 +1,13 @@
 // Test pour vérifier la gestion des images (selfie et upload)
-jest.mock('../src/services/geocodeService');
-jest.mock('../src/services/weatherService');
+jest.mock('../src/infrastructure/adapters/geocode/geocodeService');
+jest.mock('../src/infrastructure/adapters/weather/weatherService');
 jest.mock('fs');
 
 const fs = require('fs');
-const geocodeService = require('../src/services/geocodeService');
-const weatherService = require('../src/services/weatherService');
+const geocodeService = require('../src/infrastructure/adapters/geocode/geocodeService');
+const weatherService = require('../src/infrastructure/adapters/weather/weatherService');
 
-const { addMood } = require('../src/controllers/moodController');
+const { addMood } = require('../src/infrastructure/web/controllers/moodController');
 
 describe('Image Upload (Selfie and File Upload)', () => {
   beforeEach(() => {
