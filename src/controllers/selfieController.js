@@ -1,5 +1,5 @@
 const path = require('path');
-const { saveImageFromBase64 } = require('../services/imageStorage');
+const { saveImageFromBase64 } = require('../services/image/ImageStorage');
 
 /**
  * Contrôleur HTTP pour les selfies
