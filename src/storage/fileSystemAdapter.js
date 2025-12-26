@@ -51,11 +51,12 @@ function readFile(filePath) {
  * Écrit du contenu dans un fichier
  * @param {string} filePath - Chemin du fichier
  * @param {string} content - Contenu à écrire
+ * @param {string} encoding - Encodage du fichier (utf8, base64, etc.)
  * @throws {Error} Si le fichier ne peut pas être écrit
  */
-function writeFile(filePath, content) {
+function writeFile(filePath, content, encoding = 'utf8') {
   try {
-    fs.writeFileSync(filePath, content, 'utf8');
+    fs.writeFileSync(filePath, content, encoding);
   } catch (err) {
     throw new Error(`Failed to write file ${filePath}: ${err.message}`);
   }

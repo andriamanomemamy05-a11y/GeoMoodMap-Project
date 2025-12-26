@@ -1,6 +1,6 @@
 const weatherService = require('./weatherService');
 const { resolveLocation } = require('./locationResolver');
-const { saveImageFromBase64 } = require('./imageStorage');
+const { saveImageFromBase64 } = require('./image/ImageStorage');
 const { analyzeText } = require('../utils/textAnalyzer');
 const { calculateGlobalScore } = require('../scoring/ScoreEngine');
 const { buildMood } = require('../factories/moodFactory');
