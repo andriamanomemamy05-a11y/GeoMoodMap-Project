@@ -14,7 +14,7 @@ const { calculateGlobalScore } = require('../src/scoring/ScoreEngine');
 const { buildMood } = require('../src/factories/moodFactory');
 const jsonStore = require('../src/storage/jsonStore');
 
-const { createNewMood } = require('../src/services/moodBusinessService');
+const { createNewMood, getAllMoods } = require('../src/services/moodBusinessService');
 
 describe('moodBusinessService', () => {
   beforeEach(() => {
@@ -201,6 +201,41 @@ describe('moodBusinessService', () => {
       const result = await createNewMood(validatedData);
 
       expect(jsonStore.save).toHaveBeenCalledWith(result);
+    });
+  });
+
+  describe('getAllMoods', () => {
+    test('retourne tous les moods depuis le store', () => {
+      const mockMoods = [
+        { id: 1, text: 'Mood 1', rating: 4 },
+        { id: 2, text: 'Mood 2', rating: 3 },
+        { id: 3, text: 'Mood 3', rating: 5 },
+      ];
+
+      jsonStore.loadAll.mockReturnValue(mockMoods);
+
+      const result = getAllMoods();
+
+      expect(jsonStore.loadAll).toHaveBeenCalledTimes(1);
+      expect(result).toEqual(mockMoods);
+    });
+
+    test('retourne un tableau vide si aucun mood', () => {
+      jsonStore.loadAll.mockReturnValue([]);
+
+      const result = getAllMoods();
+
+      expect(jsonStore.loadAll).toHaveBeenCalledTimes(1);
+      expect(result).toEqual([]);
+    });
+
+    test('délègue correctement à jsonStore.loadAll', () => {
+      const mockMoods = [{ id: 123, text: 'Test' }];
+      jsonStore.loadAll.mockReturnValue(mockMoods);
+
+      getAllMoods();
+
+      expect(jsonStore.loadAll).toHaveBeenCalledWith();
     });
   });
 });
