@@ -2,7 +2,7 @@ const weatherService = require('./weatherService');
 const { resolveLocation } = require('./locationResolver');
 const { saveImageFromBase64 } = require('./imageStorage');
 const { analyzeText } = require('../utils/textAnalyzer');
-const { computeScoreWithBreakdown } = require('../utils/moodScore');
+const { calculateGlobalScore } = require('../scoring/ScoreEngine');
 const { buildMood } = require('../factories/moodFactory');
 const jsonStore = require('../storage/jsonStore');
 
@@ -43,7 +43,7 @@ async function createNewMood(validatedData) {
   const textScore = analyzeText(text);
 
   // 4. Calculer le score d'humeur final
-  const scoreResult = computeScoreWithBreakdown({
+  const scoreResult = calculateGlobalScore({
     rating,
     textScore,
     weather,

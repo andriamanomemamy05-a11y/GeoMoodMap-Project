@@ -2,7 +2,7 @@ jest.mock('../src/services/weatherService');
 jest.mock('../src/services/locationResolver');
 jest.mock('../src/services/imageStorage');
 jest.mock('../src/utils/textAnalyzer');
-jest.mock('../src/utils/moodScore');
+jest.mock('../src/scoring/ScoreEngine');
 jest.mock('../src/factories/moodFactory');
 jest.mock('../src/storage/jsonStore');
 
@@ -10,7 +10,7 @@ const weatherService = require('../src/services/weatherService');
 const { resolveLocation } = require('../src/services/locationResolver');
 const { saveImageFromBase64 } = require('../src/services/imageStorage');
 const { analyzeText } = require('../src/utils/textAnalyzer');
-const { computeScoreWithBreakdown } = require('../src/utils/moodScore');
+const { calculateGlobalScore } = require('../src/scoring/ScoreEngine');
 const { buildMood } = require('../src/factories/moodFactory');
 const jsonStore = require('../src/storage/jsonStore');
 
@@ -34,7 +34,7 @@ describe('moodBusinessService', () => {
 
     analyzeText.mockReturnValue(2);
 
-    computeScoreWithBreakdown.mockReturnValue(75);
+    calculateGlobalScore.mockReturnValue(75);
 
     saveImageFromBase64.mockReturnValue('selfies/selfie_123.png');
 
@@ -77,7 +77,7 @@ describe('moodBusinessService', () => {
       expect(weatherService.getWeather).toHaveBeenCalledWith(48.8566, 2.3522);
       expect(analyzeText).toHaveBeenCalledWith('Je me sens bien');
       expect(saveImageFromBase64).toHaveBeenCalledWith('data:image/png;base64,abc123');
-      expect(computeScoreWithBreakdown).toHaveBeenCalledWith({
+      expect(calculateGlobalScore).toHaveBeenCalledWith({
         rating: 4,
         textScore: 2,
         weather: { temp: 20, weather: 'clear sky', humidity: 60, wind_speed: 5 },
@@ -108,7 +108,7 @@ describe('moodBusinessService', () => {
       await createNewMood(validatedData);
 
       expect(weatherService.getWeather).not.toHaveBeenCalled();
-      expect(computeScoreWithBreakdown).toHaveBeenCalledWith({
+      expect(calculateGlobalScore).toHaveBeenCalledWith({
         rating: 3,
         textScore: 2,
         weather: null,
@@ -129,7 +129,7 @@ describe('moodBusinessService', () => {
 
       await createNewMood(validatedData);
 
-      expect(computeScoreWithBreakdown).toHaveBeenCalledWith({
+      expect(calculateGlobalScore).toHaveBeenCalledWith({
         rating: 4,
         textScore: 2,
         weather: null,
