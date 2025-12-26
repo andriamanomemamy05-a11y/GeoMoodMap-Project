@@ -1,7 +1,7 @@
 jest.mock('../src/services/weatherService');
 jest.mock('../src/services/locationResolver');
 jest.mock('../src/services/image/ImageStorage');
-jest.mock('../src/utils/textAnalyzer');
+jest.mock('../src/services/textAnalysis/TextAnalyzer');
 jest.mock('../src/scoring/ScoreEngine');
 jest.mock('../src/factories/moodFactory');
 jest.mock('../src/storage/jsonStore');
@@ -9,7 +9,7 @@ jest.mock('../src/storage/jsonStore');
 const weatherService = require('../src/services/weatherService');
 const { resolveLocation } = require('../src/services/locationResolver');
 const { saveImageFromBase64 } = require('../src/services/image/ImageStorage');
-const { analyzeText } = require('../src/utils/textAnalyzer');
+const { analyzeText } = require('../src/services/textAnalysis/TextAnalyzer');
 const { calculateGlobalScore } = require('../src/scoring/ScoreEngine');
 const { buildMood } = require('../src/factories/moodFactory');
 const jsonStore = require('../src/storage/jsonStore');

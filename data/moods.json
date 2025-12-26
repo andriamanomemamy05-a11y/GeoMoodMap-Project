@@ -550,5 +550,28 @@
     "scoreResult": 35,
     "imageUrl": null,
     "createdAt": "2025-12-26T00:04:06.161Z"
+  },
+  {
+    "id": 1766765324114,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": 48.5995461,
+    "lon": 2.5788682,
+    "place": {
+      "name": "Rue Boileau, Savigny-le-Temple, Melun, Seine-et-Marne, France métropolitaine, 77176, France",
+      "type": "residential",
+      "lat": 48.5995461,
+      "lon": 2.5788682
+    },
+    "weather": {
+      "temp": 2.26,
+      "weather": "clear sky",
+      "humidity": 85,
+      "wind_speed": 3.12
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766765324109.jpg",
+    "createdAt": "2025-12-26T16:08:44.114Z"
   }
 ]
