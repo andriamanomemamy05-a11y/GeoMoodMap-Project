@@ -1,9 +1,171 @@
+/**
+ * server.js - COMPOSITION ROOT
+ *
+ * Point d'entrée de l'application et configuration de l'injection de dépendances.
+ * C'est ICI et SEULEMENT ICI que nous assemblons les dépendances concrètes.
+ *
+ * ARCHITECTURE HEXAGONALE - COMPOSITION ROOT PATTERN:
+ * 1. Importer les adapters d'infrastructure (implémentations concrètes)
+ * 2. Importer les factories de services d'application
+ * 3. Instancier les services en injectant les adapters
+ * 4. Créer les controllers en injectant les services
+ * 5. Configurer Express avec les controllers instanciés
+ */
+
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const { addMood, getMoods } = require('./controllers/moodController');
-const { searchAddress } = require('./controllers/searchController');
-const { saveSelfie } = require('./controllers/selfieController');
+
+// ============================================================================
+// ÉTAPE 1: IMPORTER LES ADAPTERS D'INFRASTRUCTURE (Implémentations concrètes)
+// ============================================================================
+
+// Adapters externes
+const weatherService = require('../adapters/weather/weatherService');
+const geocodeService = require('../adapters/geocode/geocodeService');
+const { saveImageFromBase64 } = require('../adapters/image/ImageStorage');
+
+// Persistence
+const jsonStore = require('../persistence/json/jsonStore');
+
+// Validators
+const { validateMoodInput } = require('../../application/validators/moodValidator');
+
+// ============================================================================
+// ÉTAPE 2: IMPORTER LES FACTORIES DE SERVICES D'APPLICATION
+// ============================================================================
+
+const { createMoodService } = require('../../application/services/MoodService');
+const { createLocationResolver } = require('../../application/services/LocationResolver');
+const { createSearchService } = require('../../application/services/SearchService');
+
+// ============================================================================
+// ÉTAPE 3: INSTANCIER LES SERVICES EN INJECTANT LES ADAPTERS
+// ============================================================================
+
+// Créer LocationResolver avec geocodeService injecté
+const locationResolver = createLocationResolver({ geocodeService });
+
+// Créer ImageStorage adapter object (pour compatibilité avec l'injection)
+const imageStorage = { saveImageFromBase64 };
+
+// Créer MoodRepository adapter object (pour compatibilité avec l'injection)
+const moodRepository = {
+  save: jsonStore.save,
+  loadAll: jsonStore.loadAll,
+};
+
+// Créer MoodService avec toutes ses dépendances injectées
+const moodService = createMoodService({
+  weatherService,
+  locationResolver,
+  imageStorage,
+  moodRepository,
+});
+
+// Créer SearchService avec geocodeService injecté
+const searchService = createSearchService({ geocodeService });
+
+// ============================================================================
+// ÉTAPE 4: CRÉER LES CONTROLLERS EN INJECTANT LES SERVICES
+// ============================================================================
+
+/**
+ * Controller pour les moods
+ */
+const moodController = {
+  async addMood(req, res) {
+    try {
+      // 1. Validation des entrées
+      const validation = validateMoodInput(req.body);
+
+      if (!validation.isValid) {
+        return res.status(400).json({ errors: validation.errors });
+      }
+
+      // 2. Délégation de la logique métier au service injecté
+      const mood = await moodService.createNewMood(validation.data);
+
+      // 3. Réponse HTTP
+      return res.status(201).json(mood);
+    } catch (err) {
+      console.error('addMood error:', err && (err.stack || err));
+      return res.status(500).json({ error: err.message || 'Internal Server Error' });
+    }
+  },
+
+  getMoods(req, res) {
+    try {
+      const moods = moodService.getAllMoods();
+      res.json(moods);
+    } catch (err) {
+      console.error('getMoods error:', err && (err.stack || err));
+      res.status(500).json({ error: err.message || 'Internal Server Error' });
+    }
+  },
+};
+
+/**
+ * Controller pour la recherche d'adresses
+ */
+const searchController = {
+  async searchAddress(req, res) {
+    try {
+      const { q } = req.query;
+
+      if (!q) {
+        return res.json([]);
+      }
+
+      // Délégation au service injecté
+      const result = await searchService.searchLocation(q);
+
+      // Retourne un tableau pour compatibilité avec Leaflet
+      return res.json([result]);
+    } catch (err) {
+      console.error('searchAddress error:', err && (err.stack || err));
+      return res.status(500).json({ error: err.message || 'Internal Server Error' });
+    }
+  },
+};
+
+/**
+ * Controller pour les selfies
+ */
+const selfieController = {
+  saveSelfie(req, res) {
+    try {
+      const { image } = req.body; // dataURL base64
+
+      if (!image) {
+        return res.status(400).json({ error: 'No image provided' });
+      }
+
+      // Délégation au service injecté
+      const savedPath = imageStorage.saveImageFromBase64(image);
+
+      if (!savedPath) {
+        return res.status(400).json({ error: 'Invalid image format' });
+      }
+
+      // Convertir le chemin relatif en chemin absolu pour la réponse
+      const absolutePath = path.join(process.cwd(), 'public', savedPath);
+
+      return res.json({
+        success: true,
+        path: absolutePath,
+        relativePath: savedPath,
+      });
+    } catch (err) {
+      console.error('saveSelfie error:', err && (err.stack || err));
+      return res.status(500).json({ error: 'Failed to save image' });
+    }
+  },
+};
+
+// ============================================================================
+// ÉTAPE 5: CONFIGURER EXPRESS AVEC LES CONTROLLERS INSTANCIÉS
+// ============================================================================
 
 const app = express();
 
@@ -19,11 +181,11 @@ app.use((req, res, next) => {
 // Servir les fichiers statiques du dossier /public
 app.use(express.static(path.join(process.cwd(), 'public')));
 
-// Routes API
-app.get('/api/search', searchAddress);
-app.post('/api/moods', addMood);
-app.get('/api/moods', getMoods);
-app.post('/api/selfie', saveSelfie);
+// Routes API - Utilisation des controllers avec services injectés
+app.get('/api/search', searchController.searchAddress);
+app.post('/api/moods', moodController.addMood);
+app.get('/api/moods', moodController.getMoods);
+app.post('/api/selfie', selfieController.saveSelfie);
 
 // Check de l'erreur 404
 app.use((req, res) => {
