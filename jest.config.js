@@ -9,11 +9,10 @@ module.exports = {
 
   coverageDirectory: 'coverage',
   collectCoverageFrom: [
-    'src/**/*.js',
-    'public/js/**/*.js',
-    '!src/index.js',
-    '!src/infrastructure/web/server.js',
-    '!public/js/app.js', // Point d'entrée
+    'src/backend/**/*.js',
+    'src/frontend/**/*.js',
+    '!src/backend/infrastructure/web/server.js',
+    '!src/frontend/js/app.js', // Point d'entrée
     '!**/node_modules/**',
     '!**/coverage/**',
   ],

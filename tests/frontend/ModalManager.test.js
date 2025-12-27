@@ -2,7 +2,7 @@
  * Tests unitaires pour ModalManager
  */
 
-import { ModalManager } from '../../public/js/modules/ModalManager.js';
+import { ModalManager } from '../../src/frontend/js/modules/ModalManager.js';
 
 global.bootstrap = {
   Modal: jest.fn(function(element) {

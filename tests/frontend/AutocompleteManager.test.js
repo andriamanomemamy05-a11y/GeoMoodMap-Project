@@ -2,7 +2,7 @@
  * Tests unitaires pour AutocompleteManager
  */
 
-import { AutocompleteManager } from '../../public/js/modules/AutocompleteManager.js';
+import { AutocompleteManager } from '../../src/frontend/js/modules/AutocompleteManager.js';
 
 describe('AutocompleteManager', () => {
   let mockMapManager;

@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node src/infrastructure/web/server.js",
+    "start": "node src/backend/infrastructure/web/server.js",
     "test": "jest --runInBand",
     "test:coverage": "jest --runInBand --coverage",
-    "lint": "eslint src/ public/js/ tests/",
-    "lint:fix": "eslint src/ public/js/ tests/ --fix",
-    "format": "prettier --write \"src/**/*.js\" \"public/js/**/*.js\" \"tests/**/*.js\"",
-    "format:check": "prettier --check \"src/**/*.js\" \"public/js/**/*.js\" \"tests/**/*.js\""
+    "lint": "eslint src/ tests/",
+    "lint:fix": "eslint src/ tests/ --fix",
+    "format": "prettier --write \"src/**/*.js\" \"tests/**/*.js\"",
+    "format:check": "prettier --check \"src/**/*.js\" \"tests/**/*.js\""
   },
   "repository": {
     "type": "git",

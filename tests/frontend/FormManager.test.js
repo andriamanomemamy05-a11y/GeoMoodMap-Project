@@ -2,7 +2,7 @@
  * Tests unitaires pour FormManager
  */
 
-import { FormManager } from '../../public/js/modules/FormManager.js';
+import { FormManager } from '../../src/frontend/js/modules/FormManager.js';
 
 describe('FormManager', () => {
   let mockManagers;
