@@ -1,8 +1,5 @@
 import { SELECTORS } from '../constants.js';
 
-/** **********************************************************
- * MODAL BOOTSTRAP (résultat)
- *********************************************************** */
 export class ModalManager {
   constructor() {
     this.feedbackModalEl = document.getElementById(SELECTORS.FEEDBACK_MODAL);
@@ -22,10 +19,6 @@ export class ModalManager {
     this.initEvents();
   }
 
-  /**
-   * Affiche les résultats dans le modal
-   * @param {*} mood - Objet renvoyé par backend
-   */
   show(mood) {
     const score = mood.scoreResult ?? 'N/A';
     const { weather } = mood;
@@ -57,9 +50,6 @@ export class ModalManager {
     this.feedbackModal.show();
   }
 
-  /** **********************************************************
-   * EXPORT EN FICHIER TEXTE
-   *********************************************************** */
   exportToFile() {
     const mood = this.currentMoodData;
     if (!mood) return;

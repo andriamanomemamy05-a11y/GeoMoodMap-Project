@@ -1,8 +1,5 @@
 import { SELECTORS } from '../constants.js';
 
-/** **********************************************************
- * CAMERA + SELFIE + UPLOAD
- *********************************************************** */
 export class CameraManager {
   constructor() {
     this.video = document.getElementById(SELECTORS.VIDEO);
@@ -50,9 +47,6 @@ export class CameraManager {
       });
   }
 
-  /**
-   * Basculer vers mode selfie
-   */
   switchToSelfie() {
     this.selfieBtn.classList.add('active');
     this.uploadBtn.classList.remove('active');
@@ -72,9 +66,6 @@ export class CameraManager {
     }
   }
 
-  /**
-   * Basculer vers mode upload
-   */
   switchToUpload() {
     this.uploadBtn.classList.add('active');
     this.selfieBtn.classList.remove('active');
@@ -84,9 +75,6 @@ export class CameraManager {
     this.photoContainer.classList.add('d-none');
   }
 
-  /**
-   * Capture une photo depuis la cam
-   */
   capturePhoto() {
     this.canvas.width = this.video.videoWidth;
     this.canvas.height = this.video.videoHeight;
@@ -100,9 +88,6 @@ export class CameraManager {
     this.photoContainer.classList.remove('d-none');
   }
 
-  /**
-   * Gère l'upload de fichier
-   */
   handleFileUpload(e) {
     const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
@@ -118,9 +103,6 @@ export class CameraManager {
     }
   }
 
-  /**
-   * Supprime la photo et réactive le mode actuel
-   */
   deleteCurrentPhoto() {
     this.selfiePreview.src = '';
     this.fileInput.value = '';

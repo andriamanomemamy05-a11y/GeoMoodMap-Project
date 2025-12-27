@@ -1,8 +1,5 @@
 import { CONFIG, SELECTORS } from '../constants.js';
 
-/** **********************************************************
- * INITIALISATION DE LA MAP + MARQUEUR
- *********************************************************** */
 export class MapManager {
   constructor() {
     if (typeof L === 'undefined') {
@@ -26,10 +23,6 @@ export class MapManager {
     this.initEvents();
   }
 
-  /**
-   * Met à jour les coordonnées lat/lon
-   * @param {*} e - Événement Leaflet contenant latlng
-   */
   updateCoords(e) {
     const pos = e.latlng || this.marker.getLatLng();
     this.lat = pos.lat;

@@ -1,8 +1,5 @@
 import { CONFIG, SELECTORS } from '../constants.js';
 
-/** **********************************************************
- * AUTOCOMPLETE AVEC API /search (Nominatim backend)
- *********************************************************** */
 export class AutocompleteManager {
   constructor(mapManager) {
     this.mapManager = mapManager;

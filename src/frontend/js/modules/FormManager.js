@@ -1,8 +1,5 @@
 import { CONFIG, SELECTORS } from '../constants.js';
 
-/** **********************************************************
- * SOUMISSION FORMULAIRE
- *********************************************************** */
 export class FormManager {
   constructor(mapManager, autocompleteManager, cameraManager, modalManager) {
     this.mapManager = mapManager;
