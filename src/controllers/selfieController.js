@@ -4,14 +4,14 @@ const { saveImageFromBase64 } = require('../services/image/ImageStorage');
 /**
  * Contrôleur HTTP pour les selfies
  * Responsabilité : Gestion de la couche HTTP pour les selfies (req/res uniquement)
- */
+*/
 
 /**
- * POST /api/selfie - Enregistrer un selfie (image base64)
- */
+ * POST /api/selfie - Enregistrer un selfie pris ou choisi (image base64)
+*/
 function saveSelfie(req, res) {
   try {
-    const { image } = req.body; // dataURL base64
+    const { image } = req.body;
 
     if (!image) {
       return res.status(400).json({ error: 'No image provided' });

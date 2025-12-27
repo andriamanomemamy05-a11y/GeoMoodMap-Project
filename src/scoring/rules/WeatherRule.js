@@ -25,7 +25,7 @@ function calculateWeatherScore(weather) {
     const w = (weather.weather || '').toLowerCase();
     const { temp } = weather;
 
-    // Météo simple (à ajouter au fure et à mésure)
+    // Cas des méteo possibles
     if (w.includes('rain') || w.includes('pluie')) {
       weatherPoints -= 10;
     }
@@ -37,6 +37,26 @@ function calculateWeatherScore(weather) {
     }
     if (w.includes('clear') || w.includes('sun') || w.includes('soleil')) {
       weatherPoints += 10;
+    }
+
+    if (w.includes('wind') || w.includes('vent')) {
+      weatherPoints -= 4;
+    }
+
+    if (w.includes('storm') || w.includes('thunder') || w.includes('orage')) {
+      weatherPoints -= 12;
+    }
+
+    if (w.includes('fog') || w.includes('mist') || w.includes('brouillard')) {
+      weatherPoints -= 6;
+    }
+
+    if (w.includes('heat') || w.includes('hot') || w.includes('canicule')) {
+      weatherPoints -= 5;
+    }
+
+    if (w.includes('cold') || w.includes('froid')) {
+      weatherPoints -= 4;
     }
 
     // Température simple
