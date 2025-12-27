@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">38.88% </span>
+                <span class="strong">88.88% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/18</span>
+                <span class='fraction'>16/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">27.27% </span>
+                <span class="strong">86.36% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/22</span>
+                <span class='fraction'>19/22</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">38.88% </span>
+                <span class="strong">88.88% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/18</span>
+                <span class='fraction'>16/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -132,34 +132,34 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -167,7 +167,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -176,7 +176,7 @@
 const USE_MOCKS = process.env.USE_MOCKS === 'true';
 &nbsp;
 // On récupère la clé API depuis .env
-const OPENWEATHER_KEY = process.env.OPENWEATHER_API_KEY || '';
+const OPENWEATHER_KEY = process.env.OPENWEATHER_API_KEY || <span class="branch-1 cbranch-no" title="branch not covered" >'';</span>
 &nbsp;
 /**
  * getWeather(lat, lon)
@@ -186,34 +186,34 @@ const OPENWEATHER_KEY = process.env.OPENWEATHER_API_KEY || '';
  */
 async function getWeather(lat, lon) {
   // Les coordonnées sont obligatoires pour récupérer la météo
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
-<span class="cstat-no" title="statement not covered" >    throw new Error('Invalid coordinates for getWeather');</span>
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+    throw new Error('Invalid coordinates for getWeather');
   }
 &nbsp;
   // Si mock est true, on utilise les données de test simulées
-  <span class="missing-if-branch" title="else path not taken" >E</span>if (USE_MOCKS) {
-    return {
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (USE_MOCKS) {
+<span class="cstat-no" title="statement not covered" >    return {</span>
       source: 'mock',
       data: { temp: 15, weather: 'light rain', humidity: 80, wind_speed: 3.5 },
     };
   }
 &nbsp;
   // Checkez si l'api de openweathermap est récupéré
-<span class="cstat-no" title="statement not covered" >  if (!OPENWEATHER_KEY) {</span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!OPENWEATHER_KEY) {
 <span class="cstat-no" title="statement not covered" >    throw new Error('OPENWEATHER_API_KEY not set');</span>
   }
 &nbsp;
   // Appel de l'api en ligne : openweathermap avec les données géographiques réçues
-  const url = <span class="cstat-no" title="statement not covered" >`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&amp;lon=${lon}&amp;units=metric&amp;appid=${OPENWEATHER_KEY}`;</span>
-  const res = <span class="cstat-no" title="statement not covered" >await fetch(url);</span>
-<span class="cstat-no" title="statement not covered" >  if (!res.ok) {</span>
-    const txt = <span class="cstat-no" title="statement not covered" >await res.text();</span>
-<span class="cstat-no" title="statement not covered" >    throw new Error(`OpenWeather error ${res.status}: ${txt}`);</span>
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&amp;lon=${lon}&amp;units=metric&amp;appid=${OPENWEATHER_KEY}`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(`OpenWeather error ${res.status}: ${txt}`);
   }
-  const json = <span class="cstat-no" title="statement not covered" >await res.json();</span>
+  const json = await res.json();
 &nbsp;
   // On extrait les données utiles à envoyer dans le controller
-  const data = <span class="cstat-no" title="statement not covered" >{</span>
+  const data = {
     temp: json?.main?.temp ?? null,
     weather: json?.weather &amp;&amp; json.weather[0] ? json.weather[0].description : '',
     humidity: json?.main?.humidity ?? null,
@@ -221,7 +221,7 @@ async function getWeather(lat, lon) {
   };
 &nbsp;
   // Retourner la source statiquement et les données de la météo
-<span class="cstat-no" title="statement not covered" >  return { source: 'openweather', data };</span>
+  return { source: 'openweather', data };
 }
 &nbsp;
 module.exports = { getWeather };
@@ -232,7 +232,7 @@ module.exports = { getWeather };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-12-27T19:02:56.545Z
+                at 2025-12-27T19:16:52.441Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
