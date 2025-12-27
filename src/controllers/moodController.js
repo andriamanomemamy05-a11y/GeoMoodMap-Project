@@ -4,11 +4,11 @@ const { createNewMood, getAllMoods } = require('../services/moodBusinessService'
 /**
  * Contrôleur HTTP pour les moods
  * Responsabilité : Gestion de la couche HTTP (req/res uniquement)
- */
+*/
 
 /**
- * POST /api/moods - Ajouter une nouvelle humeur
- */
+ * POST /api/moods - Enregistrer une nouvelle humeur
+*/
 async function addMood(req, res) {
   try {
     // 1. Validation des entrées
@@ -30,8 +30,8 @@ async function addMood(req, res) {
 }
 
 /**
- * GET /api/moods - Récupérer tous les moods
- */
+ * GET /api/moods - Récupérer tous les moods sauvegardés
+*/
 function getMoods(req, res) {
   try {
     const moods = getAllMoods();
