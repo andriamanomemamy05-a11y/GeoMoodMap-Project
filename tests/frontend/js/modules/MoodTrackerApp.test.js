@@ -2,19 +2,19 @@
  * Tests unitaires pour MoodTrackerApp
  */
 
-import { MoodTrackerApp } from '../../src/frontend/js/modules/MoodTrackerApp.js';
-import { MapManager } from '../../src/frontend/js/modules/MapManager.js';
-import { AutocompleteManager } from '../../src/frontend/js/modules/AutocompleteManager.js';
-import { CameraManager } from '../../src/frontend/js/modules/CameraManager.js';
-import { ModalManager } from '../../src/frontend/js/modules/ModalManager.js';
-import { FormManager } from '../../src/frontend/js/modules/FormManager.js';
+import { MoodTrackerApp } from '../../../../src/frontend/js/modules/MoodTrackerApp.js';
+import { MapManager } from '../../../../src/frontend/js/modules/MapManager.js';
+import { AutocompleteManager } from '../../../../src/frontend/js/modules/AutocompleteManager.js';
+import { CameraManager } from '../../../../src/frontend/js/modules/CameraManager.js';
+import { ModalManager } from '../../../../src/frontend/js/modules/ModalManager.js';
+import { FormManager } from '../../../../src/frontend/js/modules/FormManager.js';
 
 // Mock all dependencies
-jest.mock('../../src/frontend/js/modules/MapManager.js');
-jest.mock('../../src/frontend/js/modules/AutocompleteManager.js');
-jest.mock('../../src/frontend/js/modules/CameraManager.js');
-jest.mock('../../src/frontend/js/modules/ModalManager.js');
-jest.mock('../../src/frontend/js/modules/FormManager.js');
+jest.mock('../../../../src/frontend/js/modules/MapManager.js');
+jest.mock('../../../../src/frontend/js/modules/AutocompleteManager.js');
+jest.mock('../../../../src/frontend/js/modules/CameraManager.js');
+jest.mock('../../../../src/frontend/js/modules/ModalManager.js');
+jest.mock('../../../../src/frontend/js/modules/FormManager.js');
 
 describe('MoodTrackerApp', () => {
   beforeEach(() => {

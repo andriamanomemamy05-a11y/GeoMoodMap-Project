@@ -2,7 +2,7 @@
  * Tests unitaires pour MapManager
  */
 
-import { MapManager } from '../../src/frontend/js/modules/MapManager.js';
+import { MapManager } from '../../../../src/frontend/js/modules/MapManager.js';
 
 // Mock Leaflet
 const mockMarker = {

@@ -2,7 +2,7 @@
  * Tests unitaires pour CameraManager
  */
 
-import { CameraManager } from '../../src/frontend/js/modules/CameraManager.js';
+import { CameraManager } from '../../../../src/frontend/js/modules/CameraManager.js';
 
 describe('CameraManager', () => {
   let elements;
