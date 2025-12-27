@@ -21,28 +21,23 @@ function validateMoodInput(body) {
   const errors = [];
   const { text = '', rating, lat, lon, address, imageUrl } = body;
 
-  // Validation du texte
   if (!validateText(text)) {
     errors.push('text is required and must be a non-empty string');
   }
 
-  // Validation du rating
   if (!validateRating(rating)) {
     errors.push('rating is required and must be a number (1-5 recommended)');
   }
 
-  // Validation des coordonnées ou adresse
   const location = validateLocation(lat, lon, address);
   if (!location.isValid) {
     errors.push('Provide either lat+lon or address');
   }
 
-  // Si des erreurs existent, retourner échec
   if (errors.length > 0) {
     return { isValid: false, errors, data: null };
   }
 
-  // Normalisation des données
   return {
     isValid: true,
     errors: [],

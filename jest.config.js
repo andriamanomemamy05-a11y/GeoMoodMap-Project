@@ -1,8 +1,6 @@
 module.exports = {
-  // Environnement JSDOM pour tester le code manipulant le DOM
   testEnvironment: 'jsdom',
 
-  // Babel transforme les ES6 modules en CommonJS pour Jest
   transform: {
     '^.+\\.js$': 'babel-jest',
   },
@@ -12,7 +10,7 @@ module.exports = {
     'src/backend/**/*.js',
     'src/frontend/**/*.js',
     '!src/backend/infrastructure/web/server.js',
-    '!src/frontend/js/app.js', // Point d'entrée
+    '!src/frontend/js/app.js',
     '!**/node_modules/**',
     '!**/coverage/**',
   ],

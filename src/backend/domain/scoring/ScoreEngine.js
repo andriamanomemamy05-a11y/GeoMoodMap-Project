@@ -1,7 +1,7 @@
 /**
  * ScoreEngine.js
  *
- * Responsabilité unique : Orchestrer le calcul du score global en combinant toutes les règles.
+ * Responsabilité: Orchestrer le calcul du score global en combinant toutes les règles.
  * Applique le clamping (min 0, max 100).
  */
 

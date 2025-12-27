@@ -1,8 +1,5 @@
 /**
- * jsonValidator.js
- *
- * Responsabilité unique : Valider que les données correspondent au schéma attendu.
- * Ne sait rien du système de fichiers.
+ * Responsabilité: Valider que les données correspondent au schéma attendu.
  */
 
 /**

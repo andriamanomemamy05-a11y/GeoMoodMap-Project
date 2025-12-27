@@ -1,7 +1,5 @@
 /**
- * dictionaries.js
- *
- * Responsabilité unique : Fournir les dictionnaires de mots pour l'analyse de sentiment
+ * Responsabilité: Fournir les dictionnaires de mots pour l'analyse de sentiment
  */
 
 /**

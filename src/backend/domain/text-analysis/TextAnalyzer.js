@@ -1,7 +1,5 @@
 /**
- * TextAnalyzer.js
- *
- * Responsabilité unique : Analyser le sentiment d'un texte basé sur un dictionnaire
+ * Responsabilité: Analyser le sentiment d'un texte basé sur un dictionnaire
  */
 
 const { positiveWords, negativeWords } = require('./dictionaries');

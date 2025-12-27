@@ -24,18 +24,11 @@ const { buildMood } = require('../../domain/factories/moodFactory');
  * @returns {Object} Instance du service avec méthodes createNewMood et getAllMoods
  */
 function createMoodService({ weatherService, locationResolver, imageStorage, moodRepository }) {
-  /**
-   * Crée une nouvelle entrée d'humeur (Use Case principal)
-   * @param {Object} validatedData - Données validées par le validator
-   * @returns {Promise<Object>} Mood créé
-   */
   async function createNewMood(validatedData) {
     const { text, rating, lat, lon, address, imageUrl } = validatedData;
 
-    // 1. Résoudre la localisation (coords + place)
     const location = await locationResolver.resolveLocation({ lat, lon, address });
 
-    // 2. Récupérer la météo (si coordonnées disponibles)
     let weather = null;
     try {
       if (
@@ -52,20 +45,16 @@ function createMoodService({ weatherService, locationResolver, imageStorage, moo
       weather = null;
     }
 
-    // 3. Analyser le sentiment du texte (Domain logic - pure)
     const textScore = analyzeText(text);
 
-    // 4. Calculer le score d'humeur final (Domain logic - pure)
     const scoreResult = calculateGlobalScore({
       rating,
       textScore,
       weather,
     });
 
-    // 5. Sauvegarder l'image (si présente)
     const savedImagePath = imageStorage.saveImageFromBase64(imageUrl);
 
-    // 6. Construire l'objet Mood (Domain factory - pure)
     const mood = buildMood({
       text,
       rating,
@@ -78,21 +67,15 @@ function createMoodService({ weatherService, locationResolver, imageStorage, moo
       imageUrl: savedImagePath,
     });
 
-    // 7. Persister dans le repository
     moodRepository.save(mood);
 
     return mood;
   }
 
-  /**
-   * Récupère tous les moods (Use Case de lecture)
-   * @returns {Array<Object>} Liste de tous les moods
-   */
   function getAllMoods() {
     return moodRepository.loadAll();
   }
 
-  // Retourne l'instance du service avec ses méthodes
   return {
     createNewMood,
     getAllMoods,

@@ -1,8 +1,5 @@
 /**
- * fileSystemAdapter.js
- *
- * Responsabilité unique : Lire/Écrire des chaînes de caractères dans des fichiers.
- * Ne connaît rien du JSON, ne valide rien.
+ * Responsabilité: Lire/Écrire des chaînes de caractères dans des fichiers.
  * Gère uniquement les erreurs disque (ENOENT, permissions, etc.)
  */
 

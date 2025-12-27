@@ -1,7 +1,5 @@
 /**
- * WeatherRule.js
- *
- * Responsabilité unique : Calculer le score basé sur les conditions météo.
+ * Responsabilité: Calculer le score basé sur les conditions météo.
  * Analyse la météo et la température pour attribuer des points (-15 à +15).
  */
 
