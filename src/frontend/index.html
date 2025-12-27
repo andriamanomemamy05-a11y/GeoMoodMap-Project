@@ -28,15 +28,16 @@
             <!-- Contenu ajouté via JS -->
           </div>
           <div class="modal-footer">
-            <button type="button" id="exportBtn" class="btn btn-success">📄 Exporter en .txt</button>
-            <button type="button" class="btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            <button type="button" id="exportBtn" class="btn btn-success me-auto">📄 Exporter en .txt</button>
+            <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">Fermer</button>
           </div>
         </div>
       </div>
     </div>
 
     <header>
-      <h1>Mood Tracker</h1>
+      <h1>Trace ton humeur, découvre-toi</h1>
+      <i> Mon humeur en un coup d’œil </i>
     </header>
 
     <div class="layout">
@@ -61,9 +62,9 @@
           <label for="selfie" class="form-label">Ajoutez une photo</label>
 
           <!-- Choix entre selfie et upload -->
-          <div class="mb-2">
-            <button id="selfieBtn" type="button" class="btn btn-outline-primary btn-sm me-2 active">📷 Selfie</button>
-            <button id="uploadBtn" type="button" class="btn btn-outline-primary btn-sm">📁 Upload</button>
+          <div class="d-flex justify-content-between mb-2">
+            <button id="selfieBtn" type="button" class="btn btn-outline-success btn-sm active">📷 Prendre un selfie</button>
+            <button id="uploadBtn" type="button" class="btn btn-outline-primary btn-sm">📁 Importer une photo</button>
           </div>
 
           <!-- Container pour le selfie -->
