@@ -34,14 +34,12 @@ function createLocationResolver({ geocodeService }) {
       usedLat !== null && usedLon !== null && !Number.isNaN(usedLat) && !Number.isNaN(usedLon);
 
     if (hasCoords) {
-      // Reverse geocode : récupérer l'adresse depuis les coords
       try {
         place = await geocodeService.reverseGeocode(usedLat, usedLon);
       } catch (err) {
         console.warn('reverseGeocode failed:', err.message || err);
       }
     } else if (address) {
-      // Forward geocode : récupérer les coords depuis l'adresse
       try {
         const result = await geocodeService.forwardGeocode(address);
         usedLat = result.lat ? Number(result.lat) : null;
@@ -59,7 +57,6 @@ function createLocationResolver({ geocodeService }) {
     };
   }
 
-  // Retourne l'instance du service avec ses méthodes
   return {
     resolveLocation,
   };

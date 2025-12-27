@@ -1,8 +1,5 @@
 import { SELECTORS } from '../constants.js';
 
-/** **********************************************************
- * CAMERA + SELFIE + UPLOAD
- *********************************************************** */
 export class CameraManager {
   constructor() {
     this.video = document.getElementById(SELECTORS.VIDEO);
@@ -29,7 +26,7 @@ export class CameraManager {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       console.error('Camera API not available. HTTPS is required for camera access.');
       alert(
-        '⚠️ La caméra n\'est pas disponible.\n\nPour utiliser la caméra:\n- Utilisez HTTPS (pas HTTP)\n- Ou accédez via localhost\n- Ou utilisez le mode Upload à la place'
+        "⚠️ La caméra n'est pas disponible.\n\nPour utiliser la caméra:\n- Utilisez HTTPS (pas HTTP)\n- Ou accédez via localhost\n- Ou utilisez le mode Upload à la place"
       );
       this.switchToUpload();
       return;
@@ -37,11 +34,11 @@ export class CameraManager {
 
     navigator.mediaDevices
       .getUserMedia({ video: true })
-      .then((stream) => {
+      .then(stream => {
         this.video.srcObject = stream;
         this.cameraStream = stream;
       })
-      .catch((err) => {
+      .catch(err => {
         console.error('Erreur caméra:', err);
         alert(
           `⚠️ Impossible d'accéder à la caméra.\n\nErreur: ${err.message}\n\nVeuillez:\n- Autoriser l'accès à la caméra dans votre navigateur\n- Ou utiliser le mode Upload`
@@ -50,9 +47,6 @@ export class CameraManager {
       });
   }
 
-  /**
-   * Basculer vers mode selfie
-   */
   switchToSelfie() {
     this.selfieBtn.classList.add('active');
     this.uploadBtn.classList.remove('active');
@@ -64,17 +58,14 @@ export class CameraManager {
     if (!this.cameraStream) {
       navigator.mediaDevices
         .getUserMedia({ video: true })
-        .then((stream) => {
+        .then(stream => {
           this.video.srcObject = stream;
           this.cameraStream = stream;
         })
-        .catch((err) => console.error('Erreur caméra:', err));
+        .catch(err => console.error('Erreur caméra:', err));
     }
   }
 
-  /**
-   * Basculer vers mode upload
-   */
   switchToUpload() {
     this.uploadBtn.classList.add('active');
     this.selfieBtn.classList.remove('active');
@@ -84,9 +75,6 @@ export class CameraManager {
     this.photoContainer.classList.add('d-none');
   }
 
-  /**
-   * Capture une photo depuis la cam
-   */
   capturePhoto() {
     this.canvas.width = this.video.videoWidth;
     this.canvas.height = this.video.videoHeight;
@@ -100,15 +88,12 @@ export class CameraManager {
     this.photoContainer.classList.remove('d-none');
   }
 
-  /**
-   * Gère l'upload de fichier
-   */
   handleFileUpload(e) {
     const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
 
-      reader.onload = (event) => {
+      reader.onload = event => {
         this.selfiePreview.src = event.target.result;
         this.uploadContainer.classList.add('d-none');
         this.photoContainer.classList.remove('d-none');
@@ -118,9 +103,6 @@ export class CameraManager {
     }
   }
 
-  /**
-   * Supprime la photo et réactive le mode actuel
-   */
   deleteCurrentPhoto() {
     this.selfiePreview.src = '';
     this.fileInput.value = '';
@@ -137,7 +119,7 @@ export class CameraManager {
     this.selfieBtn.addEventListener('click', () => this.switchToSelfie());
     this.uploadBtn.addEventListener('click', () => this.switchToUpload());
     this.snapBtn.addEventListener('click', () => this.capturePhoto());
-    this.fileInput.addEventListener('change', (e) => this.handleFileUpload(e));
+    this.fileInput.addEventListener('change', e => this.handleFileUpload(e));
     this.deletePhoto.addEventListener('click', () => this.deleteCurrentPhoto());
   }
 

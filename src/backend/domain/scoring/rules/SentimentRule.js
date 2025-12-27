@@ -1,7 +1,5 @@
 /**
- * SentimentRule.js
- *
- * Responsabilité unique : Calculer le score basé sur le sentiment du texte.
+ * Responsabilité: Calculer le score basé sur le sentiment du texte.
  * Transforme le textScore en points (-30 à +30).
  */
 

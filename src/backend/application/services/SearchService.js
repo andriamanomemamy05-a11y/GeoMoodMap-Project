@@ -27,12 +27,10 @@ function createSearchService({ geocodeService }) {
       return null;
     }
 
-    // Délégation au service de geocoding
     const result = await geocodeService.forwardGeocode(query);
     return result;
   }
 
-  // Retourne l'instance du service avec ses méthodes
   return {
     searchLocation,
   };

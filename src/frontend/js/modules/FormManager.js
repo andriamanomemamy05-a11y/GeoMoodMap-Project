@@ -1,8 +1,5 @@
 import { CONFIG, SELECTORS } from '../constants.js';
 
-/** **********************************************************
- * SOUMISSION FORMULAIRE
- *********************************************************** */
 export class FormManager {
   constructor(mapManager, autocompleteManager, cameraManager, modalManager) {
     this.mapManager = mapManager;
@@ -63,6 +60,6 @@ export class FormManager {
   }
 
   initEvents() {
-    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+    this.form.addEventListener('submit', e => this.handleSubmit(e));
   }
 }

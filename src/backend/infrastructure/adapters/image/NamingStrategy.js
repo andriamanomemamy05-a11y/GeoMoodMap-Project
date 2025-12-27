@@ -1,8 +1,5 @@
 /**
- * NamingStrategy.js
- *
- * Responsabilité unique : Générer des noms de fichiers uniques pour les images
- * Aucune dépendance externe, fonction pure
+ * Responsabilité: Générer des noms de fichiers uniques pour les images
  */
 
 /**

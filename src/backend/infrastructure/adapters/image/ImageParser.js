@@ -1,8 +1,5 @@
 /**
- * ImageParser.js
- *
- * Responsabilité unique : Parser et valider les images base64
- * Aucune dépendance externe, aucune connaissance du file system
+ * Responsabilité: Parser et valider les images base64
  */
 
 /**
@@ -11,20 +8,18 @@
  * @returns {Object|null} { type: string, base64Data: string } ou null si invalide
  */
 function parseBase64Image(imageUrl) {
-  // Pas d'image fournie
   if (!imageUrl || !imageUrl.startsWith('data:image')) {
     return null;
   }
 
   try {
-    // Extraire type et données base64 (supporte png, jpeg, jpg, webp, etc.)
     const matches = imageUrl.match(/^data:image\/(\w+);base64,(.*)$/);
     if (!matches) {
       console.warn('Invalid base64 image format');
       return null;
     }
 
-    const imageType = matches[1]; // png, jpeg, jpg, webp, etc.
+    const imageType = matches[1];
     const base64Data = matches[2];
 
     return {

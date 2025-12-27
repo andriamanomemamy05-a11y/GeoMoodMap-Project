@@ -65,4 +65,3 @@ jobs:
       - name: Pipeline Summary
         run: |
           echo "CI Pipeline completed"
-          echo "Note: This pipeline provides feedback but does not block merges"
