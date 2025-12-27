@@ -37,7 +37,7 @@ npm install
 npm start
 ```
 
-L'application sera accessible sur `http://localhost:3000`
+L'application sera accessible sur `http://localhost:3030`
 
 ### Exécuter les tests
 
@@ -124,6 +124,7 @@ Le frontend utilise des **ES6 Modules** avec le pattern **Manager**:
 - `ModalManager`: Affichage des modales Bootstrap
 - `AutocompleteManager`: Autocomplétion d'adresses
 - `MoodTrackerApp`: Orchestrateur principal
+- `AppInitializer`: Initialisation des managers
 
 ## Sources API utilisées
 
