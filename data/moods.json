@@ -619,5 +619,28 @@
     "scoreResult": 100,
     "imageUrl": "selfies/selfie_1766779317897.jpg",
     "createdAt": "2025-12-26T20:01:57.901Z"
+  },
+  {
+    "id": 1766842876328,
+    "text": "Heureux",
+    "rating": 5,
+    "lat": -10.3333333,
+    "lon": -53.2,
+    "place": {
+      "name": "Peixoto de Azevedo, Região Geográfica Imediata de Peixoto de Azevedo - Guarantã do Norte, Região Geográfica Intermediária de Sinop, Mato Grosso, Região Centro-Oeste, Brasil",
+      "type": "administrative",
+      "lat": -10.3333333,
+      "lon": -53.2
+    },
+    "weather": {
+      "temp": 33.6,
+      "weather": "overcast clouds",
+      "humidity": 41,
+      "wind_speed": 1.86
+    },
+    "textScore": 1,
+    "scoreResult": 100,
+    "imageUrl": "selfies/selfie_1766842876325.png",
+    "createdAt": "2025-12-27T13:41:16.328Z"
   }
 ]
