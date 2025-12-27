@@ -38,18 +38,10 @@ describe('weatherService', () => {
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('https://api.openweathermap.org/data/2.5/weather')
       );
-      expect(fetch).toHaveBeenCalledWith(
-        expect.stringContaining('lat=48.8566')
-      );
-      expect(fetch).toHaveBeenCalledWith(
-        expect.stringContaining('lon=2.3522')
-      );
-      expect(fetch).toHaveBeenCalledWith(
-        expect.stringContaining('units=metric')
-      );
-      expect(fetch).toHaveBeenCalledWith(
-        expect.stringContaining('appid=test-api-key')
-      );
+      expect(fetch).toHaveBeenCalledWith(expect.stringContaining('lat=48.8566'));
+      expect(fetch).toHaveBeenCalledWith(expect.stringContaining('lon=2.3522'));
+      expect(fetch).toHaveBeenCalledWith(expect.stringContaining('units=metric'));
+      expect(fetch).toHaveBeenCalledWith(expect.stringContaining('appid=test-api-key'));
       expect(result).toEqual({
         source: 'openweather',
         data: {
@@ -128,10 +120,7 @@ describe('weatherService', () => {
         ok: true,
         json: async () => ({
           main: { temp: 20, humidity: 70 },
-          weather: [
-            { description: 'scattered clouds' },
-            { description: 'should not use this' },
-          ],
+          weather: [{ description: 'scattered clouds' }, { description: 'should not use this' }],
           wind: { speed: 2.5 },
         }),
       });

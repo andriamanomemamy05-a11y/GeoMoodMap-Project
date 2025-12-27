@@ -47,14 +47,16 @@ describe('MapManager', () => {
 
   describe('constructor', () => {
     test('devrait initialiser la carte Leaflet', () => {
-      new MapManager();
+      const manager = new MapManager();
+      expect(manager).toBeDefined();
 
       expect(global.L.map).toHaveBeenCalledWith('map');
       expect(mockMap.setView).toHaveBeenCalledWith([48.8566, 2.3522], 13);
     });
 
     test('devrait créer une tile layer OpenStreetMap', () => {
-      new MapManager();
+      const manager = new MapManager();
+      expect(manager).toBeDefined();
 
       expect(global.L.tileLayer).toHaveBeenCalledWith(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -64,7 +66,8 @@ describe('MapManager', () => {
     });
 
     test('devrait créer un marqueur draggable', () => {
-      new MapManager();
+      const manager = new MapManager();
+      expect(manager).toBeDefined();
 
       expect(global.L.marker).toHaveBeenCalledWith([48.8566, 2.3522], {
         draggable: true,
@@ -91,7 +94,8 @@ describe('MapManager', () => {
     });
 
     test('devrait enregistrer les event handlers', () => {
-      new MapManager();
+      const manager = new MapManager();
+      expect(manager).toBeDefined();
 
       expect(mockMap.on).toHaveBeenCalledWith('click', expect.any(Function));
       expect(mockMarker.on).toHaveBeenCalledWith('dragend', expect.any(Function));
@@ -175,7 +179,7 @@ describe('MapManager', () => {
     test('devrait gérer le clic sur la carte', () => {
       const manager = new MapManager();
 
-      const clickHandler = mockMap.on.mock.calls.find((call) => call[0] === 'click')[1];
+      const clickHandler = mockMap.on.mock.calls.find(call => call[0] === 'click')[1];
 
       const clickEvent = {
         latlng: { lat: 49.1234, lng: 2.9876 },
@@ -191,9 +195,7 @@ describe('MapManager', () => {
     test('devrait gérer le drag du marqueur', () => {
       const manager = new MapManager();
 
-      const dragHandler = mockMarker.on.mock.calls.find(
-        (call) => call[0] === 'dragend'
-      )[1];
+      const dragHandler = mockMarker.on.mock.calls.find(call => call[0] === 'dragend')[1];
 
       mockMarker.getLatLng.mockReturnValue({ lat: 47.5555, lng: 1.2222 });
 

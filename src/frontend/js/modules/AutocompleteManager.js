@@ -30,7 +30,7 @@ export class AutocompleteManager {
 
           const results = Array.isArray(data) ? data : [data];
 
-          results.forEach((item) => {
+          results.forEach(item => {
             const div = document.createElement('div');
             div.className = 'autocomplete-suggestion';
             div.textContent = item.name;

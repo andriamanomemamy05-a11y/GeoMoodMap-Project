@@ -90,7 +90,9 @@ describe('moodBusinessService', () => {
       });
       expect(mockWeatherService.getWeather).toHaveBeenCalledWith(48.8566, 2.3522);
       expect(analyzeText).toHaveBeenCalledWith('Je me sens bien');
-      expect(mockImageStorage.saveImageFromBase64).toHaveBeenCalledWith('data:image/png;base64,abc123');
+      expect(mockImageStorage.saveImageFromBase64).toHaveBeenCalledWith(
+        'data:image/png;base64,abc123'
+      );
       expect(calculateGlobalScore).toHaveBeenCalledWith({
         rating: 4,
         textScore: 2,

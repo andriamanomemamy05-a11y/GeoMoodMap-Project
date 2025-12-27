@@ -1,4 +1,6 @@
-const { createSearchService } = require('../../../../src/backend/application/services/SearchService');
+const {
+  createSearchService,
+} = require('../../../../src/backend/application/services/SearchService');
 
 describe('SearchService', () => {
   let mockGeocodeService;

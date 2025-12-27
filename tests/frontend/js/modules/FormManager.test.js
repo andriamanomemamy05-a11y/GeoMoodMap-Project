@@ -58,10 +58,13 @@ describe('FormManager', () => {
     await manager.handleSubmit(event);
 
     expect(event.preventDefault).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledWith('/api/moods', expect.objectContaining({
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    }));
+    expect(global.fetch).toHaveBeenCalledWith(
+      '/api/moods',
+      expect.objectContaining({
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
     expect(mockManagers.modalManager.show).toHaveBeenCalledWith(mockResponse);
     expect(mockManagers.cameraManager.reset).toHaveBeenCalled();
   });

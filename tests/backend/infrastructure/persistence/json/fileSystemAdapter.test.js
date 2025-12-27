@@ -77,7 +77,7 @@ describe('fileSystemAdapter', () => {
       expect(fs.writeFileSync).toHaveBeenCalledWith('/test/file.json', '{"data": []}', 'utf8');
     });
 
-    test('lance une erreur si l\'écriture échoue', () => {
+    test("lance une erreur si l'écriture échoue", () => {
       fs.writeFileSync.mockImplementation(() => {
         throw new Error('EACCES: permission denied');
       });

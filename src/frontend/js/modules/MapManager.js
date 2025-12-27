@@ -30,11 +30,11 @@ export class MapManager {
   }
 
   initEvents() {
-    this.map.on('click', (e) => {
+    this.map.on('click', e => {
       this.marker.setLatLng(e.latlng);
       this.updateCoords(e);
     });
-    this.marker.on('dragend', (e) => this.updateCoords(e));
+    this.marker.on('dragend', e => this.updateCoords(e));
   }
 
   getCoords() {

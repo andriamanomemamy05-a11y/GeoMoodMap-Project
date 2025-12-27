@@ -29,7 +29,7 @@ describe('AutocompleteManager', () => {
   });
 
   test('devrait vider suggestions si requête vide', () => {
-    const manager = new AutocompleteManager(mockMapManager);
+    new AutocompleteManager(mockMapManager);
     const autocomplete = document.getElementById('autocomplete');
     autocomplete.innerHTML = 'test';
 
@@ -43,7 +43,7 @@ describe('AutocompleteManager', () => {
   test('devrait appeler fetch avec debounce', async () => {
     global.fetch.mockResolvedValue({ json: () => Promise.resolve([]) });
 
-    const manager = new AutocompleteManager(mockMapManager);
+    new AutocompleteManager(mockMapManager);
     const input = document.getElementById('address');
 
     input.value = 'Paris';
@@ -56,12 +56,10 @@ describe('AutocompleteManager', () => {
   });
 
   test('devrait afficher suggestions', async () => {
-    const results = [
-      { name: 'Paris, France', lat: 48.8566, lon: 2.3522 }
-    ];
+    const results = [{ name: 'Paris, France', lat: 48.8566, lon: 2.3522 }];
     global.fetch.mockResolvedValue({ json: () => Promise.resolve(results) });
 
-    const manager = new AutocompleteManager(mockMapManager);
+    new AutocompleteManager(mockMapManager);
     const input = document.getElementById('address');
 
     input.value = 'Paris';
@@ -80,7 +78,7 @@ describe('AutocompleteManager', () => {
     const results = [{ name: 'Paris', lat: 48.8566, lon: 2.3522 }];
     global.fetch.mockResolvedValue({ json: () => Promise.resolve(results) });
 
-    const manager = new AutocompleteManager(mockMapManager);
+    new AutocompleteManager(mockMapManager);
     const input = document.getElementById('address');
 
     input.value = 'Paris';
@@ -108,7 +106,7 @@ describe('AutocompleteManager', () => {
     global.fetch.mockRejectedValue(new Error('Network error'));
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
-    const manager = new AutocompleteManager(mockMapManager);
+    new AutocompleteManager(mockMapManager);
     const input = document.getElementById('address');
 
     input.value = 'Paris';

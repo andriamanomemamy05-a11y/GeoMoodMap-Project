@@ -102,7 +102,8 @@ describe('TextAnalyzer', () => {
     });
 
     test('calcule correctement un texte réaliste mixte', () => {
-      const text = "Je suis content de cette journée mais un peu triste par la pluie. C'est cool quand même !";
+      const text =
+        "Je suis content de cette journée mais un peu triste par la pluie. C'est cool quand même !";
       const score = analyzeText(text);
       // 'content' (+1) + 'triste' (-1) + 'cool' (+1) = +1
       expect(score).toBe(1);

@@ -60,6 +60,6 @@ export class FormManager {
   }
 
   initEvents() {
-    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+    this.form.addEventListener('submit', e => this.handleSubmit(e));
   }
 }

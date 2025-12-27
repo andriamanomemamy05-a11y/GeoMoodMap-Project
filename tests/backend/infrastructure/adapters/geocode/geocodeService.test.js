@@ -74,7 +74,6 @@ describe('geocodeService', () => {
         lon: 4.8357,
       });
     });
-
   });
 
   describe('forwardGeocode', () => {
@@ -151,10 +150,10 @@ describe('geocodeService', () => {
         json: async () => [{ display_name: 'Test', type: 'place', lat: '0', lon: '0' }],
       });
 
-      await geocodeService.forwardGeocode('Rue de l\'église');
+      await geocodeService.forwardGeocode("Rue de l'église");
 
       expect(fetch).toHaveBeenCalledWith(
-        expect.stringContaining(encodeURIComponent('Rue de l\'église')),
+        expect.stringContaining(encodeURIComponent("Rue de l'église")),
         expect.any(Object)
       );
     });

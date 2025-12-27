@@ -5,24 +5,35 @@
 import { CameraManager } from '../../../../src/frontend/js/modules/CameraManager.js';
 
 describe('CameraManager', () => {
-  let elements;
-
   beforeEach(() => {
     // Mock alert
     global.alert = jest.fn();
 
     // Créer les éléments DOM
     const ids = [
-      'camera', 'canvas', 'snap', 'selfiePreview', 'deletePhoto',
-      'cameraContainer', 'uploadContainer', 'photoContainer',
-      'selfieBtn', 'uploadBtn', 'fileInput'
+      'camera',
+      'canvas',
+      'snap',
+      'selfiePreview',
+      'deletePhoto',
+      'cameraContainer',
+      'uploadContainer',
+      'photoContainer',
+      'selfieBtn',
+      'uploadBtn',
+      'fileInput',
     ];
 
+    const elementTypes = {
+      camera: 'video',
+      canvas: 'canvas',
+      fileInput: 'input',
+      selfiePreview: 'img',
+    };
+
     ids.forEach(id => {
-      const el = document.createElement(id === 'camera' ? 'video' :
-                                       id === 'canvas' ? 'canvas' :
-                                       id === 'fileInput' ? 'input' :
-                                       id === 'selfiePreview' ? 'img' : 'div');
+      const elementType = elementTypes[id] || 'div';
+      const el = document.createElement(elementType);
       el.id = id;
       document.body.appendChild(el);
     });
@@ -38,8 +49,8 @@ describe('CameraManager', () => {
     Object.defineProperty(video, 'videoHeight', { value: 480 });
 
     // Mock FileReader
-    global.FileReader = jest.fn(function() {
-      this.readAsDataURL = jest.fn(function() {
+    global.FileReader = jest.fn(function () {
+      this.readAsDataURL = jest.fn(function () {
         setTimeout(() => {
           this.onload({ target: { result: 'data:image/jpeg;base64,test' } });
         }, 0);
@@ -55,8 +66,10 @@ describe('CameraManager', () => {
     const mockStream = { getTracks: () => [] };
     navigator.mediaDevices = { getUserMedia: jest.fn().mockResolvedValue(mockStream) };
 
-    const manager = new CameraManager();
-    await new Promise(resolve => setTimeout(resolve, 0));
+    new CameraManager();
+    await new Promise(resolve => {
+      setTimeout(resolve, 0);
+    });
 
     expect(navigator.mediaDevices.getUserMedia).toHaveBeenCalledWith({ video: true });
   });
@@ -64,7 +77,7 @@ describe('CameraManager', () => {
   test('devrait basculer vers upload si pas de MediaDevices', () => {
     delete navigator.mediaDevices;
 
-    const manager = new CameraManager();
+    new CameraManager();
 
     const uploadBtn = document.getElementById('uploadBtn');
     expect(uploadBtn.classList.contains('active')).toBe(true);
@@ -133,7 +146,7 @@ describe('CameraManager', () => {
     expect(manager.getImageUrl()).toContain('test.png');
   });
 
-  test('devrait gérer upload de fichier image', (done) => {
+  test('devrait gérer upload de fichier image', done => {
     navigator.mediaDevices = { getUserMedia: jest.fn().mockResolvedValue({ getTracks: () => [] }) };
 
     const manager = new CameraManager();

@@ -3,7 +3,10 @@ jest.mock('../../../../../src/backend/infrastructure/persistence/json/jsonValida
 
 const fileSystemAdapter = require('../../../../../src/backend/infrastructure/persistence/json/fileSystemAdapter');
 const jsonValidator = require('../../../../../src/backend/infrastructure/persistence/json/jsonValidator');
-const { loadAll, save } = require('../../../../../src/backend/infrastructure/persistence/json/jsonStore');
+const {
+  loadAll,
+  save,
+} = require('../../../../../src/backend/infrastructure/persistence/json/jsonStore');
 
 describe('jsonStore', () => {
   beforeEach(() => {
@@ -162,7 +165,7 @@ describe('jsonStore', () => {
       fileSystemAdapter.writeFile.mockImplementation(() => {});
       jsonValidator.parseJSON.mockReturnValue(existingMoods);
       jsonValidator.validateArray.mockReturnValue(existingMoods);
-      jsonValidator.stringifyJSON.mockImplementation((data) => JSON.stringify(data));
+      jsonValidator.stringifyJSON.mockImplementation(data => JSON.stringify(data));
 
       save(newMood);
 

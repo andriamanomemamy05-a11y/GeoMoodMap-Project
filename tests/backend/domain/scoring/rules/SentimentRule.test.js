@@ -1,4 +1,6 @@
-const { calculateSentimentScore } = require('../../../../../src/backend/domain/scoring/rules/SentimentRule');
+const {
+  calculateSentimentScore,
+} = require('../../../../../src/backend/domain/scoring/rules/SentimentRule');
 
 describe('SentimentRule', () => {
   describe('calculateSentimentScore', () => {

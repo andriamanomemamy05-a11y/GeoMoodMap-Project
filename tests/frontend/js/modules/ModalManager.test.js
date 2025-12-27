@@ -5,7 +5,7 @@
 import { ModalManager } from '../../../../src/frontend/js/modules/ModalManager.js';
 
 global.bootstrap = {
-  Modal: jest.fn(function(element) {
+  Modal: jest.fn(function MockModal(element) {
     this.element = element;
     this.show = jest.fn();
     this.hide = jest.fn();
@@ -31,7 +31,7 @@ describe('ModalManager', () => {
       revokeObjectURL: jest.fn(),
     };
 
-    global.Blob = jest.fn(function(parts, options) {
+    global.Blob = jest.fn(function MockBlob(parts, options) {
       this.parts = parts;
       this.options = options;
     });
@@ -42,7 +42,7 @@ describe('ModalManager', () => {
   });
 
   test('devrait initialiser avec Bootstrap', () => {
-    const manager = new ModalManager();
+    new ModalManager();
     expect(global.bootstrap.Modal).toHaveBeenCalled();
   });
 
