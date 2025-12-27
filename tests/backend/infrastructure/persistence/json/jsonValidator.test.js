@@ -1,4 +1,4 @@
-const { parseJSON, validateArray, stringifyJSON } = require('../../src/backend/infrastructure/persistence/json/jsonValidator');
+const { parseJSON, validateArray, stringifyJSON } = require('../../../../../src/backend/infrastructure/persistence/json/jsonValidator');
 
 describe('jsonValidator', () => {
   beforeEach(() => {

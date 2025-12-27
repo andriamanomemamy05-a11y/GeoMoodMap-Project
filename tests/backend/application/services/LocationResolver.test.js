@@ -1,4 +1,4 @@
-const { createLocationResolver } = require('../../src/backend/application/services/LocationResolver');
+const { createLocationResolver } = require('../../../../src/backend/application/services/LocationResolver');
 
 describe('locationResolver', () => {
   let mockGeocodeService;

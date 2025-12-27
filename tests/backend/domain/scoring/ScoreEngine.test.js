@@ -1,4 +1,4 @@
-const { calculateGlobalScore } = require('../../src/backend/domain/scoring/ScoreEngine');
+const { calculateGlobalScore } = require('../../../../src/backend/domain/scoring/ScoreEngine');
 
 describe('ScoreEngine', () => {
   describe('calculateGlobalScore', () => {

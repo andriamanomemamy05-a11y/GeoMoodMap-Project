@@ -1,4 +1,4 @@
-const { calculateRatingScore } = require('../../src/backend/domain/scoring/rules/RatingRule');
+const { calculateRatingScore } = require('../../../../../src/backend/domain/scoring/rules/RatingRule');
 
 describe('RatingRule', () => {
   describe('calculateRatingScore', () => {

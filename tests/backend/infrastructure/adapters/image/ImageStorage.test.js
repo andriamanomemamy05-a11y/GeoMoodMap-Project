@@ -1,9 +1,9 @@
-jest.mock('../../src/backend/infrastructure/persistence/json/fileSystemAdapter');
+jest.mock('../../../../../src/backend/infrastructure/persistence/json/fileSystemAdapter');
 
-const { parseBase64Image, isSupportedImageType } = require('../../src/backend/infrastructure/adapters/image/ImageParser');
-const { generateUniqueFileName, generateRelativePath } = require('../../src/backend/infrastructure/adapters/image/NamingStrategy');
-const { saveImageFromBase64 } = require('../../src/backend/infrastructure/adapters/image/ImageStorage');
-const fileSystemAdapter = require('../../src/backend/infrastructure/persistence/json/fileSystemAdapter');
+const { parseBase64Image, isSupportedImageType } = require('../../../../../src/backend/infrastructure/adapters/image/ImageParser');
+const { generateUniqueFileName, generateRelativePath } = require('../../../../../src/backend/infrastructure/adapters/image/NamingStrategy');
+const { saveImageFromBase64 } = require('../../../../../src/backend/infrastructure/adapters/image/ImageStorage');
+const fileSystemAdapter = require('../../../../../src/backend/infrastructure/persistence/json/fileSystemAdapter');
 
 describe('ImageParser', () => {
   describe('parseBase64Image', () => {

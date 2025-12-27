@@ -1,12 +1,12 @@
-jest.mock('../../src/backend/domain/text-analysis/TextAnalyzer');
-jest.mock('../../src/backend/domain/scoring/ScoreEngine');
-jest.mock('../../src/backend/domain/factories/moodFactory');
+jest.mock('../../../../src/backend/domain/text-analysis/TextAnalyzer');
+jest.mock('../../../../src/backend/domain/scoring/ScoreEngine');
+jest.mock('../../../../src/backend/domain/factories/moodFactory');
 
-const { analyzeText } = require('../../src/backend/domain/text-analysis/TextAnalyzer');
-const { calculateGlobalScore } = require('../../src/backend/domain/scoring/ScoreEngine');
-const { buildMood } = require('../../src/backend/domain/factories/moodFactory');
+const { analyzeText } = require('../../../../src/backend/domain/text-analysis/TextAnalyzer');
+const { calculateGlobalScore } = require('../../../../src/backend/domain/scoring/ScoreEngine');
+const { buildMood } = require('../../../../src/backend/domain/factories/moodFactory');
 
-const { createMoodService } = require('../../src/backend/application/services/MoodService');
+const { createMoodService } = require('../../../../src/backend/application/services/MoodService');
 
 describe('moodBusinessService', () => {
   let mockWeatherService;
