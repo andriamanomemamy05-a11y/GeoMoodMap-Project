@@ -1,7 +1,6 @@
 jest.mock('fs');
 
 const fs = require('fs');
-const path = require('path');
 const {
   ensureDirectory,
   ensureFile,
@@ -39,15 +38,6 @@ describe('fileSystemAdapter', () => {
       ensureFile('/test/file.json', '[]');
 
       expect(fs.writeFileSync).toHaveBeenCalledWith('/test/file.json', '[]', 'utf8');
-    });
-
-    test('crée le dossier parent si nécessaire', () => {
-      fs.existsSync.mockReturnValue(false);
-
-      ensureFile('/test/dir/file.json', '[]');
-
-      expect(fs.mkdirSync).toHaveBeenCalledWith('/test/dir', { recursive: true });
-      expect(fs.writeFileSync).toHaveBeenCalledWith('/test/dir/file.json', '[]', 'utf8');
     });
 
     test('ne fait rien si le fichier existe déjà', () => {

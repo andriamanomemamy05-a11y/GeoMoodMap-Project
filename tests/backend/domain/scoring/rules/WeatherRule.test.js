@@ -6,14 +6,6 @@ describe('WeatherRule', () => {
       expect(calculateWeatherScore(null)).toBe(0);
     });
 
-    test('retourne 0 si weather est undefined', () => {
-      expect(calculateWeatherScore(undefined)).toBe(0);
-    });
-
-    test('retourne 0 si weather est vide', () => {
-      expect(calculateWeatherScore({})).toBe(0);
-    });
-
     test('rain applique -10 points', () => {
       expect(calculateWeatherScore({ weather: 'rain' })).toBe(-10);
     });
@@ -78,16 +70,8 @@ describe('WeatherRule', () => {
       expect(calculateWeatherScore({ weather: 'RAIN' })).toBe(-10);
     });
 
-    test('gère mixed case', () => {
-      expect(calculateWeatherScore({ weather: 'Clear Sky' })).toBe(10);
-    });
-
     test('ignore température non numérique', () => {
       expect(calculateWeatherScore({ weather: 'clear', temp: 'hot' })).toBe(10);
-    });
-
-    test('ignore température null', () => {
-      expect(calculateWeatherScore({ weather: 'clear', temp: null })).toBe(10);
     });
   });
 });

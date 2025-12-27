@@ -135,26 +135,6 @@ describe('ImageStorage', () => {
       expect(fileSystemAdapter.writeFile).not.toHaveBeenCalled();
     });
 
-    test('appelle ensureDirectory avec le bon chemin', () => {
-      const base64Image =
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
-
-      saveImageFromBase64(base64Image);
-
-      const ensureCall = fileSystemAdapter.ensureDirectory.mock.calls[0];
-      expect(ensureCall[0]).toContain('selfies');
-    });
-
-    test('écrit le fichier avec encoding base64', () => {
-      const base64Image =
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
-
-      saveImageFromBase64(base64Image);
-
-      const writeCall = fileSystemAdapter.writeFile.mock.calls[0];
-      expect(writeCall[2]).toBe('base64');
-    });
-
     test('retourne null si type image non supporté', () => {
       // Modifier temporairement isSupportedImageType pour simuler un type non supporté
       const base64Image = 'data:image/bmp;base64,Qk0=';

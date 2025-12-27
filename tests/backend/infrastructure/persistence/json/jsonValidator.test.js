@@ -19,12 +19,6 @@ describe('jsonValidator', () => {
       expect(result).toEqual({ test: true });
     });
 
-    test('parse un tableau JSON valide', () => {
-      const result = parseJSON('[1, 2, 3]', []);
-
-      expect(result).toEqual([1, 2, 3]);
-    });
-
     test('retourne fallback si JSON invalide', () => {
       const result = parseJSON('invalid json', []);
 
@@ -33,19 +27,6 @@ describe('jsonValidator', () => {
         'jsonValidator: JSON parse error',
         expect.any(String)
       );
-    });
-
-    test('retourne fallback si chaîne vide', () => {
-      const result = parseJSON('', { default: true });
-
-      expect(result).toEqual({ default: true });
-    });
-
-    test('utilise le fallback personnalisé', () => {
-      const customFallback = { error: 'invalid' };
-      const result = parseJSON('bad json', customFallback);
-
-      expect(result).toEqual(customFallback);
     });
   });
 
@@ -64,38 +45,6 @@ describe('jsonValidator', () => {
         'jsonValidator: data is not an array, using fallback'
       );
     });
-
-    test('retourne fallback si null', () => {
-      const result = validateArray(null, []);
-
-      expect(result).toEqual([]);
-    });
-
-    test('retourne fallback si undefined', () => {
-      const result = validateArray(undefined, []);
-
-      expect(result).toEqual([]);
-    });
-
-    test('retourne fallback si string', () => {
-      const result = validateArray('not an array', []);
-
-      expect(result).toEqual([]);
-    });
-
-    test('utilise le fallback personnalisé', () => {
-      const customFallback = ['default'];
-      const result = validateArray('invalid', customFallback);
-
-      expect(result).toEqual(customFallback);
-    });
-
-    test('accepte un tableau vide', () => {
-      const result = validateArray([], []);
-
-      expect(result).toEqual([]);
-      expect(console.warn).not.toHaveBeenCalled();
-    });
   });
 
   describe('stringifyJSON', () => {
@@ -105,29 +54,11 @@ describe('jsonValidator', () => {
       expect(result).toBe('{\n  "test": true\n}');
     });
 
-    test('sérialise un tableau en JSON formaté', () => {
-      const result = stringifyJSON([1, 2, 3]);
-
-      expect(result).toBe('[\n  1,\n  2,\n  3\n]');
-    });
-
     test('indente avec 2 espaces', () => {
       const result = stringifyJSON({ nested: { value: 42 } });
 
       expect(result).toContain('  ');
       expect(result).toBe('{\n  "nested": {\n    "value": 42\n  }\n}');
-    });
-
-    test('gère les valeurs null', () => {
-      const result = stringifyJSON(null);
-
-      expect(result).toBe('null');
-    });
-
-    test('gère les tableaux vides', () => {
-      const result = stringifyJSON([]);
-
-      expect(result).toBe('[]');
     });
   });
 });

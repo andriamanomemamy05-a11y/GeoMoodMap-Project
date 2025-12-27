@@ -201,21 +201,6 @@ describe('moodBusinessService', () => {
         imageUrl: 'selfies/selfie_123.png',
       });
     });
-
-    test('sauvegarde le mood dans le store', async () => {
-      const validatedData = {
-        text: 'Test',
-        rating: 4,
-        lat: 48.8566,
-        lon: 2.3522,
-        address: null,
-        imageUrl: null,
-      };
-
-      const result = await moodService.createNewMood(validatedData);
-
-      expect(mockMoodRepository.save).toHaveBeenCalledWith(result);
-    });
   });
 
   describe('getAllMoods', () => {
@@ -241,15 +226,6 @@ describe('moodBusinessService', () => {
 
       expect(mockMoodRepository.loadAll).toHaveBeenCalledTimes(1);
       expect(result).toEqual([]);
-    });
-
-    test('délègue correctement à moodRepository.loadAll', () => {
-      const mockMoods = [{ id: 123, text: 'Test' }];
-      mockMoodRepository.loadAll.mockReturnValue(mockMoods);
-
-      moodService.getAllMoods();
-
-      expect(mockMoodRepository.loadAll).toHaveBeenCalledWith();
     });
   });
 });

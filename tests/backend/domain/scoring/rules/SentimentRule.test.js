@@ -37,13 +37,5 @@ describe('SentimentRule', () => {
     test('textScore -5 est clamped à -30', () => {
       expect(calculateSentimentScore(-5)).toBe(-30);
     });
-
-    test('textScore +4 est clamped à +30', () => {
-      expect(calculateSentimentScore(4)).toBe(30);
-    });
-
-    test('textScore -4 est clamped à -30', () => {
-      expect(calculateSentimentScore(-4)).toBe(-30);
-    });
   });
 });

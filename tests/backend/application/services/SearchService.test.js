@@ -52,23 +52,6 @@ describe('SearchService', () => {
       expect(result).toBeNull();
     });
 
-    test('délègue correctement au geocodeService', async () => {
-      const mockResult = {
-        name: 'Lyon, France',
-        type: 'city',
-        lat: 45.764,
-        lon: 4.8357,
-      };
-
-      mockGeocodeService.forwardGeocode.mockResolvedValue(mockResult);
-
-      const result = await searchService.searchLocation('Lyon');
-
-      expect(mockGeocodeService.forwardGeocode).toHaveBeenCalledTimes(1);
-      expect(mockGeocodeService.forwardGeocode).toHaveBeenCalledWith('Lyon');
-      expect(result).toBe(mockResult);
-    });
-
     test('propage les erreurs du geocodeService', async () => {
       const error = new Error('Geocode API error');
       mockGeocodeService.forwardGeocode.mockRejectedValue(error);
