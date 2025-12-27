@@ -1,7 +1,13 @@
 import { MoodTrackerApp } from './modules/MoodTrackerApp.js';
+import { AppInitializer } from './modules/AppInitializer.js';
 
 try {
-  const app = new MoodTrackerApp();
+
+  const managers = AppInitializer.init();
+  const app = new MoodTrackerApp(managers);
+
+  app.start();
+
   console.log('MoodTrackerApp initialized', app);
 } catch (error) {
   console.error('Failed to initialize MoodTrackerApp:', error);
