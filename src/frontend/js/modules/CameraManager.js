@@ -47,7 +47,8 @@ export class CameraManager {
       return;
     }
 
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
       .then(stream => {
         this.video.srcObject = stream;
         this.cameraStream = stream;
@@ -74,7 +75,8 @@ export class CameraManager {
 
     // Lance la caméra si elle n'est pas déjà activée
     if (!this.cameraStream) {
-      navigator.mediaDevices.getUserMedia({ video: true })
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
         .then(stream => {
           this.video.srcObject = stream;
           this.cameraStream = stream;

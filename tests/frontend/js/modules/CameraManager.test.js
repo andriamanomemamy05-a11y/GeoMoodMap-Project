@@ -61,7 +61,9 @@ describe('CameraManager', () => {
     navigator.mediaDevices = { getUserMedia: jest.fn().mockResolvedValue(mockStream) };
 
     new CameraManager();
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await new Promise(resolve => {
+      setTimeout(resolve, 0);
+    });
 
     expect(navigator.mediaDevices.getUserMedia).toHaveBeenCalledWith({ video: true });
   });
@@ -122,7 +124,9 @@ describe('CameraManager', () => {
 
     manager.reset();
 
-    expect(document.getElementById(SELECTORS.CAMERA_CONTAINER).classList.contains('d-none')).toBe(false);
+    expect(document.getElementById(SELECTORS.CAMERA_CONTAINER).classList.contains('d-none')).toBe(
+      false
+    );
   });
 
   test('should return image URL', () => {

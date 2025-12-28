@@ -59,9 +59,7 @@ describe('AutocompleteManager', () => {
     jest.advanceTimersByTime(CONFIG.AUTOCOMPLETE.DEBOUNCE_DELAY);
     await Promise.resolve();
 
-    expect(global.fetch).toHaveBeenCalledWith(
-      `${CONFIG.API.SEARCH}?q=Paris`
-    );
+    expect(global.fetch).toHaveBeenCalledWith(`${CONFIG.API.SEARCH}?q=Paris`);
   });
 
   test('should display autocomplete suggestions', async () => {

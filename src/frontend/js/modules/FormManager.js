@@ -75,9 +75,7 @@ export class FormManager {
       this.cameraManager.reset();
     } catch (err) {
       console.error('POST /moods error:', err);
-      alert(
-        `❌ Error saving mood.\n\nDetails: ${err.message}\nCheck console for more info.`
-      );
+      alert(`❌ Error saving mood.\n\nDetails: ${err.message}\nCheck console for more info.`);
     }
   }
 

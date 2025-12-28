@@ -5,7 +5,7 @@ import { CONFIG, SELECTORS } from '../constants.js';
  * ----------------------
  * Responsable uniquement de la logique d'autocomplétion pour le champ d'adresse.
  * Applique le principe SRP : une seule responsabilité.
- * 
+ *
  * Dépend d'une abstraction mapManager pour mettre à jour la position sur la carte (DIP).
  */
 export class AutocompleteManager {
@@ -42,7 +42,10 @@ export class AutocompleteManager {
 
       // Debounce : attendre avant d'envoyer la requête API
       clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => this.fetchSuggestions(query), CONFIG.AUTOCOMPLETE.DEBOUNCE_DELAY);
+      this.timeout = setTimeout(
+        () => this.fetchSuggestions(query),
+        CONFIG.AUTOCOMPLETE.DEBOUNCE_DELAY
+      );
     });
   }
 

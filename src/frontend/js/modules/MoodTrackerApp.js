@@ -37,4 +37,3 @@ export class MoodTrackerApp {
     console.log('MoodTrackerApp started successfully!');
   }
 }
-
