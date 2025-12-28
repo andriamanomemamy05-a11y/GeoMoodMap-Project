@@ -129,7 +129,7 @@ J’ai aussi conçu et implémenté, refactorisé des tests unitaires côté fro
 
 ## 4. Auto-évaluation
 
-Ma première tentative de refactoring sur la branche `develop` s’est soldée par un échec, ce qui m’a conduit à isoler ce travail dans une branche `develop2` afin de repartir sur des bases plus saines. J’ai alors revu ma stratégie, plutôt que d’appliquer les principes SOLID de manière linéaire sur les premiers fichiers rencontrés, j’ai choisi de me concentrer en priorité sur le(s) God Object. Cette décision, bien que difficile car elle impliquait de « repartir de zéro », s’est révélée pertinente. Elle m’a permis de structurer progressivement une architecture hexagonale cohérente et exploitable. Ce projet s’est avéré particulièrement stimulant, dans la mesure où il m’a demandé d’analyser et de créer un code initialement complexe et peu lisible, puis de le transformer en une base de code plus claire et maintenable et cela ma démontrée l'importance de faire du Clean Code dès le départ.
+Ma première tentative de refactoring sur la branche `develop2` s’est soldée par un échec. J’ai alors revu ma stratégie, plutôt que d’appliquer les principes SOLID de manière linéaire sur les premiers fichiers rencontrés, j’ai choisi de me concentrer en priorité sur le(s) God Object. Cette décision, bien que difficile car elle impliquait de « repartir de zéro », s’est révélée pertinente. Elle m’a permis de structurer progressivement une architecture hexagonale cohérente et exploitable. Ce projet était stimulant, car il m’a demandé d’analyser et de créer un code "sale", puis de le transformer en une base de code plus claire et maintenable, cela ma démontrée l'importance de faire du Clean Code dès le départ.
 
 ## 5. Évaluation des pairs
 
